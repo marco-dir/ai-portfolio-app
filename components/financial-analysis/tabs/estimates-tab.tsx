@@ -134,7 +134,7 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                     cx="50%"
                                     cy="50%"
                                     labelLine={false}
-                                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}% `}
+                                    label={({ name, percent }) => `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`}
                                     outerRadius={100}
                                     fill="#8884d8"
                                     dataKey="value"
@@ -172,8 +172,8 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                     key={r}
                                     onClick={() => setRange(r)}
                                     className={`px - 3 py - 1 rounded - md text - sm font - medium transition - all ${range === r
-                                            ? "bg-gray-700 text-white shadow-sm"
-                                            : "text-gray-400 hover:text-gray-200"
+                                        ? "bg-gray-700 text-white shadow-sm"
+                                        : "text-gray-400 hover:text-gray-200"
                                         } `}
                                 >
                                     {r}
