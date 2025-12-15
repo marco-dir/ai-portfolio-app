@@ -78,7 +78,7 @@ export default async function FundamentalAnalysisPage({
                 dividend: d.adjDividend || d.dividend
             }))
         } else {
-            dividendHistory = incomeStatements?.map(inc => ({
+            dividendHistory = incomeStatements?.map((inc: any) => ({
                 date: inc.date,
                 dividend: inc.dividendPerShare || 0
             })) || []
