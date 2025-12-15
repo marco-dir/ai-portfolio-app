@@ -46,7 +46,7 @@ export async function PATCH(request: Request) {
 
     } catch (error) {
         if (error instanceof z.ZodError) {
-            return new NextResponse(error.errors[0].message, { status: 400 })
+            return new NextResponse(error.issues[0].message, { status: 400 })
         }
         console.error("[PASSWORD_PATCH]", error)
         return new NextResponse("Internal Error", { status: 500 })
