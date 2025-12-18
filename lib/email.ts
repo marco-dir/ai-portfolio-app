@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Use a fallback key for build/dev if not provided. Runtime calls will fail if key is invalid, which is expected.
+const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789');
 
 export const sendWelcomeEmail = async (email: string, name?: string) => {
     try {
