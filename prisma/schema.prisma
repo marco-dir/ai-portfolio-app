@@ -18,6 +18,8 @@ model User {
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  newsletterSubscribed Boolean @default(true)
+  role      String   @default("USER") // "USER" or "ADMIN"
 
   portfolios Portfolio[]
   watchlist  Watchlist?

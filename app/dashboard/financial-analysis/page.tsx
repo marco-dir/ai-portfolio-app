@@ -90,6 +90,9 @@ export default async function FinancialAnalysisPage({
                 </div>
 
                 <FinancialAnalysisSearch initialTicker={ticker} />
+                <p className="text-sm text-gray-500 mt-2 ml-1">
+                    Visualizza dati storici di conto economico, stato patrimoniale, flusso di cassa e key ratios. Accedi a valutazioni intelligenti, calendario finanziario, notizie in tempo reale e molto altro.
+                </p>
 
                 {ticker && !companyProfile && (
                     <div className="bg-red-900/20 border border-red-900 text-red-200 p-4 rounded-lg">

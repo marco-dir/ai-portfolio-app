@@ -5,17 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
-import {
-    LayoutDashboard,
-    PieChart,
-    Star,
-    LogOut,
-    User,
-    BarChart3,
-    Menu,
-    ChevronLeft,
-    Lightbulb
-} from "lucide-react"
+import { BarChart3, Briefcase, ChevronLeft, DollarSign, Landmark, LayoutDashboard, Lightbulb, LogOut, Menu, PieChart, Star, TrendingUp, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -28,8 +18,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { label: 'Azioni Value', href: '/dashboard/fundamental-analysis', icon: Lightbulb },
         { label: 'Panoramica', href: '/dashboard', icon: LayoutDashboard },
         { label: 'Portafogli', href: '/dashboard/portfolio', icon: PieChart },
-        { label: 'Watchlist', href: '/dashboard/watchlist', icon: Star },
-        { label: 'Il mio account', href: '/dashboard/settings', icon: User },
+        { label: 'La Mia Watchlist', href: '/dashboard/watchlist', icon: Star },
+        { label: 'Portafoglio DIRAMCO', href: '/dashboard/diramco-portfolio', icon: Landmark },
+        { label: 'Portafoglio Conservativo', href: '/dashboard/conservative-portfolio', icon: Briefcase },
+        { label: 'Portafoglio Moderato', href: '/dashboard/portafoglio-moderato', icon: Briefcase },
+        { label: 'Portafoglio Aggressivo', href: '/dashboard/portafoglio-aggressivo', icon: TrendingUp },
+        { label: 'Portafoglio Dividendi', href: '/dashboard/portafoglio-dividendi', icon: DollarSign },
+        { label: 'Portafoglio ETF', href: '/dashboard/portafoglio-etf', icon: Briefcase },
+        { label: 'Watchlist DIRAMCO', href: '/dashboard/watchlist-diramco', icon: Star },
     ]
 
     return (
@@ -38,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <aside
                 className={cn(
                     "border-r border-gray-800 p-6 flex flex-col transition-all duration-300 ease-in-out",
-                    sidebarOpen ? "w-64" : "w-0 p-0 overflow-hidden"
+                    sidebarOpen ? "w-72" : "w-0 p-0 overflow-hidden"
                 )}
             >
                 <div className="flex items-center gap-3 mb-8 px-2">
@@ -68,8 +64,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     })}
                 </nav>
 
-                <div className="pt-6 border-t border-gray-800">
-                    <div className="mb-4 px-4 text-sm text-gray-500">
+                <div className="pt-6 border-t border-gray-800 space-y-2">
+                    <Link
+                        href="/dashboard/settings"
+                        className={cn(
+                            "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap",
+                            pathname === "/dashboard/settings" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
+                        )}
+                    >
+                        <User size={20} />
+                        Il mio account
+                    </Link>
+                    <div className="px-4 py-2 text-sm text-gray-500 truncate" title={session?.user?.email || ''}>
                         {session?.user?.email}
                     </div>
                     <button
@@ -89,7 +95,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                     className={cn(
                         "fixed top-4 z-50 p-2 bg-gray-800 hover:bg-gray-700 rounded-lg border border-gray-700 transition-all duration-300",
-                        sidebarOpen ? "left-[260px]" : "left-4"
+                        sidebarOpen ? "left-[292px]" : "left-4"
                     )}
                     title={sidebarOpen ? "Nascondi menu" : "Mostra menu"}
                 >

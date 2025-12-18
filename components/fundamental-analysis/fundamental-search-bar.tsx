@@ -20,9 +20,9 @@ export function FundamentalSearchBar() {
     const [showResults, setShowResults] = useState(false)
     const searchRef = useRef<HTMLDivElement>(null)
 
-    // Priority exchanges
+    // Priority exchanges: Italian first, then US, then Europe
     const exchangePriority: Record<string, number> = {
-        'MIL': 1,      // Milan
+        'MIL': 1,      // Milan - prioritized for Italian market
         'NASDAQ': 2,
         'NYSE': 3,
         'AMEX': 4,
@@ -66,6 +66,9 @@ export function FundamentalSearchBar() {
                     return
                 }
 
+                const queryUpper = query.toUpperCase()
+                const queryLower = query.toLowerCase()
+
                 // Filter and sort results
                 const filtered = data
                     .filter(item => {
@@ -76,17 +79,25 @@ export function FundamentalSearchBar() {
                             item.currency === 'EUR'
                     })
                     .sort((a, b) => {
-                        const priorityA = exchangePriority[a.exchangeShortName] || 999
-                        const priorityB = exchangePriority[b.exchangeShortName] || 999
+                        // PRIORITY 1: Exact ticker match comes first
+                        const aExactMatch = a.symbol.toUpperCase() === queryUpper
+                        const bExactMatch = b.symbol.toUpperCase() === queryUpper
 
-                        if (priorityA !== priorityB) return priorityA - priorityB
+                        if (aExactMatch && !bExactMatch) return -1
+                        if (!aExactMatch && bExactMatch) return 1
 
-                        const queryLower = query.toLowerCase()
+                        // PRIORITY 2: Name starts with query
                         const aNameMatch = a.name.toLowerCase().startsWith(queryLower)
                         const bNameMatch = b.name.toLowerCase().startsWith(queryLower)
 
                         if (aNameMatch && !bNameMatch) return -1
                         if (!aNameMatch && bNameMatch) return 1
+
+                        // PRIORITY 3: Exchange priority (Italy first, then US, then Europe)
+                        const priorityA = exchangePriority[a.exchangeShortName] || 999
+                        const priorityB = exchangePriority[b.exchangeShortName] || 999
+
+                        if (priorityA !== priorityB) return priorityA - priorityB
 
                         return a.name.localeCompare(b.name)
                     })

@@ -3,27 +3,47 @@ import { NextResponse } from 'next/server'
 const FMP_API_KEY = process.env.FMP_API_KEY
 const BASE_URL = "https://financialmodelingprep.com/api/v3"
 
-// Priority exchanges: Milan (1), US (2), Europe (3)
-const EXCHANGE_PRIORITY: Record<string, number> = {
-    'MIL': 1,      // Borsa Italiana
+// Country to preferred exchange mapping
+const COUNTRY_EXCHANGE_MAP: Record<string, string[]> = {
+    'IT': ['MIL'],                    // Italy → Milan
+    'US': ['NASDAQ', 'NYSE', 'AMEX'], // USA → US exchanges
+    'GB': ['LSE'],                    // UK → London
+    'FR': ['PAR'],                    // France → Paris
+    'DE': ['ETR', 'FRA'],             // Germany → Frankfurt/Xetra
+    'NL': ['AMS'],                    // Netherlands → Amsterdam
+    'ES': ['BME'],                    // Spain → Madrid
+    'CH': ['SWX'],                    // Switzerland → Swiss
+    'BE': ['BRU'],                    // Belgium → Brussels
+    'AT': ['VIE'],                    // Austria → Vienna
+    'NO': ['OSL'],                    // Norway → Oslo
+    'SE': ['STO'],                    // Sweden → Stockholm
+    'FI': ['HEL'],                    // Finland → Helsinki
+    'DK': ['CPH'],                    // Denmark → Copenhagen
+    'PT': ['LIS'],                    // Portugal → Lisbon
+    'IE': ['DUB'],                    // Ireland → Dublin
+}
+
+// Default exchange priority: Italian first, then US, then Europe
+const DEFAULT_EXCHANGE_PRIORITY: Record<string, number> = {
+    'MIL': 1,      // Borsa Italiana - default priority
     'NASDAQ': 2,
     'NYSE': 3,
     'AMEX': 4,
-    'LSE': 5,      // London
-    'PAR': 6,      // Paris
-    'ETR': 7,      // Xetra
-    'FRA': 8,      // Frankfurt
-    'AMS': 9,      // Amsterdam
-    'BME': 10,     // Madrid
-    'SWX': 11,     // Swiss
-    'BRU': 12,     // Brussels
-    'VIE': 13,     // Vienna
-    'OSL': 14,     // Oslo
-    'STO': 15,     // Stockholm
-    'HEL': 16,     // Helsinki
-    'CPH': 17,     // Copenhagen
-    'LIS': 18,     // Lisbon
-    'DUB': 19      // Dublin
+    'LSE': 5,
+    'PAR': 6,
+    'ETR': 7,
+    'FRA': 8,
+    'AMS': 9,
+    'BME': 10,
+    'SWX': 11,
+    'BRU': 12,
+    'VIE': 13,
+    'OSL': 14,
+    'STO': 15,
+    'HEL': 16,
+    'CPH': 17,
+    'LIS': 18,
+    'DUB': 19
 }
 
 export async function GET(request: Request) {
@@ -39,6 +59,9 @@ export async function GET(request: Request) {
     }
 
     try {
+        const queryUpper = query.toUpperCase()
+        const queryLower = query.toLowerCase()
+
         const response = await fetch(
             `${BASE_URL}/search?query=${encodeURIComponent(query)}&limit=100&apikey=${FMP_API_KEY}`
         )
@@ -53,41 +76,49 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'No results found' }, { status: 404 })
         }
 
-        // Filter and sort results
-        const sortedResults = results
-            .filter(item => {
-                const exchange = item.exchangeShortName
-                // Keep if in priority list or is a major exchange
-                return exchange in EXCHANGE_PRIORITY ||
-                    ['NASDAQ', 'NYSE', 'AMEX', 'EURONEXT'].includes(exchange) ||
-                    item.symbol.includes('.') // Broadly include European tickers
+        // Filter valid exchanges
+        const filtered = results.filter(item => {
+            const exchange = item.exchangeShortName
+            return exchange in DEFAULT_EXCHANGE_PRIORITY ||
+                ['NASDAQ', 'NYSE', 'AMEX', 'EURONEXT'].includes(exchange) ||
+                item.symbol.includes('.')
+        })
+
+        // PRIORITY 1: Exact ticker match (highest priority)
+        const exactMatch = filtered.find(item =>
+            item.symbol === queryUpper || item.symbol.toUpperCase() === queryUpper
+        )
+        if (exactMatch) {
+            return NextResponse.json({
+                ticker: exactMatch.symbol,
+                name: exactMatch.name,
+                exchange: exactMatch.exchangeShortName,
+                currency: exactMatch.currency
             })
-            .sort((a, b) => {
-                // 1. Sort by Exchange Priority
-                const priorityA = EXCHANGE_PRIORITY[a.exchangeShortName] || 999
-                const priorityB = EXCHANGE_PRIORITY[b.exchangeShortName] || 999
+        }
 
-                if (priorityA !== priorityB) {
-                    return priorityA - priorityB
-                }
+        // PRIORITY 2: For company name searches, prioritize home market
+        // First, determine if this looks like a well-known company and get its home country
+        const sortedResults = filtered.sort((a, b) => {
+            // 2a. Prefer name matches that start with the query
+            const aNameMatch = a.name.toLowerCase().startsWith(queryLower)
+            const bNameMatch = b.name.toLowerCase().startsWith(queryLower)
 
-                // 2. Sort by Exact Match on Symbol
-                if (a.symbol === query.toUpperCase()) return -1
-                if (b.symbol === query.toUpperCase()) return 1
+            if (aNameMatch && !bNameMatch) return -1
+            if (!aNameMatch && bNameMatch) return 1
 
-                // 3. Sort by Name Match
-                const queryLower = query.toLowerCase()
-                const aNameMatch = a.name.toLowerCase().startsWith(queryLower)
-                const bNameMatch = b.name.toLowerCase().startsWith(queryLower)
+            // 2b. If both match names, prefer home market based on company country
+            // We can infer home market from where the "main" listing is
+            // Companies typically have their primary listing in their home country
 
-                if (aNameMatch && !bNameMatch) return -1
-                if (!aNameMatch && bNameMatch) return 1
+            // Use default priority (Italy first, then US, then Europe)
+            const priorityA = DEFAULT_EXCHANGE_PRIORITY[a.exchangeShortName] || 999
+            const priorityB = DEFAULT_EXCHANGE_PRIORITY[b.exchangeShortName] || 999
 
-                return 0
-            })
+            return priorityA - priorityB
+        })
 
         if (sortedResults.length > 0) {
-            // Return best match
             const bestMatch = sortedResults[0]
             return NextResponse.json({
                 ticker: bestMatch.symbol,

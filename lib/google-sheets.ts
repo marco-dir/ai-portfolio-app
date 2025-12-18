@@ -2,8 +2,8 @@
 
 export async function getDiramcoScore(ticker: string): Promise<number | null> {
     try {
-        const SHEET_ID = process.env.NEXT_PUBLIC_GOOGLE_SHEET_ID
-        const SHEET_GID = process.env.NEXT_PUBLIC_GOOGLE_SHEET_GID
+        const SHEET_ID = '1cGXPRbrhanUTeEQPklLK8j_rJzG_4XAjAZmVUPcrRQc' // Watchlist DIRAMCO Sheet
+        const SHEET_GID = '1613026528' // Specific GID for scores
 
         if (!SHEET_ID || !SHEET_GID) {
             console.warn('Google Sheets credentials not configured')
