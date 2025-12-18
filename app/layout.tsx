@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "DIRAMCO",
   description: "Gestione del portafoglio e investimenti con l'IA",
+  icons: {
+    icon: '/icon.png',
+  }
 };
 
 export default function RootLayout({
