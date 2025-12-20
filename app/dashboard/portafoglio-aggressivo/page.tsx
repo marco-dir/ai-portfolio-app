@@ -374,7 +374,7 @@ export default function AggressivePortfolioPage() {
                                         tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`}
                                     />
                                     <RechartsTooltip
-                                        formatter={(value: number) => [`€ ${value.toLocaleString('it-IT')}`, 'Valore']}
+                                        formatter={(value: any) => [`€ ${value.toLocaleString('it-IT')}`, 'Valore']}
                                         labelStyle={{ color: '#fff' }}
                                         contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff', borderRadius: '8px' }}
                                     />
@@ -507,7 +507,7 @@ export default function AggressivePortfolioPage() {
                                     ))}
                                 </Pie>
                                 <RechartsTooltip
-                                    formatter={(value: number) => `${value.toFixed(2)}%`}
+                                    formatter={(value: any) => `${value.toFixed(2)}%`}
                                     contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                     itemStyle={{ color: '#fff' }}
                                 />
@@ -591,7 +591,7 @@ export default function AggressivePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -677,7 +677,7 @@ export default function AggressivePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -709,7 +709,7 @@ export default function AggressivePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -802,7 +802,7 @@ export default function AggressivePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -834,7 +834,7 @@ export default function AggressivePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />

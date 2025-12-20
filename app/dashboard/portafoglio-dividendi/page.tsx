@@ -339,7 +339,7 @@ export default function DividendPortfolioPage() {
                                     tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`}
                                 />
                                 <RechartsTooltip
-                                    formatter={(value: number) => [`€ ${value.toLocaleString('it-IT')}`, 'Valore']}
+                                    formatter={(value: any) => [`€ ${value.toLocaleString('it-IT')}`, 'Valore']}
                                     contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                     labelStyle={{ color: '#9ca3af' }}
                                 />
@@ -477,7 +477,7 @@ export default function DividendPortfolioPage() {
                                     ))}
                                 </Pie>
                                 <RechartsTooltip
-                                    formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                    formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                     contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                     itemStyle={{ color: '#fff' }}
                                 />
@@ -553,7 +553,7 @@ export default function DividendPortfolioPage() {
                                             <Cell key={`cell-sector-${index}`} fill={entry.color} />
                                         ))}
                                     </Pie>
-                                    <RechartsTooltip formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`} contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }} />
+                                    <RechartsTooltip formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`} contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }} />
                                     <Legend />
                                 </PieChart>
                             </ResponsiveContainer>
@@ -572,7 +572,7 @@ export default function DividendPortfolioPage() {
                                             <Cell key={`cell-country-${index}`} fill={entry.color} />
                                         ))}
                                     </Pie>
-                                    <RechartsTooltip formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`} contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }} />
+                                    <RechartsTooltip formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`} contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }} />
                                     <Legend />
                                 </PieChart>
                             </ResponsiveContainer>
@@ -644,7 +644,7 @@ export default function DividendPortfolioPage() {
                                 <XAxis dataKey="name" stroke="#9ca3af" tick={{ fill: '#9ca3af', fontSize: 12 }} />
                                 <YAxis stroke="#9ca3af" tick={{ fill: '#9ca3af', fontSize: 12 }} />
                                 <RechartsTooltip
-                                    formatter={(value: number) => `€ ${value.toLocaleString('it-IT', { minimumFractionDigits: 2 })}`}
+                                    formatter={(value: any) => `€ ${value.toLocaleString('it-IT', { minimumFractionDigits: 2 })}`}
                                     contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                 />
                                 <Bar dataKey="value" fill="#10b981" radius={[4, 4, 0, 0]} />

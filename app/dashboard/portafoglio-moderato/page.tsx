@@ -358,7 +358,7 @@ export default function ModeratePortfolioPage() {
                                         domain={['auto', 'auto']}
                                     />
                                     <RechartsTooltip
-                                        formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                        formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                         contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                         itemStyle={{ color: '#fff' }}
                                     />
@@ -507,7 +507,7 @@ export default function ModeratePortfolioPage() {
                                         ))}
                                     </Pie>
                                     <RechartsTooltip
-                                        formatter={(value: number) => `€ ${value.toLocaleString('it-IT')} `}
+                                        formatter={(value: any) => `€ ${value.toLocaleString('it-IT')} `}
                                         contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                         itemStyle={{ color: '#fff' }}
                                     />
@@ -588,7 +588,7 @@ export default function ModeratePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')} `}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')} `}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -674,7 +674,7 @@ export default function ModeratePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')} `}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')} `}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -706,7 +706,7 @@ export default function ModeratePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')} `}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')} `}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -792,7 +792,7 @@ export default function ModeratePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')} `}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')} `}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -824,7 +824,7 @@ export default function ModeratePortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')} `}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')} `}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />

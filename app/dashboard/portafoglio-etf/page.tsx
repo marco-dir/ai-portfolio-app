@@ -231,7 +231,7 @@ export default function ETFPortfolioPage() {
                                         <RechartsTooltip
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
-                                            formatter={(value: number) => [`€ ${value.toLocaleString('it-IT')}`, 'Valore']}
+                                            formatter={(value: any) => [`€ ${value.toLocaleString('it-IT')}`, 'Valore']}
                                             labelStyle={{ color: '#9ca3af' }}
                                         />
                                         <Area
@@ -356,7 +356,7 @@ export default function ETFPortfolioPage() {
                                     ))}
                                 </Pie>
                                 <RechartsTooltip
-                                    formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                    formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                     contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                     itemStyle={{ color: '#fff' }}
                                 />
@@ -472,7 +472,7 @@ export default function ETFPortfolioPage() {
                                                     ))}
                                                 </Pie>
                                                 <RechartsTooltip
-                                                    formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                                    formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                                     contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                                     itemStyle={{ color: '#fff' }}
                                                 />

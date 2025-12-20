@@ -378,7 +378,7 @@ export default function DiramcoPortfolioPage() {
                                     />
                                     <RechartsTooltip
                                         contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
-                                        formatter={(value: number) => [`€ ${value.toLocaleString('it-IT', { maximumFractionDigits: 0 })}`, 'Valore Totale']}
+                                        formatter={(value: any) => [`€ ${value.toLocaleString('it-IT', { maximumFractionDigits: 0 })}`, 'Valore Totale']}
                                         labelStyle={{ color: '#9ca3af' }}
                                     />
                                     <Area
@@ -533,7 +533,7 @@ export default function DiramcoPortfolioPage() {
                                         ))}
                                     </Pie>
                                     <RechartsTooltip
-                                        formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                        formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                         contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                         itemStyle={{ color: '#fff' }}
                                     />
@@ -619,7 +619,7 @@ export default function DiramcoPortfolioPage() {
                                         <RechartsTooltip
                                             cursor={{ fill: 'transparent' }}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
-                                            formatter={(value: number) => [`€ ${value.toLocaleString('it-IT')}`]}
+                                            formatter={(value: any) => [`€ ${value.toLocaleString('it-IT')}`]}
                                         />
                                         <Legend wrapperStyle={{ paddingTop: '10px' }} />
                                         <Bar dataKey="Dividendi" stackId="a" fill="#10b981" />
@@ -663,7 +663,7 @@ export default function DiramcoPortfolioPage() {
                                             ))}
                                         </Pie>
                                         <RechartsTooltip
-                                            formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                            formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                             contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                             itemStyle={{ color: '#fff' }}
                                         />
@@ -765,7 +765,7 @@ export default function DiramcoPortfolioPage() {
                                                 ))}
                                             </Pie>
                                             <RechartsTooltip
-                                                formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                                formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                                 contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                                 itemStyle={{ color: '#fff' }}
                                             />
@@ -803,7 +803,7 @@ export default function DiramcoPortfolioPage() {
                                                 ))}
                                             </Pie>
                                             <RechartsTooltip
-                                                formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                                formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                                 contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                                 itemStyle={{ color: '#fff' }}
                                             />
@@ -841,7 +841,7 @@ export default function DiramcoPortfolioPage() {
                                                 ))}
                                             </Pie>
                                             <RechartsTooltip
-                                                formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                                formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                                 contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                                 itemStyle={{ color: '#fff' }}
                                             />
@@ -948,7 +948,7 @@ export default function DiramcoPortfolioPage() {
                                                 ))}
                                             </Pie>
                                             <RechartsTooltip
-                                                formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                                formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                                 contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                                 itemStyle={{ color: '#fff' }}
                                             />
@@ -986,7 +986,7 @@ export default function DiramcoPortfolioPage() {
                                                 ))}
                                             </Pie>
                                             <RechartsTooltip
-                                                formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                                formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                                 contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                                 itemStyle={{ color: '#fff' }}
                                             />
@@ -1024,7 +1024,7 @@ export default function DiramcoPortfolioPage() {
                                                 ))}
                                             </Pie>
                                             <RechartsTooltip
-                                                formatter={(value: number) => `€ ${value.toLocaleString('it-IT')}`}
+                                                formatter={(value: any) => `€ ${value.toLocaleString('it-IT')}`}
                                                 contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
                                                 itemStyle={{ color: '#fff' }}
                                             />
