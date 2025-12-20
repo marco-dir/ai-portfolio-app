@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import HomeAnimations from "@/components/home-animations"
+import DiramcoEquityChart from "@/components/public/diramco-equity-chart"
 import {
   TrendingUp,
   Shield,
@@ -14,7 +15,11 @@ import {
   Globe
 } from "lucide-react"
 
-export default function Home() {
+import { fetchEquityData } from "@/lib/data-fetcher"
+
+export default async function Home() {
+  const equityData = await fetchEquityData()
+
   const features = [
     {
       icon: TrendingUp,
@@ -98,10 +103,28 @@ export default function Home() {
               Missione
             </Link>
             <Link
+              href="/portafogli"
+              className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
+            >
+              Portafogli
+            </Link>
+            <Link
               href="/abbonamento"
               className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
             >
               Abbonamento
+            </Link>
+            <Link
+              href="/blog"
+              className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
+            >
+              Blog
+            </Link>
+            <Link
+              href="/contatti"
+              className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
+            >
+              Contatti
             </Link>
           </div>
         </div>
@@ -236,6 +259,19 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* Equity Chart Section */}
+      <section className="relative z-10 py-16 px-8 bg-gray-900/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">La Nostra Performance</h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Trasparenza assoluta sui nostri risultati. Ecco l'andamento storico del portafoglio DIRAMCO.
+            </p>
+          </div>
+          <DiramcoEquityChart data={equityData} />
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="relative z-10 py-24 px-8">

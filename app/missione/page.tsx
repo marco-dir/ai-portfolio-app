@@ -13,14 +13,18 @@ export default function MissionPage() {
                         DIRAMCO
                     </Link>
                 </div>
+                <div className="hidden md:flex items-center gap-6">
+                    <Link href="/chi-siamo" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Chi Siamo</Link>
+                    <Link href="/missione" className="text-white text-sm font-medium">Missione</Link>
+                    <Link href="/portafogli" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Portafogli</Link>
+                    <Link href="/abbonamento" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Abbonamento</Link>
+                    <Link href="/blog" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Blog</Link>
+                    <Link href="/contatti" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Contatti</Link>
+                </div>
                 <div className="flex items-center gap-4">
-                    <Link
-                        href="/"
-                        className="flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-white transition-colors"
-                    >
-                        <ArrowLeft size={20} />
-                        Torna alla Home
-                    </Link>
+                    <Link href="/disclaimer" className="px-6 py-2 text-gray-300 hover:text-white transition-colors">Disclaimer</Link>
+                    <Link href="/login" className="px-6 py-2 text-gray-300 hover:text-white transition-colors">Accedi</Link>
+                    <Link href="/register" className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full font-medium transition-all hover:scale-105">Inizia Gratis</Link>
                 </div>
             </nav>
 

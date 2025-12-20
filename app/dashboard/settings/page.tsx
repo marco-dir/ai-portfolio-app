@@ -1,16 +1,35 @@
 "use client"
 
 import { useState } from "react"
-import { Lock, Save, AlertCircle, CheckCircle } from "lucide-react"
+import { useSession } from "next-auth/react"
+import { Lock, Save, AlertCircle, CheckCircle, CreditCard, ExternalLink } from "lucide-react"
 
 export default function SettingsPage() {
+    const { data: session } = useSession()
     const [isLoading, setIsLoading] = useState(false)
+    const [isPortalLoading, setIsPortalLoading] = useState(false)
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
     const [formData, setFormData] = useState({
         currentPassword: "",
         newPassword: "",
         confirmPassword: ""
     })
+
+    const handleManageSubscription = async () => {
+        setIsPortalLoading(true)
+        try {
+            const response = await fetch('/api/stripe/portal', {
+                method: 'POST',
+            })
+            const data = await response.json()
+            if (!response.ok) throw new Error(data.message || 'Errore nel caricamento del portale')
+            window.location.href = data.url
+        } catch (error) {
+            console.error(error)
+            setMessage({ type: 'error', text: "Impossibile aprire il portale pagamenti" })
+            setIsPortalLoading(false)
+        }
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -57,7 +76,60 @@ export default function SettingsPage() {
         <div className="space-y-8">
             <h1 className="text-3xl font-bold text-white">Il mio account</h1>
 
-            <div className="max-w-xl">
+            <div className="max-w-xl space-y-6">
+
+                {/* Subscription Section */}
+                <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+                    <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                        <CreditCard size={20} />
+                        Abbonamento
+                    </h2>
+
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-center p-4 bg-gray-800/50 rounded-lg">
+                            <div>
+                                <p className="text-sm text-gray-400">Stato Attuale</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${session?.user?.subscriptionStatus === 'active' ? 'bg-green-500/20 text-green-400' :
+                                            session?.user?.subscriptionStatus === 'trialing' ? 'bg-yellow-500/20 text-yellow-400' :
+                                                'bg-red-500/20 text-red-400'
+                                        }`}>
+                                        {session?.user?.subscriptionStatus === 'active' ? 'Attivo' :
+                                            session?.user?.subscriptionStatus === 'trialing' ? 'Periodo di Prova' :
+                                                'Scaduto / Inattivo'}
+                                    </span>
+                                </div>
+                            </div>
+                            {session?.user?.trialEndsAt && (
+                                <div className="text-right">
+                                    <p className="text-sm text-gray-400">
+                                        {session?.user?.subscriptionStatus === 'trialing' ? 'Scadenza Prova' : 'Scadenza Prova'}
+                                    </p>
+                                    <p className="font-medium text-white">
+                                        {new Date(session.user.trialEndsAt).toLocaleDateString('it-IT')}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
+                        <button
+                            onClick={handleManageSubscription}
+                            disabled={isPortalLoading}
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                        >
+                            {isPortalLoading ? (
+                                "Caricamento..."
+                            ) : (
+                                <>
+                                    <ExternalLink size={18} />
+                                    Gestisci Abbonamento e Pagamenti
+                                </>
+                            )}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Password Section */}
                 <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
                     <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
                         <Lock size={20} />

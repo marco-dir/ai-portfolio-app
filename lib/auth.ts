@@ -45,6 +45,8 @@ export const authOptions: NextAuthOptions = {
                     email: user.email,
                     name: user.name,
                     role: user.role,
+                    subscriptionStatus: user.subscriptionStatus,
+                    trialEndsAt: user.trialEndsAt,
                 }
             }
         })
@@ -57,6 +59,8 @@ export const authOptions: NextAuthOptions = {
                     ...session.user,
                     id: token.id,
                     role: token.role,
+                    subscriptionStatus: token.subscriptionStatus,
+                    trialEndsAt: token.trialEndsAt,
                 }
             }
         },
@@ -66,6 +70,8 @@ export const authOptions: NextAuthOptions = {
                     ...token,
                     id: user.id,
                     role: user.role,
+                    subscriptionStatus: user.subscriptionStatus,
+                    trialEndsAt: user.trialEndsAt,
                 }
             }
             return token

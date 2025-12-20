@@ -183,7 +183,7 @@ export default async function DashboardPage() {
                         <PieChart size={24} className="text-purple-400" />
                         I tuoi Portafogli
                     </h2>
-                    <Link href="/dashboard/portfolio" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-3 py-1.5 rounded-full border border-blue-800 hover:border-blue-600">
+                    <Link href="/dashboard/portfolio" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800 hover:border-blue-600 active:scale-95 transition-transform">
                         Vedi Tutti <ArrowRight size={14} />
                     </Link>
                 </div>
@@ -254,7 +254,7 @@ export default async function DashboardPage() {
                         <Activity size={24} className="text-orange-400" />
                         Watchlist
                     </h2>
-                    <Link href="/dashboard/watchlist" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-3 py-1.5 rounded-full border border-blue-800 hover:border-blue-600">
+                    <Link href="/dashboard/watchlist" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800 hover:border-blue-600 active:scale-95 transition-transform">
                         Gestisci <ArrowRight size={14} />
                     </Link>
                 </div>

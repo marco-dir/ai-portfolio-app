@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, Legend, AreaChart, Area, XAxis, YAxis, CartesianGrid } from "recharts"
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, Legend, AreaChart, Area, XAxis, YAxis, CartesianGrid, BarChart, Bar } from "recharts"
 import { ArrowUpRight, DollarSign, PieChart as PieChartIcon, Loader2, AlertTriangle, ExternalLink, RefreshCw, TrendingUp, Briefcase, Landmark } from "lucide-react"
 
 export default function DiramcoPortfolioPage() {
@@ -12,6 +12,7 @@ export default function DiramcoPortfolioPage() {
     const [bondsData, setBondsData] = useState<any[]>([])
     const [historyData, setHistoryData] = useState<any[]>([])
     const [movementsData, setMovementsData] = useState<any[]>([])
+    const [cashFlowData, setCashFlowData] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const [isPrivate, setIsPrivate] = useState(false)
@@ -22,6 +23,7 @@ export default function DiramcoPortfolioPage() {
     const BONDS_GID = '96512829'
     const HISTORY_GID = '437553469'
     const MOVEMENTS_GID = '1551404658'
+    const CASH_FLOW_GID = '2105866920'
 
     const fetchData = async () => {
         setLoading(true)
@@ -29,13 +31,14 @@ export default function DiramcoPortfolioPage() {
         setIsPrivate(false)
         try {
             // Fetch all sheets in parallel
-            const [assetsRes, fundsRes, stocksRes, bondsRes, historyRes, movementsRes] = await Promise.all([
+            const [assetsRes, fundsRes, stocksRes, bondsRes, historyRes, movementsRes, cashFlowRes] = await Promise.all([
                 fetch(`/api/diramco-portfolio/data?gid=${ASSETS_GID}`),
                 fetch(`/api/diramco-portfolio/data?gid=${FUNDS_GID}`),
                 fetch(`/api/diramco-portfolio/data?gid=${STOCKS_GID}`),
                 fetch(`/api/diramco-portfolio/data?gid=${BONDS_GID}`),
                 fetch(`/api/diramco-portfolio/data?gid=${HISTORY_GID}`),
-                fetch(`/api/diramco-portfolio/data?gid=${MOVEMENTS_GID}`)
+                fetch(`/api/diramco-portfolio/data?gid=${MOVEMENTS_GID}`),
+                fetch(`/api/diramco-portfolio/data?gid=${CASH_FLOW_GID}`)
             ])
 
             const assetsJson = await assetsRes.json()
@@ -44,6 +47,7 @@ export default function DiramcoPortfolioPage() {
             const bondsJson = await bondsRes.json()
             const historyJson = await historyRes.json()
             const movementsJson = await movementsRes.json()
+            const cashFlowJson = await cashFlowRes.json()
 
             if (assetsJson.error === 'SHEET_PRIVATE' || fundsJson.error === 'SHEET_PRIVATE' || stocksJson.error === 'SHEET_PRIVATE' || bondsJson.error === 'SHEET_PRIVATE' || historyJson.error === 'SHEET_PRIVATE' || movementsJson.error === 'SHEET_PRIVATE') {
                 setIsPrivate(true)
@@ -61,6 +65,7 @@ export default function DiramcoPortfolioPage() {
             setBondsData(bondsJson.data)
             setHistoryData(historyJson.data)
             setMovementsData(movementsJson.data)
+            setCashFlowData(cashFlowJson.data)
         } catch (err: any) {
             setError(err.message)
         } finally {
@@ -579,6 +584,54 @@ export default function DiramcoPortfolioPage() {
                 </div>
             </div>
 
+            {/* --- CASH FLOW CHART --- */}
+            <div className="space-y-6">
+                <Card className="bg-gray-900 border-gray-800">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Cash Flow (Dividendi & Interessi)</CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-[300px]">
+                        {(() => {
+                            const months = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
+
+                            const dividendsRow = cashFlowData.find((r: any) => r['Cash Flow'] && r['Cash Flow'].trim() === 'Dividendi')
+                            const interestsRow = cashFlowData.find((r: any) => r['Cash Flow'] && r['Cash Flow'].trim() === 'Interessi')
+
+                            if (!dividendsRow || !interestsRow) return <div className="flex items-center justify-center h-full text-gray-500">Nessun dato Cash Flow</div>
+
+                            const chartData = months.map((month, index) => {
+                                const colIndex = (index + 1).toString()
+                                const divVal = parseItNum(dividendsRow[colIndex])
+                                const intVal = parseItNum(interestsRow[colIndex])
+                                return {
+                                    month,
+                                    Dividendi: divVal,
+                                    Interessi: intVal,
+                                }
+                            })
+
+                            return (
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={chartData}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
+                                        <XAxis dataKey="month" stroke="#9ca3af" tick={{ fontSize: 12 }} />
+                                        <YAxis stroke="#9ca3af" tick={{ fontSize: 12 }} tickFormatter={(val) => `€${val}`} />
+                                        <RechartsTooltip
+                                            cursor={{ fill: 'transparent' }}
+                                            contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', color: '#fff' }}
+                                            formatter={(value: number) => [`€ ${value.toLocaleString('it-IT')}`]}
+                                        />
+                                        <Legend wrapperStyle={{ paddingTop: '10px' }} />
+                                        <Bar dataKey="Dividendi" stackId="a" fill="#10b981" />
+                                        <Bar dataKey="Interessi" stackId="a" fill="#3b82f6" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            )
+                        })()}
+                    </CardContent>
+                </Card>
+            </div>
+
             {/* --- SECTION 2: FUNDS --- */}
             <div>
                 <div className="flex items-center gap-3 mb-4">
@@ -702,8 +755,8 @@ export default function DiramcoPortfolioPage() {
                                                 data={stocksChartData}
                                                 cx="50%"
                                                 cy="50%"
-                                                innerRadius={60}
-                                                outerRadius={80}
+                                                innerRadius={50}
+                                                outerRadius={70}
                                                 paddingAngle={5}
                                                 dataKey="value"
                                             >
@@ -740,8 +793,8 @@ export default function DiramcoPortfolioPage() {
                                                 data={stocksByCountryData}
                                                 cx="50%"
                                                 cy="50%"
-                                                innerRadius={60}
-                                                outerRadius={80}
+                                                innerRadius={50}
+                                                outerRadius={70}
                                                 paddingAngle={5}
                                                 dataKey="value"
                                             >
@@ -778,8 +831,8 @@ export default function DiramcoPortfolioPage() {
                                                 data={stocksBySectorData}
                                                 cx="50%"
                                                 cy="50%"
-                                                innerRadius={60}
-                                                outerRadius={80}
+                                                innerRadius={50}
+                                                outerRadius={70}
                                                 paddingAngle={5}
                                                 dataKey="value"
                                             >
