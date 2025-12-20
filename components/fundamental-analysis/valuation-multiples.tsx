@@ -138,7 +138,7 @@ export function ValuationMultiples({
                                             borderColor: '#374151',
                                             borderRadius: '0.5rem'
                                         }}
-                                        formatter={(value: number) => [value.toFixed(2), 'P/E']}
+                                        formatter={(value: any) => [value.toFixed(2), 'P/E']}
                                     />
                                     {peStats && (
                                         <ReferenceLine
@@ -208,7 +208,7 @@ export function ValuationMultiples({
                                             borderColor: '#374151',
                                             borderRadius: '0.5rem'
                                         }}
-                                        formatter={(value: number) => [value.toFixed(2), 'P/B']}
+                                        formatter={(value: any) => [value.toFixed(2), 'P/B']}
                                     />
                                     {pbStats && (
                                         <ReferenceLine

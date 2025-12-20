@@ -192,7 +192,7 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                 />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [formatCurrency(value, "USD"), '']}
+                                    formatter={(value: any) => [formatCurrency(value, "USD"), '']}
                                 />
                                 <Legend />
                                 <Bar dataKey="Revenue" fill="#3b82f6" name="Est. Revenue" />

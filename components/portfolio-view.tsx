@@ -665,7 +665,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                                            <Tooltip formatter={(value: any) => `$${value.toFixed(2)}`} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -695,7 +695,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                                                     <Cell key={`cell-${index}`} fill={COLORS[(index + 2) % COLORS.length]} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                                            <Tooltip formatter={(value: any) => `$${value.toFixed(2)}`} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -725,7 +725,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                                                     <Cell key={`cell-${index}`} fill={COLORS[(index + 4) % COLORS.length]} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                                            <Tooltip formatter={(value: any) => `$${value.toFixed(2)}`} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -755,7 +755,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                                                     <Cell key={`cell-${index}`} fill={COLORS[(index + 6) % COLORS.length]} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                                            <Tooltip formatter={(value: any) => `$${value.toFixed(2)}`} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -848,7 +848,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                                         <YAxis stroke="#9CA3AF" />
                                         <Tooltip
                                             contentStyle={{ backgroundColor: '#1F2937', border: 'none' }}
-                                            formatter={(value: number) => [`$${value.toFixed(2)}`, 'Dividendi']}
+                                            formatter={(value: any) => [`$${value.toFixed(2)}`, 'Dividendi']}
                                         />
                                         <Bar dataKey="value" fill="#10B981" name="Dividendi" />
                                     </BarChart>

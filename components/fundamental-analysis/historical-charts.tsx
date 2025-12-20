@@ -96,7 +96,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${value.toFixed(2)}B`, 'Ricavi']}
+                                    formatter={(value: any) => [`${value.toFixed(2)}B`, 'Ricavi']}
                                 />
                                 <Bar dataKey="revenue" fill="#3b82f6" />
                             </BarChart>
@@ -114,7 +114,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${currencySymbol}${value.toFixed(2)}`, 'EPS']}
+                                    formatter={(value: any) => [`${currencySymbol}${value.toFixed(2)}`, 'EPS']}
                                 />
                                 <Bar dataKey="eps" fill="#10b981" />
                             </BarChart>
@@ -135,7 +135,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${currencySymbol}${value.toFixed(2)}`, 'Book Value']}
+                                    formatter={(value: any) => [`${currencySymbol}${value.toFixed(2)}`, 'Book Value']}
                                 />
                                 <Bar dataKey="bookValue" fill="#8b5cf6" />
                             </BarChart>
@@ -153,7 +153,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${value.toFixed(2)}%`, 'Debt/Equity']}
+                                    formatter={(value: any) => [`${value.toFixed(2)}%`, 'Debt/Equity']}
                                 />
                                 <Bar dataKey="debtEquity" fill="#ef4444" />
                             </BarChart>
@@ -174,7 +174,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} domain={['auto', 'auto']} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${value.toFixed(0)}M`, 'Azioni']}
+                                    formatter={(value: any) => [`${value.toFixed(0)}M`, 'Azioni']}
                                 />
                                 <Bar dataKey="sharesOutstanding" fill="#f59e0b" />
                             </BarChart>
@@ -192,7 +192,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${currencySymbol}${value.toFixed(2)}`, 'Dividendo']}
+                                    formatter={(value: any) => [`${currencySymbol}${value.toFixed(2)}`, 'Dividendo']}
                                 />
                                 <Bar dataKey="dividendPerShare" fill="#06b6d4" />
                             </BarChart>
@@ -213,7 +213,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${value.toFixed(1)}%`, 'Payout Ratio']}
+                                    formatter={(value: any) => [`${value.toFixed(1)}%`, 'Payout Ratio']}
                                 />
                                 <Bar dataKey="payoutRatio" fill="#ec4899" />
                             </BarChart>
@@ -231,7 +231,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} domain={['auto', 'auto']} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${value.toFixed(1)}%`, 'Margine Lordo']}
+                                    formatter={(value: any) => [`${value.toFixed(1)}%`, 'Margine Lordo']}
                                 />
                                 <Bar dataKey="grossMargin" fill="#a855f7" />
                             </BarChart>
@@ -252,7 +252,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${currencySymbol}${value.toFixed(2)}`, '']}
+                                    formatter={(value: any) => [`${currencySymbol}${value.toFixed(2)}`, '']}
                                 />
                                 <Legend />
                                 <Bar dataKey="operatingCFPerShare" fill="#10b981" name="Operating CF/Share" />
@@ -272,7 +272,7 @@ export function HistoricalCharts({
                                 <YAxis stroke="#9CA3AF" fontSize={12} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
-                                    formatter={(value: number) => [`${value.toFixed(2)}B`, 'Investing CF']}
+                                    formatter={(value: any) => [`${value.toFixed(2)}B`, 'Investing CF']}
                                 />
                                 <Bar dataKey="investingCF" fill="#f97316" />
                             </BarChart>

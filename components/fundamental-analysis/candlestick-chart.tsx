@@ -167,7 +167,7 @@ export function CandlestickChart({ data, currency }: CandlestickChartProps) {
                                 borderRadius: '0.5rem'
                             }}
                             labelFormatter={(label) => new Date(label).toLocaleDateString('it-IT')}
-                            formatter={(value: number, name: string) => {
+                            formatter={(value: any, name: any) => {
                                 const labels: Record<string, string> = {
                                     high: 'Massimo',
                                     low: 'Minimo',

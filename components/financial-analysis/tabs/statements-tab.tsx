@@ -197,7 +197,7 @@ export function FinancialStatementsTab({ data, type, currency }: FinancialStatem
                             <Tooltip
                                 contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
                                 itemStyle={{ color: '#E5E7EB' }}
-                                formatter={(value: number) => [formatCurrency(value, currency), '']}
+                                formatter={(value: any) => [formatCurrency(value, currency), '']}
                             />
                             <Legend />
                             {metrics.map(metric => (

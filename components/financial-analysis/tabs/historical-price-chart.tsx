@@ -107,7 +107,7 @@ export function HistoricalPriceChart({ data }: { data: any[] }) {
                         <Tooltip
                             contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem' }}
                             itemStyle={{ color: '#E5E7EB' }}
-                            formatter={(value: number) => [formatCurrency(value), 'Price']}
+                            formatter={(value: any) => [formatCurrency(value), 'Price']}
                             labelFormatter={(label) => new Date(label).toLocaleDateString()}
                         />
                         <Area
