@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import HomeAnimations from "@/components/home-animations"
 import DiramcoEquityChart from "@/components/public/diramco-equity-chart"
+import ReviewsSection from "@/components/public/reviews-section"
 import {
   TrendingUp,
   Shield,
@@ -90,18 +91,31 @@ export default async function Home() {
             DIRAMCO
           </div>
           <div className="hidden md:flex items-center gap-6">
-            <Link
-              href="/chi-siamo"
-              className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
-            >
-              Chi Siamo
-            </Link>
-            <Link
-              href="/missione"
-              className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
-            >
-              Missione
-            </Link>
+            <div className="relative group">
+              <Link
+                href="/chi-siamo"
+                className="text-gray-300 hover:text-white transition-colors text-sm font-medium flex items-center gap-1"
+              >
+                Chi Siamo
+                <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </Link>
+              <div className="absolute top-full left-0 mt-2 w-48 bg-gray-900 border border-gray-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <Link
+                  href="/chi-siamo"
+                  className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 text-sm font-medium rounded-t-lg transition-colors"
+                >
+                  Chi Siamo
+                </Link>
+                <Link
+                  href="/missione"
+                  className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 text-sm font-medium rounded-b-lg transition-colors"
+                >
+                  Missione
+                </Link>
+              </div>
+            </div>
             <Link
               href="/portafogli"
               className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
@@ -136,13 +150,13 @@ export default async function Home() {
             Disclaimer
           </Link>
           <Link
-            href="/login"
+            href="/accedi"
             className="px-6 py-2 text-gray-300 hover:text-white transition-colors"
           >
             Accedi
           </Link>
           <Link
-            href="/register"
+            href="/registrati"
             className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full font-medium transition-all hover:scale-105"
           >
             Inizia Gratis
@@ -173,14 +187,14 @@ export default async function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/register"
+              href="/registrati"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/25"
             >
               Inizia Gratuitamente
               <ChevronRight size={20} />
             </Link>
             <Link
-              href="/login"
+              href="/accedi"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-800/50 hover:bg-gray-800 border border-gray-700 rounded-full font-bold text-lg transition-all"
             >
               Ho già un account
@@ -273,6 +287,9 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Reviews Section */}
+      <ReviewsSection />
+
       {/* CTA Section */}
       <section className="relative z-10 py-24 px-8">
         <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/20 rounded-3xl p-12">
@@ -284,7 +301,7 @@ export default async function Home() {
             Unisciti a centinaia di investitori che hanno già scelto DIRAMCO per gestire i propri portafogli.
           </p>
           <Link
-            href="/register"
+            href="/registrati"
             className="inline-flex items-center gap-2 px-10 py-4 bg-blue-600 hover:bg-blue-500 rounded-full font-bold text-lg transition-all transform hover:scale-105"
           >
             Crea il tuo Account Gratuito
@@ -315,6 +332,14 @@ export default async function Home() {
             <a href="https://www.youtube.com/@diramcoportfolio/about" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-500 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-youtube"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" /><path d="m10 15 5-3-5-3z" /></svg>
             </a>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 text-gray-500 text-sm">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <span>•</span>
+            <Link href="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</Link>
+            <span>•</span>
+            <Link href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</Link>
           </div>
 
           <div className="flex items-center gap-6 text-gray-500 text-sm">

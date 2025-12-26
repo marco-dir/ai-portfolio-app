@@ -14,8 +14,9 @@ export function KeyRatiosTab({ data }: { data: any[] }) {
 
     const getFilteredData = (data: any[]) => {
         if (range === "Max") return data
-        const years = range === "5Y" ? 5 : range === "10Y" ? 10 : 20
-        return data.slice(0, years)
+        // Since data is now quarterly, multiply years by 4 to get number of quarters
+        const quarters = (range === "5Y" ? 5 : range === "10Y" ? 10 : 20) * 4
+        return data.slice(0, quarters)
     }
 
     const filteredData = getFilteredData(data)
@@ -117,8 +118,8 @@ export function KeyRatiosTab({ data }: { data: any[] }) {
                             key={r}
                             onClick={() => setRange(r)}
                             className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${range === r
-                                    ? "bg-blue-600 text-white shadow-sm"
-                                    : "text-gray-400 hover:text-gray-200"
+                                ? "bg-blue-600 text-white shadow-sm"
+                                : "text-gray-400 hover:text-gray-200"
                                 }`}
                         >
                             {r}
@@ -131,9 +132,16 @@ export function KeyRatiosTab({ data }: { data: any[] }) {
                 const selected = getSelectedMetricsForGroup(group.title, group.metrics)
                 const selectedMetricObjects = group.metrics.filter(m => selected.includes(m.key))
 
-                // Prepare chart data
+                // Prepare chart data - handle quarterly data with Q1/Q2/Q3/Q4 labels
                 const chartData = filteredData.map(item => {
-                    const dataPoint: any = { year: new Date(item.date).getFullYear() }
+                    const date = new Date(item.date)
+                    const year = date.getFullYear()
+                    const month = date.getMonth()
+                    // Determine quarter based on month
+                    const quarter = month < 3 ? 'Q1' : month < 6 ? 'Q2' : month < 9 ? 'Q3' : 'Q4'
+                    const label = `${quarter} ${year}`
+
+                    const dataPoint: any = { period: label, year: year }
                     selectedMetricObjects.forEach(metric => {
                         const value = item[metric.key]
                         dataPoint[metric.key] = value !== null && value !== undefined ? value : null
@@ -170,7 +178,7 @@ export function KeyRatiosTab({ data }: { data: any[] }) {
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={chartData}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
-                                        <XAxis dataKey="year" stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} />
+                                        <XAxis dataKey="period" stroke="#9CA3AF" fontSize={10} tickLine={false} axisLine={false} interval="preserveStartEnd" />
                                         <YAxis stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} />
                                         <Tooltip
                                             contentStyle={{

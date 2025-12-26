@@ -24,6 +24,7 @@ model User {
   portfolios Portfolio[]
   watchlist  Watchlist?
   comments   Comment[]
+  review     Review?
 
   // Stripe & Subscription Fields
   stripeCustomerId     String?   @unique
@@ -83,4 +84,15 @@ model PasswordResetToken {
   token     String   @unique
   expires   DateTime
   createdAt DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String   @unique // One review per user
+  rating    Int      // 1-5 stars
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

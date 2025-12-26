@@ -94,6 +94,52 @@ export default function NewsletterPage() {
                         <p className="text-xs text-gray-500 mt-2">Puoi usare tag HTML per la formattazione.</p>
                     </div>
 
+                    {/* Email Preview Section */}
+                    <div className="mt-8 pt-8 border-t border-gray-800">
+                        <h3 className="text-xl font-bold text-gray-200 mb-6">Anteprima Email</h3>
+                        <div className="bg-white text-black rounded-lg shadow-lg overflow-hidden">
+                            {/* Subject Line */}
+                            <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
+                                <span className="text-gray-500 text-sm font-medium">Oggetto:</span>
+                                <span className="font-bold ml-2 text-gray-900">{subject || "Nessun oggetto"}</span>
+                            </div>
+
+                            {/* Email Body - Matching API Template */}
+                            <div style={{ fontFamily: 'sans-serif', lineHeight: 1.6, color: '#333' }}>
+                                <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
+                                    {/* Header with Logo - Centered */}
+                                    <div style={{ textAlign: 'center', paddingBottom: '20px', borderBottom: '1px solid #eee', marginBottom: '20px' }}>
+                                        <img
+                                            src="/diramco-logo.png"
+                                            alt="DIRAMCO"
+                                            style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', display: 'inline-block' }}
+                                        />
+                                        <h2 style={{ margin: '10px 0 0 0', color: '#333' }}>DIRAMCO Newsletter</h2>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div
+                                        className="prose prose-sm max-w-none"
+                                        style={{ color: '#333' }}
+                                        dangerouslySetInnerHTML={{ __html: content || "<p style='color: #999; font-style: italic;'>Il contenuto della mail apparirà qui...</p>" }}
+                                    />
+
+                                    {/* Footer */}
+                                    <div style={{ marginTop: '40px', paddingTop: '20px', borderTop: '1px solid #eee', textAlign: 'center', fontSize: '12px', color: '#666' }}>
+                                        {/* Social Links */}
+                                        <div style={{ marginBottom: '10px' }}>
+                                            <a href="https://www.youtube.com/@diramcoportfolio/about" style={{ color: '#333', textDecoration: 'none', margin: '0 10px', fontWeight: 'bold' }}>YouTube</a>
+                                            <a href="https://www.instagram.com/diramco/" style={{ color: '#333', textDecoration: 'none', margin: '0 10px', fontWeight: 'bold' }}>Instagram</a>
+                                            <a href="https://www.whatsapp.com/channel/0029VaDfDAgJENxwmMx7la0b" style={{ color: '#333', textDecoration: 'none', margin: '0 10px', fontWeight: 'bold' }}>WhatsApp</a>
+                                        </div>
+                                        <p style={{ margin: '10px 0' }}>© {new Date().getFullYear()} DIRAMCO. Tutti i diritti riservati.</p>
+                                        <p style={{ color: '#999' }}>Non vuoi più ricevere queste email? <a href="/dashboard/impostazioni" style={{ color: '#666' }}>Gestisci preferenze</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="flex justify-end pt-4">
                         <button
                             type="submit"

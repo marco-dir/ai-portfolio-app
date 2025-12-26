@@ -63,7 +63,7 @@ export function FinancialAnalysisSearch({ initialTicker }: { initialTicker?: str
 
             try {
                 const response = await fetch(
-                    `https://financialmodelingprep.com/api/v3/search?query=${encodeURIComponent(query)}&limit=50&apikey=${process.env.NEXT_PUBLIC_FMP_API_KEY}`
+                    `/api/stocks/search?query=${encodeURIComponent(query)}`
                 )
                 const data: SearchResult[] = await response.json()
 
@@ -123,7 +123,7 @@ export function FinancialAnalysisSearch({ initialTicker }: { initialTicker?: str
     const handleSelect = (symbol: string) => {
         setQuery(symbol)
         setShowResults(false)
-        router.push(`/dashboard/financial-analysis?ticker=${symbol}`)
+        router.push(`/dashboard/analisi-finanziaria?ticker=${symbol}`)
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -141,15 +141,15 @@ export function FinancialAnalysisSearch({ initialTicker }: { initialTicker?: str
 
             if (response.ok) {
                 const data = await response.json()
-                router.push(`/dashboard/financial-analysis?ticker=${data.ticker}`)
+                router.push(`/dashboard/analisi-finanziaria?ticker=${data.ticker}`)
             } else {
                 // If resolution fails, try as direct ticker
-                router.push(`/dashboard/financial-analysis?ticker=${trimmedQuery.toUpperCase()}`)
+                router.push(`/dashboard/analisi-finanziaria?ticker=${trimmedQuery.toUpperCase()}`)
             }
         } catch (error) {
             console.error('Ticker resolution error:', error)
             // Fallback to direct ticker search
-            router.push(`/dashboard/financial-analysis?ticker=${trimmedQuery.toUpperCase()}`)
+            router.push(`/dashboard/analisi-finanziaria?ticker=${trimmedQuery.toUpperCase()}`)
         } finally {
             setIsSearching(false)
         }

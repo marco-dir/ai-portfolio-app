@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { MarketingHeader } from "@/components/marketing/header"
 
 export default function SubscriptionPage() {
     const features = [
@@ -29,7 +30,7 @@ export default function SubscriptionPage() {
                 method: 'POST',
             })
             if (response.status === 401) {
-                window.location.href = '/login?callbackUrl=/abbonamento'
+                window.location.href = '/accedi?callbackUrl=/abbonamento'
                 return
             }
 
@@ -46,27 +47,7 @@ export default function SubscriptionPage() {
     return (
         <div className="relative min-h-screen bg-[#0a0a0a] text-white flex flex-col">
             {/* Navigation */}
-            <nav className="relative z-20 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
-                <Link href="/" className="flex items-center gap-3">
-                    <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={40} height={40} className="w-10 h-10 rounded-full" />
-                    <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-                        DIRAMCO
-                    </div>
-                </Link>
-                <div className="hidden md:flex items-center gap-6">
-                    <Link href="/chi-siamo" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Chi Siamo</Link>
-                    <Link href="/missione" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Missione</Link>
-                    <Link href="/portafogli" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Portafogli</Link>
-                    <Link href="/abbonamento" className="text-white text-sm font-medium">Abbonamento</Link>
-                    <Link href="/blog" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Blog</Link>
-                    <Link href="/contatti" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Contatti</Link>
-                </div>
-                <div className="flex items-center gap-4">
-                    <Link href="/disclaimer" className="px-6 py-2 text-gray-300 hover:text-white transition-colors">Disclaimer</Link>
-                    <Link href="/login" className="px-6 py-2 text-gray-300 hover:text-white transition-colors">Accedi</Link>
-                    <Link href="/register" className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full font-medium transition-all hover:scale-105">Inizia Gratis</Link>
-                </div>
-            </nav>
+            <MarketingHeader />
 
             <div className="flex-grow flex items-center justify-center p-4 md:p-8">
 

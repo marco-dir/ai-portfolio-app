@@ -58,20 +58,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     const navItems = [
         // Analisi (first 2)
-        { label: 'Analisi Finanziaria', href: '/dashboard/financial-analysis', icon: BarChart3 },
-        { label: 'Azioni Value', href: '/dashboard/fundamental-analysis', icon: Lightbulb },
+        { label: 'Analisi Finanziaria', href: '/dashboard/analisi-finanziaria', icon: BarChart3 },
+        { label: 'Azioni Value', href: '/dashboard/analisi-azioni-value', icon: Lightbulb },
         // I Miei Investimenti (next 3)
         { label: 'Panoramica', href: '/dashboard', icon: LayoutDashboard },
-        { label: 'Portafogli', href: '/dashboard/portfolio', icon: PieChart },
-        { label: 'La Mia Watchlist', href: '/dashboard/watchlist', icon: Star },
+        { label: 'Portafogli', href: '/dashboard/portafoglio', icon: PieChart },
+        { label: 'La Mia Watchlist', href: '/dashboard/lista-titoli', icon: Star },
         // Portafogli (from index 5 onwards)
-        { label: 'Portafoglio DIRAMCO', href: '/dashboard/diramco-portfolio', icon: Landmark },
-        { label: 'Portafoglio Conservativo', href: '/dashboard/conservative-portfolio', icon: Briefcase },
+        { label: 'Portafoglio DIRAMCO', href: '/dashboard/portafoglio-diramco', icon: Landmark },
+        { label: 'Portafoglio Conservativo', href: '/dashboard/portafoglio-conservativo', icon: Briefcase },
         { label: 'Portafoglio Moderato', href: '/dashboard/portafoglio-moderato', icon: Briefcase },
         { label: 'Portafoglio Aggressivo', href: '/dashboard/portafoglio-aggressivo', icon: TrendingUp },
         { label: 'Portafoglio Dividendi', href: '/dashboard/portafoglio-dividendi', icon: DollarSign },
         { label: 'Portafoglio ETF', href: '/dashboard/portafoglio-etf', icon: Briefcase },
-        { label: 'Watchlist DIRAMCO', href: '/dashboard/watchlist-diramco', icon: Star },
+        { label: 'Watchlist DIRAMCO', href: '/dashboard/lista-titoli-diramco', icon: Star },
     ]
 
     const SidebarContent = () => (
@@ -160,10 +160,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 )}
                 {session?.user?.role === "ADMIN" && (
                     <Link
-                        href="/dashboard/users"
+                        href="/dashboard/utenti"
                         className={cn(
                             "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
-                            pathname === "/dashboard/users" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
+                            pathname === "/dashboard/utenti" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                         )}
                     >
                         <Users size={20} />
@@ -171,10 +171,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     </Link>
                 )}
                 <Link
-                    href="/dashboard/settings"
+                    href="/dashboard/impostazioni"
                     className={cn(
                         "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
-                        pathname === "/dashboard/settings" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
+                        pathname === "/dashboard/impostazioni" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                     )}
                 >
                     <User size={20} />
@@ -184,7 +184,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     {session?.user?.email}
                 </div>
                 <button
-                    onClick={() => signOut({ callbackUrl: "/login" })}
+                    onClick={() => signOut({ callbackUrl: "/accedi" })}
                     className="flex items-center gap-3 px-4 py-3 w-full text-gray-400 hover:text-red-400 transition-colors"
                 >
                     <LogOut size={20} />
@@ -356,10 +356,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     )}
                     {session?.user?.role === "ADMIN" && (
                         <Link
-                            href="/dashboard/users"
+                            href="/dashboard/utenti"
                             className={cn(
                                 "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap",
-                                pathname === "/dashboard/users" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
+                                pathname === "/dashboard/utenti" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                                 !isDesktopSidebarOpen && "justify-center px-2"
                             )}
                             title={!isDesktopSidebarOpen ? "Utenti" : undefined}
@@ -369,10 +369,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         </Link>
                     )}
                     <Link
-                        href="/dashboard/settings"
+                        href="/dashboard/impostazioni"
                         className={cn(
                             "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap",
-                            pathname === "/dashboard/settings" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
+                            pathname === "/dashboard/impostazioni" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                             !isDesktopSidebarOpen && "justify-center px-2"
                         )}
                         title={!isDesktopSidebarOpen ? "Il mio account" : undefined}
@@ -388,7 +388,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     )}
 
                     <button
-                        onClick={() => signOut({ callbackUrl: "/login" })}
+                        onClick={() => signOut({ callbackUrl: "/accedi" })}
                         className={cn(
                             "flex items-center gap-3 px-4 py-2 w-full text-gray-400 hover:text-red-400 transition-colors",
                             !isDesktopSidebarOpen && "justify-center px-2"

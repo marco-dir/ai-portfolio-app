@@ -86,6 +86,31 @@ export function NewsletterForm() {
                     </p>
                 </div>
 
+                {/* Email Preview Section - Moved Inside Form */}
+                <div className="mt-8 pt-8 border-t border-gray-800">
+                    <h3 className="text-xl font-bold text-gray-200 mb-6">Anteprima Email</h3>
+                    <div className="bg-white text-black p-8 rounded-lg shadow-lg overflow-hidden">
+                        {/* Header/Subject simulation */}
+                        <div className="border-b border-gray-200 pb-4 mb-6">
+                            <span className="text-gray-500 text-sm font-medium">Oggetto:</span>
+                            <span className="font-bold ml-2 text-lg text-gray-900">{subject || "Nessun oggetto"}</span>
+                        </div>
+
+                        {/* Email Body Simulation */}
+                        <div style={{ fontFamily: 'sans-serif', maxWidth: '600px', margin: '0 auto' }}>
+                            <div
+                                className="prose prose-sm max-w-none text-gray-800"
+                                dangerouslySetInnerHTML={{ __html: content || "<p class='text-gray-400 italic'>Il contenuto della mail apparirà qui...</p>" }}
+                            />
+
+                            <hr style={{ marginTop: '40px', border: '0', borderTop: '1px solid #eaeaea' }} />
+                            <p style={{ fontSize: '12px', color: '#666', marginTop: '20px' }}>
+                                Hai ricevuto questa mail perché sei iscritto alla newsletter di DIRAMCO.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 {status && (
                     <div className={`p-4 rounded-lg flex items-center gap-2 ${status.type === 'success'
                         ? 'bg-green-900/20 text-green-400 border border-green-900/50'
@@ -95,7 +120,7 @@ export function NewsletterForm() {
                     </div>
                 )}
 
-                <div className="flex justify-end">
+                <div className="flex justify-end pt-6">
                     <button
                         type="submit"
                         disabled={isLoading}

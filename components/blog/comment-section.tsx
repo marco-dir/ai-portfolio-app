@@ -111,10 +111,10 @@ export function CommentSection({ slug }: { slug: string }) {
                     <div className="text-center py-6">
                         <p className="text-gray-400 mb-4">Accedi per partecipare alla discussione</p>
                         <div className="flex justify-center gap-4">
-                            <Link href="/login" className="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded-full text-white transition-colors">
+                            <Link href="/accedi" className="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded-full text-white transition-colors">
                                 Accedi
                             </Link>
-                            <Link href="/register" className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full text-white transition-colors">
+                            <Link href="/registrati" className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full text-white transition-colors">
                                 Registrati
                             </Link>
                         </div>

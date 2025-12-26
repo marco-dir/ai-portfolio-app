@@ -91,7 +91,7 @@ export default async function DashboardPage() {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-        redirect("/login")
+        redirect("/accedi")
     }
 
     const portfolios = await prisma.portfolio.findMany({
@@ -183,14 +183,14 @@ export default async function DashboardPage() {
                         <PieChart size={24} className="text-purple-400" />
                         I tuoi Portafogli
                     </h2>
-                    <Link href="/dashboard/portfolio" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800 hover:border-blue-600 active:scale-95 transition-transform">
+                    <Link href="/dashboard/portafoglio" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800 hover:border-blue-600 active:scale-95 transition-transform">
                         Vedi Tutti <ArrowRight size={14} />
                     </Link>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {portfoliosWithMetrics.map(portfolio => (
-                        <Link key={portfolio.id} href={`/dashboard/portfolio/${portfolio.id}`} className="block h-full">
+                        <Link key={portfolio.id} href={`/dashboard/portafoglio/${portfolio.id}`} className="block h-full">
                             <div className="h-full p-6 bg-gray-900 border border-gray-800 rounded-xl hover:border-blue-500/50 hover:bg-gray-800/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 group flex flex-col">
                                 <div className="flex justify-between items-start mb-6">
                                     <div>
@@ -236,7 +236,7 @@ export default async function DashboardPage() {
                         </Link>
                     ))}
 
-                    <Link href="/dashboard/portfolio/new" className="block h-full">
+                    <Link href="/dashboard/portafoglio/new" className="block h-full">
                         <div className="h-full min-h-[250px] p-6 bg-gray-900/30 border border-dashed border-gray-800 rounded-xl hover:border-blue-500 hover:bg-blue-900/10 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center text-gray-400 group">
                             <div className="p-4 rounded-full bg-gray-800 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 mb-4 shadow-lg">
                                 <Plus size={32} />
@@ -254,7 +254,7 @@ export default async function DashboardPage() {
                         <Activity size={24} className="text-orange-400" />
                         Watchlist
                     </h2>
-                    <Link href="/dashboard/watchlist" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800 hover:border-blue-600 active:scale-95 transition-transform">
+                    <Link href="/dashboard/lista-titoli" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800 hover:border-blue-600 active:scale-95 transition-transform">
                         Gestisci <ArrowRight size={14} />
                     </Link>
                 </div>
@@ -286,7 +286,7 @@ export default async function DashboardPage() {
                     ) : (
                         <div className="text-center py-8">
                             <p className="text-gray-500 mb-4">La tua watchlist è vuota.</p>
-                            <Link href="/dashboard/watchlist" className="text-blue-400 hover:underline">
+                            <Link href="/dashboard/lista-titoli" className="text-blue-400 hover:underline">
                                 Aggiungi titoli alla watchlist
                             </Link>
                         </div>

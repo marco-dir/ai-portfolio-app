@@ -1,29 +1,48 @@
 import { prisma } from "@/lib/prisma"
 import { hash } from "bcryptjs"
 import { NextResponse } from "next/server"
-import { z } from "zod"
 import { sendWelcomeEmail } from "@/lib/email"
-
-const userSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-    name: z.string().optional(),
-})
+import { rateLimit, getClientIp, RATE_LIMIT_CONFIGS } from "@/lib/rate-limit"
+import { registerSchema, validateData } from "@/lib/validation"
 
 export async function POST(req: Request) {
     try {
+        // Rate limiting
+        const clientIp = getClientIp(req)
+        const rateLimitResult = rateLimit(`register:${clientIp}`, RATE_LIMIT_CONFIGS.REGISTER)
+
+        if (!rateLimitResult.success) {
+            return NextResponse.json(
+                { user: null, message: "Troppi tentativi. Riprova tra qualche minuto." },
+                {
+                    status: 429,
+                    headers: {
+                        'Retry-After': rateLimitResult.resetIn.toString(),
+                        'X-RateLimit-Remaining': '0',
+                    }
+                }
+            )
+        }
+
         const body = await req.json()
-        const { email, password, name } = userSchema.parse(body)
+
+        // Validate input
+        const validation = validateData(registerSchema, body)
+        if (!validation.success) {
+            return NextResponse.json({ user: null, message: validation.error }, { status: 400 })
+        }
+
+        const { email, password, name } = validation.data
 
         const existingUser = await prisma.user.findUnique({
             where: { email }
         })
 
         if (existingUser) {
-            return NextResponse.json({ user: null, message: "User with this email already exists" }, { status: 409 })
+            return NextResponse.json({ user: null, message: "Un utente con questa email esiste già" }, { status: 409 })
         }
 
-        const hashedPassword = await hash(password, 10)
+        const hashedPassword = await hash(password, 12) // Increased from 10 to 12 rounds
 
         const newUser = await prisma.user.create({
             data: {
@@ -46,8 +65,9 @@ export async function POST(req: Request) {
             // Don't block registration if email fails
         }
 
-        return NextResponse.json({ user: rest, message: "User created successfully" }, { status: 201 })
+        return NextResponse.json({ user: rest, message: "Utente creato con successo" }, { status: 201 })
     } catch (error) {
-        return NextResponse.json({ user: null, message: "Something went wrong" }, { status: 500 })
+        console.error("Registration error:", error)
+        return NextResponse.json({ user: null, message: "Si è verificato un errore" }, { status: 500 })
     }
 }

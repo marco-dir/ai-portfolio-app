@@ -57,6 +57,27 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
                 }
             })
         } else {
+            // Check limits for new position
+            const user = await prisma.user.findUnique({
+                where: { id: session.user.id }
+            })
+
+            if (user) {
+                const { shouldEnforceLimits, MAX_STOCKS_PER_PORTFOLIO } = await import("@/lib/subscription-limits")
+                if (shouldEnforceLimits(user)) {
+                    const stockCount = await prisma.stockPosition.count({
+                        where: { portfolioId: id }
+                    })
+
+                    if (stockCount >= MAX_STOCKS_PER_PORTFOLIO) {
+                        return NextResponse.json(
+                            { message: `Stock limit reached (${MAX_STOCKS_PER_PORTFOLIO}) for this portfolio` },
+                            { status: 403 }
+                        )
+                    }
+                }
+            }
+
             await prisma.stockPosition.create({
                 data: {
                     portfolioId: id,

@@ -171,7 +171,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                 method: "DELETE"
             })
             if (res.ok) {
-                window.location.href = "/dashboard/portfolio"
+                window.location.href = "/dashboard/portafoglio"
             }
         } catch (error) {
             console.error(error)

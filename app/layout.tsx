@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { CookieBanner } from "@/components/ui/cookie-banner";
+import { Chatbot } from "@/components/chatbot";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           {children}
         </Providers>
         <CookieBanner />
+        <Chatbot />
       </body>
     </html>
   );

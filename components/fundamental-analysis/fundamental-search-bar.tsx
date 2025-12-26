@@ -57,7 +57,7 @@ export function FundamentalSearchBar() {
 
             try {
                 const response = await fetch(
-                    `https://financialmodelingprep.com/api/v3/search?query=${encodeURIComponent(query)}&limit=20&apikey=${process.env.NEXT_PUBLIC_FMP_API_KEY}`
+                    `/api/stocks/search?query=${encodeURIComponent(query)}`
                 )
                 const data: SearchResult[] = await response.json()
 
@@ -120,7 +120,7 @@ export function FundamentalSearchBar() {
     const handleSelect = (symbol: string) => {
         setQuery(symbol)
         setShowResults(false)
-        router.push(`/dashboard/fundamental-analysis?ticker=${symbol}`)
+        router.push(`/dashboard/analisi-azioni-value?ticker=${symbol}`)
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -137,14 +137,14 @@ export function FundamentalSearchBar() {
 
             if (response.ok) {
                 const data = await response.json()
-                router.push(`/dashboard/fundamental-analysis?ticker=${data.ticker}`)
+                router.push(`/dashboard/analisi-azioni-value?ticker=${data.ticker}`)
             } else {
                 // Fallback to direct navigation
-                router.push(`/dashboard/fundamental-analysis?ticker=${trimmedQuery.toUpperCase()}`)
+                router.push(`/dashboard/analisi-azioni-value?ticker=${trimmedQuery.toUpperCase()}`)
             }
         } catch (error) {
             console.error('Ticker resolution failed:', error)
-            router.push(`/dashboard/fundamental-analysis?ticker=${trimmedQuery.toUpperCase()}`)
+            router.push(`/dashboard/analisi-azioni-value?ticker=${trimmedQuery.toUpperCase()}`)
         } finally {
             setIsSearching(false)
         }

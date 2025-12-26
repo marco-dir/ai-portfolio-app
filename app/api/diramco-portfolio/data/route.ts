@@ -88,9 +88,15 @@ export async function GET(request: Request) {
             const obj: any = {}
             headers.forEach((header, index) => {
                 // Remove quotes from header and value if present (parser handles quotes but trimming cleanup)
-                const cleanHeader = header?.replace(/^"|"$/g, '').trim()
+                let cleanHeader = header?.replace(/^"|"$/g, '').trim()
                 const cleanValue = row[index]?.replace(/^"|"$/g, '')
-                if (cleanHeader) obj[cleanHeader] = cleanValue
+
+                // Assign a default key for empty headers (e.g., COL_0, COL_1, etc.)
+                if (!cleanHeader) {
+                    cleanHeader = `COL_${index}`
+                }
+
+                obj[cleanHeader] = cleanValue
             })
             return obj
         })

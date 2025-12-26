@@ -3,6 +3,7 @@ import Image from "next/image"
 import { ChevronRight, ArrowLeft } from "lucide-react"
 import PortfoliosChart from "@/components/public/portfolios-chart"
 import DiramcoEquityChart from "@/components/public/diramco-equity-chart"
+import { MarketingHeader } from "@/components/marketing/header"
 
 import { fetchEquityData } from "@/lib/data-fetcher"
 
@@ -12,29 +13,7 @@ export default async function PortfoliosPage() {
         <div className="relative min-h-screen bg-gray-950 text-white overflow-hidden">
 
             {/* Navigation */}
-            <nav className="relative z-20 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
-                <div className="flex items-center gap-12">
-                    <Link href="/" className="flex items-center gap-3">
-                        <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={40} height={40} className="w-10 h-10 rounded-full" />
-                        <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-                            DIRAMCO
-                        </div>
-                    </Link>
-                    <div className="hidden md:flex items-center gap-6">
-                        <Link href="/chi-siamo" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Chi Siamo</Link>
-                        <Link href="/missione" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Missione</Link>
-                        <Link href="/portafogli" className="text-white text-sm font-medium">Portafogli</Link>
-                        <Link href="/abbonamento" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Abbonamento</Link>
-                        <Link href="/blog" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Blog</Link>
-                        <Link href="/contatti" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Contatti</Link>
-                    </div>
-                </div>
-                <div className="flex items-center gap-4">
-                    <Link href="/disclaimer" className="px-6 py-2 text-gray-300 hover:text-white transition-colors">Disclaimer</Link>
-                    <Link href="/login" className="px-6 py-2 text-gray-300 hover:text-white transition-colors">Accedi</Link>
-                    <Link href="/register" className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full font-medium transition-all hover:scale-105">Inizia Gratis</Link>
-                </div>
-            </nav>
+            <MarketingHeader />
 
             {/* Hero Content */}
             <section className="relative z-10 pt-16 pb-24 px-8">
@@ -58,7 +37,7 @@ export default async function PortfoliosPage() {
 
                     <div className="mt-16 text-center">
                         <Link
-                            href="/register"
+                            href="/registrati"
                             className="inline-flex items-center gap-2 px-10 py-4 bg-blue-600 hover:bg-blue-500 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/25"
                         >
                             Inizia a Investire

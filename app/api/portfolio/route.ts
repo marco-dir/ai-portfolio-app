@@ -42,6 +42,27 @@ export async function POST(req: Request) {
         const body = await req.json()
         const { name } = createPortfolioSchema.parse(body)
 
+        // Check subscription limits
+        const user = await prisma.user.findUnique({
+            where: { id: session.user.id }
+        })
+
+        if (user) {
+            const { shouldEnforceLimits, MAX_PORTFOLIOS } = await import("@/lib/subscription-limits")
+            if (shouldEnforceLimits(user)) {
+                const portfolioCount = await prisma.portfolio.count({
+                    where: { userId: session.user.id }
+                })
+
+                if (portfolioCount >= MAX_PORTFOLIOS) {
+                    return NextResponse.json(
+                        { message: `Portfolio limit reached (${MAX_PORTFOLIOS}) for your subscription plan` },
+                        { status: 403 }
+                    )
+                }
+            }
+        }
+
         const portfolio = await prisma.portfolio.create({
             data: {
                 name,
@@ -51,6 +72,9 @@ export async function POST(req: Request) {
 
         return NextResponse.json(portfolio, { status: 201 })
     } catch (error) {
+        if (error instanceof z.ZodError) {
+            return NextResponse.json({ message: "Invalid input" }, { status: 400 })
+        }
         return NextResponse.json({ message: "Something went wrong" }, { status: 500 })
     }
 }

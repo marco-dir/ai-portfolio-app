@@ -39,8 +39,8 @@ export async function PATCH(
             data: { name }
         })
 
-        revalidatePath("/dashboard/portfolio")
-        revalidatePath(`/dashboard/portfolio/${id}`)
+        revalidatePath("/dashboard/portafoglio")
+        revalidatePath(`/dashboard/portafoglio/${id}`)
 
         return NextResponse.json(updatedPortfolio)
     } catch (error) {
@@ -78,7 +78,7 @@ export async function DELETE(
             }
         })
 
-        revalidatePath("/dashboard/portfolio")
+        revalidatePath("/dashboard/portafoglio")
 
         return NextResponse.json(portfolio)
     } catch (error) {

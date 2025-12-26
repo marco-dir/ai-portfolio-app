@@ -63,6 +63,21 @@ export async function POST(req: Request) {
         } else {
             const currentSymbols = watchlist.symbols ? watchlist.symbols.split(",") : []
             if (!currentSymbols.includes(upperSymbol)) {
+                // Check limits
+                const user = await prisma.user.findUnique({
+                    where: { id: session.user.id }
+                })
+
+                if (user) {
+                    const { shouldEnforceLimits, MAX_WATCHLIST_SYMBOLS } = await import("@/lib/subscription-limits")
+                    if (shouldEnforceLimits(user) && currentSymbols.length >= MAX_WATCHLIST_SYMBOLS) {
+                        return NextResponse.json(
+                            { message: `Watchlist limit reached (${MAX_WATCHLIST_SYMBOLS}) for your subscription plan` },
+                            { status: 403 }
+                        )
+                    }
+                }
+
                 currentSymbols.push(upperSymbol)
                 await prisma.watchlist.update({
                     where: { userId: session.user.id },
