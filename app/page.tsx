@@ -259,7 +259,7 @@ export default async function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="relative text-center">
-                <div className="text-8xl font-bold text-gray-800 mb-4">{step.number}</div>
+                <div className="text-8xl font-bold bg-gradient-to-r from-blue-500/40 to-purple-500/40 bg-clip-text text-transparent mb-4">{step.number}</div>
                 <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
                 <p className="text-gray-400">{step.description}</p>
                 {index < steps.length - 1 && (

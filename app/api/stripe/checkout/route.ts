@@ -60,11 +60,23 @@ export async function POST(req: Request) {
             automatic_tax: { enabled: true },
             tax_id_collection: { enabled: true },
             allow_promotion_codes: true,
-            payment_method_types: ['card'],
+            // payment_method_types non specificato = Stripe abilita automaticamente
+            // tutti i metodi disponibili: Card, Apple Pay, Google Pay, Link, etc.
             customer_update: {
                 address: 'auto',
                 name: 'auto',
             },
+            custom_fields: [
+                {
+                    key: 'codice_fiscale',
+                    label: {
+                        type: 'custom',
+                        custom: 'Codice Fiscale',
+                    },
+                    type: 'text',
+                    optional: false,
+                },
+            ],
             line_items: [
                 {
                     price: priceId,
