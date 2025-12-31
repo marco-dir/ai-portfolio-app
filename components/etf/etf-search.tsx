@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Search, Loader2 } from "lucide-react"
-import { useDebounce } from "@/lib/hooks" // Assuming generic hook exists, or I'll implement debounce manually
 
 export function ETFSearch({ initialTicker }: { initialTicker?: string }) {
     const router = useRouter()
