@@ -13,7 +13,8 @@ import {
   ChevronRight,
   Zap,
   Target,
-  Globe
+  Globe,
+  Layers
 } from "lucide-react"
 
 import { fetchEquityData } from "@/lib/data-fetcher"
@@ -43,14 +44,14 @@ export default async function Home() {
       description: "Scopri opportunità di investimento con analisi fondamentale potenziata dall'intelligenza artificiale."
     },
     {
-      icon: BarChart3,
-      title: "Grafici Storici",
-      description: "Analizza 30 anni di dati storici su ricavi, EPS, dividendi e margini operativi."
+      icon: Layers,
+      title: "Analisi ETF",
+      description: "Esplora la composizione degli ETF: holdings principali, allocazione settoriale ed esposizione geografica."
     },
     {
-      icon: Star,
-      title: "Watchlist Personalizzata",
-      description: "Segui i titoli che ti interessano e ricevi aggiornamenti sui prezzi e sulle metriche chiave."
+      icon: BarChart3,
+      title: "Grafici Storici e Watchlist",
+      description: "Analizza 30 anni di dati storici e segui i tuoi titoli preferiti con aggiornamenti in tempo reale."
     }
   ]
 

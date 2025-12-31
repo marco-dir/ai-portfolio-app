@@ -18,3 +18,11 @@ export const formatCurrency = (value: number, currency: string = "USD") => {
 
     return `${sign}${symbol}${absValue.toFixed(2)}`
 }
+
+export const formatNumber = (value: number) => {
+    if (value === undefined || value === null) return "N/A"
+    return new Intl.NumberFormat('en-US', {
+        notation: "compact",
+        maximumFractionDigits: 1
+    }).format(value)
+}

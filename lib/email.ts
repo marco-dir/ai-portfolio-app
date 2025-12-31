@@ -64,3 +64,41 @@ export const sendNewsletter = async (email: string, subject: string, content: st
         return false;
     }
 };
+
+export const sendVerificationEmail = async (email: string, token: string) => {
+    const confirmLink = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${token}`;
+
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'DIRAMCO <noreply@diramco.com>',
+            to: [email],
+            subject: 'Verifica la tua email',
+            html: `
+                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h1>Verifica il tuo indirizzo email</h1>
+                    <p>Grazie per esserti registrato a DIRAMCO. Per completare la registrazione, clicca sul link qui sotto:</p>
+                    <p>
+                        <a href="${confirmLink}" style="display: inline-block; background-color: #2563EB; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+                            Verifica Email
+                        </a>
+                    </p>
+                    <p style="font-size: 14px; color: #666;">
+                        O copia e incolla questo link nel tuo browser:<br/>
+                        <a href="${confirmLink}" style="color: #2563EB;">${confirmLink}</a>
+                    </p>
+                    <p>Se non hai richiesto questa email, puoi ignorarla.</p>
+                </div>
+            `,
+        });
+
+        if (error) {
+            console.error('Error sending verification email:', error);
+            return false;
+        }
+
+        return true;
+    } catch (e) {
+        console.error('Exception sending verification email:', e);
+        return false;
+    }
+};

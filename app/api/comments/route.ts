@@ -19,14 +19,25 @@ export async function GET(request: Request) {
                 user: {
                     select: {
                         name: true,
-                        email: true, // Optional: for gravatar if needed, otherwise remove
+                        email: true,
                     },
                 },
             },
             orderBy: { createdAt: "desc" },
         });
 
-        return NextResponse.json(comments);
+        // Map to standard format, handling guests
+        const formattedComments = comments.map(comment => ({
+            id: comment.id,
+            content: comment.content,
+            createdAt: comment.createdAt,
+            user: {
+                name: comment.user?.name || comment.guestName || "Utente",
+                email: comment.user?.email || comment.guestEmail,
+            }
+        }));
+
+        return NextResponse.json(formattedComments);
     } catch (error) {
         console.error("Error fetching comments:", error);
         return NextResponse.json({ error: "Failed to fetch comments" }, { status: 500 });
@@ -36,22 +47,28 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     const session = await getServerSession(authOptions);
 
-    if (!session || !session.user) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     try {
-        const { slug, content } = await request.json();
+        const body = await request.json();
+        const { slug, content, guestName, guestEmail } = body;
 
         if (!slug || !content) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+        }
+
+        // Validate guest info if not logged in
+        if (!session?.user) {
+            if (!guestName || !guestEmail) {
+                return NextResponse.json({ error: "Name and email are required for guests" }, { status: 400 });
+            }
         }
 
         const comment = await prisma.comment.create({
             data: {
                 content,
                 postId: slug,
-                userId: session.user.id,
+                userId: session?.user?.id, // Optional
+                guestName: session?.user ? null : guestName,
+                guestEmail: session?.user ? null : guestEmail,
             },
             include: {
                 user: {

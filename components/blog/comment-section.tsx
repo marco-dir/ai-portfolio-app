@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { User, MessageSquare, Send, Loader2 } from "lucide-react";
+import { User, MessageSquare, Send, Loader2, Mail } from "lucide-react";
 
 interface Comment {
     id: string;
@@ -21,6 +21,10 @@ export function CommentSection({ slug }: { slug: string }) {
     const [newComment, setNewComment] = useState("");
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+
+    // Guest states
+    const [guestName, setGuestName] = useState("");
+    const [guestEmail, setGuestEmail] = useState("");
 
     useEffect(() => {
         fetchComments();
@@ -42,19 +46,35 @@ export function CommentSection({ slug }: { slug: string }) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!newComment.trim() || !session) return;
+
+        if (!newComment.trim()) return;
+        if (!session && (!guestName.trim() || !guestEmail.trim())) return;
 
         setSubmitting(true);
         try {
+            const body = {
+                slug,
+                content: newComment,
+                guestName: session ? undefined : guestName,
+                guestEmail: session ? undefined : guestEmail,
+            };
+
             const res = await fetch("/api/comments", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ slug, content: newComment }),
+                body: JSON.stringify(body),
             });
 
             if (res.ok) {
                 setNewComment("");
+                if (!session) {
+                    setGuestName("");
+                    setGuestEmail("");
+                }
                 fetchComments(); // Refresh list
+            } else {
+                const err = await res.json();
+                alert(err.error || "Errore durante l'invio del commento");
             }
         } catch (error) {
             console.error("Error submitting comment:", error);
@@ -72,54 +92,80 @@ export function CommentSection({ slug }: { slug: string }) {
 
             {/* Comment Form */}
             <div className="mb-12 bg-gray-900/50 border border-gray-800 rounded-2xl p-6">
-                {session ? (
-                    <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
+                    {session ? (
                         <div className="flex items-center gap-3 mb-4 text-sm text-gray-400">
                             <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400">
                                 <User size={16} />
                             </div>
                             <span>Commenta come <span className="text-white font-medium">{session.user?.name || "Utente"}</span></span>
                         </div>
-                        <textarea
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            placeholder="Scrivi un commento..."
-                            className="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors min-h-[100px] resize-y"
-                            required
-                        />
-                        <div className="flex justify-end mt-4">
-                            <button
-                                type="submit"
-                                disabled={submitting || !newComment.trim()}
-                                className="px-6 py-2 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-600/50 disabled:cursor-not-allowed rounded-full font-medium transition-all flex items-center gap-2"
-                            >
-                                {submitting ? (
-                                    <>
-                                        <Loader2 size={16} className="animate-spin" />
-                                        Invio...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send size={16} />
-                                        Pubblica
-                                    </>
-                                )}
-                            </button>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label className="block text-xs text-gray-400 mb-1 ml-1">Nome</label>
+                                <div className="relative">
+                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                                    <input
+                                        type="text"
+                                        value={guestName}
+                                        onChange={(e) => setGuestName(e.target.value)}
+                                        className="w-full bg-gray-950 border border-gray-800 rounded-xl py-2 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                                        placeholder="Il tuo nome"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-400 mb-1 ml-1">Email (non sarà pubblicata)</label>
+                                <div className="relative">
+                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                                    <input
+                                        type="email"
+                                        value={guestEmail}
+                                        onChange={(e) => setGuestEmail(e.target.value)}
+                                        className="w-full bg-gray-950 border border-gray-800 rounded-xl py-2 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                                        placeholder="La tua email"
+                                        required
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                ) : (
-                    <div className="text-center py-6">
-                        <p className="text-gray-400 mb-4">Accedi per partecipare alla discussione</p>
-                        <div className="flex justify-center gap-4">
-                            <Link href="/accedi" className="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded-full text-white transition-colors">
-                                Accedi
-                            </Link>
-                            <Link href="/registrati" className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-full text-white transition-colors">
-                                Registrati
-                            </Link>
-                        </div>
+                    )}
+
+                    <textarea
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        placeholder="Scrivi un commento..."
+                        className="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-white focus:outline-none focus:border-blue-500 transition-colors min-h-[100px] resize-y"
+                        required
+                    />
+
+                    <div className="flex justify-between items-center mt-4">
+                        {!session && (
+                            <p className="text-xs text-gray-500">
+                                Oppure <Link href="/accedi" className="text-blue-400 hover:underline">Accedi</Link> o <Link href="/registrati" className="text-blue-400 hover:underline">Registrati</Link>
+                            </p>
+                        )}
+                        <button
+                            type="submit"
+                            disabled={submitting || !newComment.trim() || (!session && (!guestName.trim() || !guestEmail.trim()))}
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-600/50 disabled:cursor-not-allowed rounded-full font-medium transition-all flex items-center gap-2 ml-auto"
+                        >
+                            {submitting ? (
+                                <>
+                                    <Loader2 size={16} className="animate-spin" />
+                                    Invio...
+                                </>
+                            ) : (
+                                <>
+                                    <Send size={16} />
+                                    Pubblica
+                                </>
+                            )}
+                        </button>
                     </div>
-                )}
+                </form>
             </div>
 
             {/* Comments List */}

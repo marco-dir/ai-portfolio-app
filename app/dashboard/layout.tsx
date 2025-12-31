@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
-import { BarChart3, Briefcase, ChevronLeft, DollarSign, Landmark, LayoutDashboard, Lightbulb, LogOut, Menu, PieChart, Send, Star, TrendingUp, User, Users, X } from "lucide-react"
+import { BarChart3, Briefcase, ChevronLeft, DollarSign, Landmark, LayoutDashboard, Lightbulb, LogOut, Menu, PieChart, Send, Star, TrendingUp, User, Users, X, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -60,6 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         // Analisi (first 2)
         { label: 'Analisi Finanziaria', href: '/dashboard/analisi-finanziaria', icon: BarChart3 },
         { label: 'Azioni Value', href: '/dashboard/analisi-azioni-value', icon: Lightbulb },
+        { label: 'ETF', href: '/dashboard/etf', icon: Globe },
         // I Miei Investimenti (next 3)
         { label: 'Panoramica', href: '/dashboard', icon: LayoutDashboard },
         { label: 'Portafogli', href: '/dashboard/portafoglio', icon: PieChart },
@@ -85,8 +86,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             <nav className="flex-1 space-y-2 overflow-y-auto pr-2 custom-scrollbar">
                 {/* Section: Analisi */}
-                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-2 pb-1">Analisi</p>
-                {navItems.slice(0, 2).map((item) => {
+                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-2 pb-1">Strumenti</p>
+                {navItems.slice(0, 3).map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href
                     return (
@@ -94,7 +95,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                                 isActive ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                             )}
                         >
@@ -106,7 +107,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 {/* Section: I Miei Investimenti */}
                 <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-4 pb-1">I Miei Investimenti</p>
-                {navItems.slice(2, 5).map((item) => {
+                {navItems.slice(3, 6).map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href
                     return (
@@ -114,7 +115,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                                 isActive ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                             )}
                         >
@@ -126,7 +127,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 {/* Section: Portafogli DIRAMCO */}
                 <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-4 pb-1">Portafogli</p>
-                {navItems.slice(5).map((item) => {
+                {navItems.slice(6).map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href
                     return (
@@ -134,7 +135,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                                 isActive ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                             )}
                         >
@@ -150,7 +151,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Link
                         href="/dashboard/newsletter"
                         className={cn(
-                            "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                            "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                             pathname === "/dashboard/newsletter" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                         )}
                     >
@@ -162,7 +163,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Link
                         href="/dashboard/utenti"
                         className={cn(
-                            "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                            "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                             pathname === "/dashboard/utenti" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                         )}
                     >
@@ -173,7 +174,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <Link
                     href="/dashboard/impostazioni"
                     className={cn(
-                        "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                        "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                         pathname === "/dashboard/impostazioni" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white"
                     )}
                 >
@@ -185,7 +186,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
                 <button
                     onClick={() => signOut({ callbackUrl: "/accedi" })}
-                    className="flex items-center gap-3 px-4 py-3 w-full text-gray-400 hover:text-red-400 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 w-full text-gray-400 hover:text-red-400 transition-colors text-sm"
                 >
                     <LogOut size={20} />
                     Esci
@@ -257,10 +258,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     {/* Section: Analisi */}
                     {isDesktopSidebarOpen && (
                         <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-2 pb-1 transition-opacity duration-300 opacity-100">
-                            Analisi
+                            Strumenti
                         </p>
                     )}
-                    {navItems.slice(0, 2).map((item) => {
+                    {navItems.slice(0, 3).map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.href
                         return (
@@ -268,7 +269,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                                     isActive ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                                     !isDesktopSidebarOpen && "justify-center px-2"
                                 )}
@@ -288,7 +289,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             I Miei Investimenti
                         </p>
                     )}
-                    {navItems.slice(2, 5).map((item) => {
+                    {navItems.slice(3, 6).map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.href
                         return (
@@ -296,7 +297,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                                     isActive ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                                     !isDesktopSidebarOpen && "justify-center px-2"
                                 )}
@@ -316,7 +317,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             Portafogli
                         </p>
                     )}
-                    {navItems.slice(5).map((item) => {
+                    {navItems.slice(6).map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.href
                         return (
@@ -324,7 +325,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap",
+                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors whitespace-nowrap text-sm",
                                     isActive ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                                     !isDesktopSidebarOpen && "justify-center px-2"
                                 )}
@@ -344,7 +345,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <Link
                             href="/dashboard/newsletter"
                             className={cn(
-                                "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap",
+                                "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap text-sm",
                                 pathname === "/dashboard/newsletter" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                                 !isDesktopSidebarOpen && "justify-center px-2"
                             )}
@@ -358,7 +359,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <Link
                             href="/dashboard/utenti"
                             className={cn(
-                                "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap",
+                                "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap text-sm",
                                 pathname === "/dashboard/utenti" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                                 !isDesktopSidebarOpen && "justify-center px-2"
                             )}
@@ -371,7 +372,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Link
                         href="/dashboard/impostazioni"
                         className={cn(
-                            "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap",
+                            "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors whitespace-nowrap text-sm",
                             pathname === "/dashboard/impostazioni" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-900 hover:text-white",
                             !isDesktopSidebarOpen && "justify-center px-2"
                         )}
@@ -390,7 +391,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <button
                         onClick={() => signOut({ callbackUrl: "/accedi" })}
                         className={cn(
-                            "flex items-center gap-3 px-4 py-2 w-full text-gray-400 hover:text-red-400 transition-colors",
+                            "flex items-center gap-3 px-4 py-2 w-full text-gray-400 hover:text-red-400 transition-colors text-sm",
                             !isDesktopSidebarOpen && "justify-center px-2"
                         )}
                         title={!isDesktopSidebarOpen ? "Esci" : undefined}

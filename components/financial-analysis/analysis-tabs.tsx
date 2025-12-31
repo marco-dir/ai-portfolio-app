@@ -12,7 +12,8 @@ import {
     Users,
     Newspaper,
     Target,
-    Calendar
+    Calendar,
+    Building2
 } from "lucide-react"
 
 // We'll import these as we build them. For now placeholders.
@@ -22,6 +23,7 @@ import { KeyRatiosTab } from "./tabs/ratios-tab"
 import { InsiderTab } from "./tabs/insider-tab"
 import { EstimatesTab } from "./tabs/estimates-tab"
 import { HistoricalPriceChart } from "./tabs/historical-price-chart"
+import { OwnershipTab } from "./tabs/ownership-tab"
 
 export function AnalysisTabs({
     ticker,
@@ -38,7 +40,10 @@ export function AnalysisTabs({
     calendar,
     dividendHistory,
     quote,
-    profile
+    profile,
+    institutionalHolders,
+    mutualFundHolders,
+    beneficialOwnership
 }: {
     ticker: string
     incomeStatement: any
@@ -55,6 +60,9 @@ export function AnalysisTabs({
     dividendHistory: any
     quote: any
     profile: any
+    institutionalHolders: any
+    mutualFundHolders: any
+    beneficialOwnership: any
 }) {
     const [activeTab, setActiveTab] = useState("overview")
 
@@ -69,6 +77,7 @@ export function AnalysisTabs({
         { id: "valuation", label: "Valutazione", icon: Calculator },
         { id: "estimates", label: "Stime", icon: Target },
         { id: "insider", label: "Insider Trading", icon: Users },
+        { id: "ownership", label: "Proprietà", icon: Building2 }, // Re-using Building2 or could use another icon if available
         { id: "news", label: "Notizie", icon: Newspaper },
         { id: "calendar", label: "Calendario", icon: Calendar },
     ]
@@ -85,8 +94,8 @@ export function AnalysisTabs({
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`px-4 py-2 rounded-t-lg transition-colors ${isActive
-                                        ? "bg-blue-600 text-white"
-                                        : "text-gray-400 hover:text-white hover:bg-gray-800"
+                                    ? "bg-blue-600 text-white"
+                                    : "text-gray-400 hover:text-white hover:bg-gray-800"
                                     }`}
                             >
                                 {tab.label}
@@ -184,6 +193,14 @@ export function AnalysisTabs({
                 )}
                 {activeTab === "insider" && (
                     <InsiderTab data={insiderTrades} />
+                )}
+                {activeTab === "ownership" && (
+                    <OwnershipTab
+                        institutional={institutionalHolders}
+                        mutualFund={mutualFundHolders}
+                        beneficialOwnership={beneficialOwnership}
+                        sharesOutstanding={quote?.sharesOutstanding}
+                    />
                 )}
                 {activeTab === "estimates" && (
                     <EstimatesTab estimates={estimates} ratings={ratings} recommendations={recommendations} />

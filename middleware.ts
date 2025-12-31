@@ -48,6 +48,7 @@ export default withAuth(
                     pathname.startsWith("/api/contact") ||
                     pathname.startsWith("/api/reviews") ||
                     pathname.startsWith("/api/newsletter") ||
+                    pathname.startsWith("/api/comments") ||
                     pathname.startsWith("/api/stripe/webhook")
                 )
 

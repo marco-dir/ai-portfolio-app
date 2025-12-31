@@ -199,7 +199,7 @@ export default async function FundamentalAnalysisPage({
             ) : (
                 <div className="mt-8 text-center">
                     <p className="text-gray-400">
-                        Cerca un titolo per iniziare l'analisi fondamentale
+                        Cerca un titolo per iniziare l'analisi fondamentale delle azionie scoprire Key Ratio, Indicatori di Performance, Indicatori di Prezzo e trend storici selezionati da DIRAMCO.
                     </p>
                 </div>
             )}

@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
+import { ExportUsersButton } from "@/components/admin/export-users-button"
 
 export default async function UsersPage() {
     const session = await getServerSession(authOptions)
@@ -16,7 +17,10 @@ export default async function UsersPage() {
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-white mb-8">Utenti Registrati ({users.length})</h1>
+            <div className="flex items-center justify-between mb-8">
+                <h1 className="text-3xl font-bold text-white">Utenti Registrati ({users.length})</h1>
+                <ExportUsersButton users={JSON.parse(JSON.stringify(users))} />
+            </div>
             <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead className="bg-gray-950 text-gray-400 border-b border-gray-800">
@@ -43,8 +47,8 @@ export default async function UsersPage() {
                                 </td>
                                 <td className="p-4">
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${user.subscriptionStatus === 'active' ? 'bg-green-500/20 text-green-400' :
-                                            user.subscriptionStatus === 'trialing' ? 'bg-yellow-500/20 text-yellow-400' :
-                                                'bg-gray-700 text-gray-400'
+                                        user.subscriptionStatus === 'trialing' ? 'bg-yellow-500/20 text-yellow-400' :
+                                            'bg-gray-700 text-gray-400'
                                         }`}>
                                         {user.subscriptionStatus === 'active' ? 'Attivo' :
                                             user.subscriptionStatus === 'trialing' ? 'Periodo di Prova' :

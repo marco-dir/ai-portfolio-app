@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 
 export default function RegisterPage() {
     const [email, setEmail] = useState("")
@@ -36,6 +37,10 @@ export default function RegisterPage() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-950">
             <div className="w-full max-w-md p-8 space-y-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
+                <Link href="/" className="inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors">
+                    <ArrowLeft size={16} className="mr-2" />
+                    Torna alla Home
+                </Link>
                 <h2 className="text-3xl font-bold text-center text-white">Crea Account</h2>
                 {error && <p className="text-red-500 text-center">{error}</p>}
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -74,6 +79,17 @@ export default function RegisterPage() {
                     >
                         Registrati
                     </button>
+                    <p className="text-xs text-gray-400 text-center">
+                        Cliccando su Registrati, accetti i{" "}
+                        <Link href="/disclaimer" className="text-blue-400 hover:underline">
+                            Termini di Servizio
+                        </Link>
+                        {" "}e la{" "}
+                        <Link href="/privacy-policy" className="text-blue-400 hover:underline">
+                            Politica sulla Privacy
+                        </Link>
+                        .
+                    </p>
                 </form>
                 <p className="text-center text-gray-400">
                     Hai già un account?{" "}

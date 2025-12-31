@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
-import { Lock, Save, AlertCircle, CheckCircle, CreditCard, ExternalLink, Star } from "lucide-react"
+import { Lock, Save, AlertCircle, CheckCircle, CreditCard, ExternalLink, Star, Mail } from "lucide-react"
 
 export default function SettingsPage() {
     const { data: session } = useSession()
@@ -14,6 +14,12 @@ export default function SettingsPage() {
         newPassword: "",
         confirmPassword: ""
     })
+
+    // Contact Form State
+    const [contactSubject, setContactSubject] = useState("")
+    const [contactMessage, setContactMessage] = useState("")
+    const [isContactLoading, setIsContactLoading] = useState(false)
+    const [contactStatus, setContactStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
     // Review state
     const [reviewRating, setReviewRating] = useState(5)
@@ -70,6 +76,41 @@ export default function SettingsPage() {
             setReviewMessage({ type: 'error', text: error.message })
         } finally {
             setIsReviewLoading(false)
+        }
+    }
+
+    const handleContactSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setContactStatus(null)
+
+        if (!contactSubject || !contactMessage) {
+            setContactStatus({ type: 'error', text: "Compila tutti i campi" })
+            return
+        }
+
+        setIsContactLoading(true)
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: session?.user?.name || "Utente",
+                    email: session?.user?.email,
+                    subject: contactSubject,
+                    message: contactMessage
+                })
+            })
+
+            const data = await res.json()
+            if (!res.ok) throw new Error(data.error || "Errore durante l'invio")
+
+            setContactStatus({ type: 'success', text: "Messaggio inviato con successo!" })
+            setContactSubject("")
+            setContactMessage("")
+        } catch (error: any) {
+            setContactStatus({ type: 'error', text: error.message })
+        } finally {
+            setIsContactLoading(false)
         }
     }
 
@@ -332,6 +373,66 @@ export default function SettingsPage() {
                         </form>
                     </div>
                 )}
+
+                {/* Contact Support Section */}
+                <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+                    <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                        <Mail size={20} />
+                        Contatta il Supporto
+                    </h2>
+
+                    <form onSubmit={handleContactSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-400 mb-1">
+                                Oggetto
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                value={contactSubject}
+                                onChange={(e) => setContactSubject(e.target.value)}
+                                placeholder="Es. Problema con il pagamento"
+                                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-400 mb-1">
+                                Messaggio
+                            </label>
+                            <textarea
+                                required
+                                value={contactMessage}
+                                onChange={(e) => setContactMessage(e.target.value)}
+                                placeholder="Descrivi la tua richiesta..."
+                                rows={4}
+                                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                            />
+                        </div>
+
+                        {contactStatus && (
+                            <div className={`p-3 rounded-lg flex items-center gap-2 text-sm ${contactStatus.type === 'success' ? 'bg-green-900/20 text-green-400' : 'bg-red-900/20 text-red-400'}`}>
+                                {contactStatus.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                                {contactStatus.text}
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={isContactLoading}
+                            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isContactLoading ? (
+                                "Invio in corso..."
+                            ) : (
+                                <>
+                                    <Mail size={18} />
+                                    Invia Messaggio
+                                </>
+                            )}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     )

@@ -38,7 +38,7 @@ const securityHeaders = [
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https: http:",
       "connect-src 'self' https://api.stripe.com https://financialmodelingprep.com https://docs.google.com https://api.openai.com",
-      "frame-src 'self' https://js.stripe.com",
+      "frame-src 'self' https://js.stripe.com https://www.youtube.com https://youtube.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",

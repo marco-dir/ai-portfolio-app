@@ -13,7 +13,10 @@ import {
     getAnalystRecommendations,
     getHistoricalPrice,
     getEarningsCalendar,
-    getDividendHistory
+    getDividendHistory,
+    getInstitutionalHolders,
+    getMutualFundHolders,
+    getBeneficialOwnership
 } from "@/lib/fmp"
 import { FinancialAnalysisSearch } from "@/components/financial-analysis/search-bar"
 import { CompanyHeader } from "@/components/financial-analysis/company-header"
@@ -41,6 +44,9 @@ export default async function FinancialAnalysisPage({
     let historicalPrice = null
     let calendar = null
     let dividendHistory = null
+    let institutionalHolders = null
+    let mutualFundHolders = null
+    let beneficialOwnership = null
 
     if (ticker) {
         // Parallel data fetching
@@ -58,7 +64,10 @@ export default async function FinancialAnalysisPage({
             getAnalystRecommendations(ticker),
             getHistoricalPrice(ticker, undefined, undefined), // default fetches full history or large chunk, we handle slicing in UI
             getEarningsCalendar(ticker),
-            getDividendHistory(ticker)
+            getDividendHistory(ticker),
+            getInstitutionalHolders(ticker),
+            getMutualFundHolders(ticker),
+            getBeneficialOwnership(ticker)
         ])
 
         // Helper to extract value or null
@@ -79,6 +88,9 @@ export default async function FinancialAnalysisPage({
         historicalPrice = results[11].status === 'fulfilled' ? results[11].value : null
         calendar = results[12].status === 'fulfilled' ? results[12].value : null
         dividendHistory = results[13].status === 'fulfilled' ? results[13].value?.historical : null
+        institutionalHolders = results[14].status === 'fulfilled' ? results[14].value : null
+        mutualFundHolders = results[15].status === 'fulfilled' ? results[15].value : null
+        beneficialOwnership = results[16].status === 'fulfilled' ? results[16].value : null
     }
 
     return (
@@ -118,6 +130,9 @@ export default async function FinancialAnalysisPage({
                             historicalPrice={historicalPrice}
                             calendar={calendar}
                             dividendHistory={dividendHistory}
+                            institutionalHolders={institutionalHolders}
+                            mutualFundHolders={mutualFundHolders}
+                            beneficialOwnership={beneficialOwnership}
                             quote={quote}
                             profile={companyProfile}
                         />

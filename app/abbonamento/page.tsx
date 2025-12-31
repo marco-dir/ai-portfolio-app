@@ -12,6 +12,7 @@ export default function SubscriptionPage() {
     const features = [
         "Analisi Finanziaria Avanzata (Dati storici 30 anni)",
         "Azioni Value (Dati storici 30 anni)",
+        "Analisi ETF (Holdings, Settori, Paesi)",
         "Creazione Portafogli Personalizzati (Analisi AI)",
         "Watchlist Personalizzate",
         "Visualizzazione Portafogli Modello",

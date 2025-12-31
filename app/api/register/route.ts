@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { hash } from "bcryptjs"
 import { NextResponse } from "next/server"
-import { sendWelcomeEmail } from "@/lib/email"
+import { sendWelcomeEmail, sendVerificationEmail } from "@/lib/email"
+import { generateVerificationToken } from "@/lib/tokens"
 import { rateLimit, getClientIp, RATE_LIMIT_CONFIGS } from "@/lib/rate-limit"
 import { registerSchema, validateData } from "@/lib/validation"
 
@@ -57,12 +58,15 @@ export async function POST(req: Request) {
 
         const { password: newUserPassword, ...rest } = newUser
 
-        // Send welcome email (fire and forget)
+        // Generate verification token
+        const verificationToken = await generateVerificationToken(email)
+
+        // Send verification email
         try {
-            await sendWelcomeEmail(email, name || undefined)
+            await sendVerificationEmail(email, verificationToken.token)
+            // Removed welcome email sending here, it should be sent after verification
         } catch (emailError) {
-            console.error("Failed to send welcome email:", emailError)
-            // Don't block registration if email fails
+            console.error("Failed to send verification email:", emailError)
         }
 
         return NextResponse.json({ user: rest, message: "Utente creato con successo" }, { status: 201 })

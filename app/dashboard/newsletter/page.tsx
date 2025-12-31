@@ -114,7 +114,7 @@ export default function NewsletterPage() {
                                             alt="DIRAMCO"
                                             style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', display: 'inline-block' }}
                                         />
-                                        <h2 style={{ margin: '10px 0 0 0', color: '#333' }}>DIRAMCO Newsletter</h2>
+                                        <h2 style={{ margin: '10px 0 0 0', color: '#333' }}>DIRAMCO</h2>
                                     </div>
 
                                     {/* Content */}

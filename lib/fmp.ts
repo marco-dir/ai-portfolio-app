@@ -147,3 +147,39 @@ export const getEarningsCalendar = async (symbol: string) => {
 export const getDividendHistory = async (symbol: string) => {
     return fetchFMP(`/historical-price-full/stock_dividend/${symbol}`)
 }
+
+export const getInstitutionalHolders = async (symbol: string) => {
+    return fetchFMP(`/institutional-holder/${symbol}`)
+}
+
+export const getMutualFundHolders = async (symbol: string) => {
+    return fetchFMP(`/mutual-fund-holder/${symbol}`)
+}
+
+export const getBeneficialOwnership = async (symbol: string) => {
+    // Uses v4 endpoint
+    const url = `${BASE_URL.replace('v3', 'v4')}/insider/ownership/acquisition_of_beneficial_ownership?symbol=${symbol}&apikey=${FMP_API_KEY}`
+
+    try {
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`FMP API Error: ${res.status}`)
+        return await res.json()
+    } catch (error) {
+        console.error("Failed to fetch Beneficial Ownership:", error)
+        return []
+    }
+
+}
+
+export const getETFHolders = async (symbol: string) => {
+    return fetchFMP(`/etf-holder/${symbol}`)
+}
+
+export const getETFSectorWeight = async (symbol: string) => {
+    return fetchFMP(`/etf-sector-weight/${symbol}`)
+}
+
+export const getETFCountryWeight = async (symbol: string) => {
+    return fetchFMP(`/etf-country-weight/${symbol}`)
+}
+
