@@ -27,7 +27,7 @@ export function SuperinvestorChart({ data }: { data: any[] }) {
                 <Tooltip
                     contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#F3F4F6' }}
                     itemStyle={{ color: '#F3F4F6' }}
-                    formatter={(value: number) => `$${formatNumber(value)}`}
+                    formatter={(value: any) => `$${formatNumber(value)}`}
                 />
                 <Legend
                     layout="horizontal"
