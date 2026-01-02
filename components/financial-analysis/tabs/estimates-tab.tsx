@@ -57,23 +57,23 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                             <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-4 text-center w-full">
                                 <div>
                                     <div className="text-xs text-gray-500 mb-1">Strong Buy</div>
-                                    <div className="font-bold text-green-400 text-lg">{latestRec.analystRatingsStrongBuy || 0}</div>
+                                    <div className="font-bold text-green-400 text-lg">{latestRec.analystRatingsStrongBuy || latestRec.analystRatingsStrongbuy || 0}</div>
                                 </div>
                                 <div>
                                     <div className="text-xs text-gray-500 mb-1">Buy</div>
-                                    <div className="font-bold text-green-500 text-lg">{latestRec.analystRatingsBuy || 0}</div>
+                                    <div className="font-bold text-green-500 text-lg">{latestRec.analystRatingsBuy || latestRec.analystRatingsbuy || 0}</div>
                                 </div>
                                 <div>
                                     <div className="text-xs text-gray-500 mb-1">Hold</div>
-                                    <div className="font-bold text-yellow-500 text-lg">{latestRec.analystRatingsHold || 0}</div>
+                                    <div className="font-bold text-yellow-500 text-lg">{latestRec.analystRatingsHold || latestRec.analystRatingshold || 0}</div>
                                 </div>
                                 <div>
                                     <div className="text-xs text-gray-500 mb-1">Sell</div>
-                                    <div className="font-bold text-red-500 text-lg">{latestRec.analystRatingsSell || 0}</div>
+                                    <div className="font-bold text-red-500 text-lg">{latestRec.analystRatingsSell || latestRec.analystRatingssell || 0}</div>
                                 </div>
                                 <div>
                                     <div className="text-xs text-gray-500 mb-1">Strong Sell</div>
-                                    <div className="font-bold text-red-700 text-lg">{latestRec.analystRatingsStrongSell || 0}</div>
+                                    <div className="font-bold text-red-700 text-lg">{latestRec.analystRatingsStrongSell || latestRec.analystRatingsStrongsell || 0}</div>
                                 </div>
                             </div>
                         ) : (
@@ -82,7 +82,7 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                     <div className="text-xs text-gray-500 mb-1">Strong Buy</div>
                                     <div className="flex justify-center gap-1">
                                         {Array.from({ length: 5 }).map((_, i) => (
-                                            <div key={i} className={`w - 2 h - 2 rounded - full ${i < (latestRating?.ratingScore >= 4.5 ? 5 : 0) ? 'bg-green-400' : 'bg-gray-700'} `} />
+                                            <div key={i} className={`w-2 h-2 rounded-full ${i < (latestRating?.ratingScore >= 4.5 ? 5 : 0) ? 'bg-green-400' : 'bg-gray-700'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                     <div className="text-xs text-gray-500 mb-1">Buy</div>
                                     <div className="flex justify-center gap-1">
                                         {Array.from({ length: 5 }).map((_, i) => (
-                                            <div key={i} className={`w - 2 h - 2 rounded - full ${i < (latestRating?.ratingScore >= 3.5 && latestRating?.ratingScore < 4.5 ? 4 : 0) ? 'bg-green-500' : 'bg-gray-700'} `} />
+                                            <div key={i} className={`w-2 h-2 rounded-full ${i < (latestRating?.ratingScore >= 3.5 && latestRating?.ratingScore < 4.5 ? 4 : 0) ? 'bg-green-500' : 'bg-gray-700'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                     <div className="text-xs text-gray-500 mb-1">Hold</div>
                                     <div className="flex justify-center gap-1">
                                         {Array.from({ length: 5 }).map((_, i) => (
-                                            <div key={i} className={`w - 2 h - 2 rounded - full ${i < (latestRating?.ratingScore >= 2.5 && latestRating?.ratingScore < 3.5 ? 3 : 0) ? 'bg-yellow-500' : 'bg-gray-700'} `} />
+                                            <div key={i} className={`w-2 h-2 rounded-full ${i < (latestRating?.ratingScore >= 2.5 && latestRating?.ratingScore < 3.5 ? 3 : 0) ? 'bg-yellow-500' : 'bg-gray-700'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                     <div className="text-xs text-gray-500 mb-1">Sell</div>
                                     <div className="flex justify-center gap-1">
                                         {Array.from({ length: 5 }).map((_, i) => (
-                                            <div key={i} className={`w - 2 h - 2 rounded - full ${i < (latestRating?.ratingScore < 2.5 ? 2 : 0) ? 'bg-red-500' : 'bg-gray-700'} `} />
+                                            <div key={i} className={`w-2 h-2 rounded-full ${i < (latestRating?.ratingScore < 2.5 ? 2 : 0) ? 'bg-red-500' : 'bg-gray-700'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -140,11 +140,11 @@ export function EstimatesTab({ estimates, ratings, recommendations }: { estimate
                                     dataKey="value"
                                 >
                                     {[
-                                        { name: 'Strong Buy', value: latestRec.analystRatingsStrongBuy || 0, color: '#22c55e' },
-                                        { name: 'Buy', value: latestRec.analystRatingsBuy || 0, color: '#10b981' },
-                                        { name: 'Hold', value: latestRec.analystRatingsHold || 0, color: '#eab308' },
-                                        { name: 'Sell', value: latestRec.analystRatingsSell || 0, color: '#ef4444' },
-                                        { name: 'Strong Sell', value: latestRec.analystRatingsStrongSell || 0, color: '#dc2626' }
+                                        { name: 'Strong Buy', value: latestRec.analystRatingsStrongBuy || latestRec.analystRatingsStrongbuy || 0, color: '#22c55e' },
+                                        { name: 'Buy', value: latestRec.analystRatingsBuy || latestRec.analystRatingsbuy || 0, color: '#10b981' },
+                                        { name: 'Hold', value: latestRec.analystRatingsHold || latestRec.analystRatingshold || 0, color: '#eab308' },
+                                        { name: 'Sell', value: latestRec.analystRatingsSell || latestRec.analystRatingssell || 0, color: '#ef4444' },
+                                        { name: 'Strong Sell', value: latestRec.analystRatingsStrongSell || latestRec.analystRatingsStrongsell || 0, color: '#dc2626' }
                                     ].filter(item => item.value > 0).map((entry, index) => (
                                         <Cell key={`cell - ${index} `} fill={entry.color} />
                                     ))}

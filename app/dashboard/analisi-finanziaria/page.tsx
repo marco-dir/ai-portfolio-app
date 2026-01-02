@@ -84,7 +84,7 @@ export default async function FinancialAnalysisPage({
         insiderTrades = results[7].status === 'fulfilled' ? results[7].value : null
         stockNews = results[8].status === 'fulfilled' ? results[8].value : null
         ratings = results[9].status === 'fulfilled' ? results[9].value : null
-        recommendations = results[10].status === 'fulfilled' ? results[10].value?.[0] : null
+        recommendations = results[10].status === 'fulfilled' ? results[10].value : null
         historicalPrice = results[11].status === 'fulfilled' ? results[11].value : null
         calendar = results[12].status === 'fulfilled' ? results[12].value : null
         dividendHistory = results[13].status === 'fulfilled' ? results[13].value?.historical : null

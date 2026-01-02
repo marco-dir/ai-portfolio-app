@@ -61,6 +61,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { label: 'Analisi Finanziaria', href: '/dashboard/analisi-finanziaria', icon: BarChart3 },
         { label: 'Azioni Value', href: '/dashboard/analisi-azioni-value', icon: Lightbulb },
         { label: 'ETF', href: '/dashboard/etf', icon: Globe },
+        { label: 'Superinvestitori', href: '/dashboard/superinvestitori', icon: Users },
         { label: 'Macroeconomia', href: '/dashboard/macroeconomia', icon: TrendingUp },
         // I Miei Investimenti (next 3)
         { label: 'Panoramica', href: '/dashboard', icon: LayoutDashboard },
@@ -262,7 +263,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             Strumenti
                         </p>
                     )}
-                    {navItems.slice(0, 4).map((item) => {
+                    {navItems.slice(0, 5).map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.href
                         return (
@@ -290,7 +291,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             I Miei Investimenti
                         </p>
                     )}
-                    {navItems.slice(4, 7).map((item) => {
+                    {navItems.slice(5, 8).map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.href
                         return (
@@ -318,7 +319,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             Portafogli
                         </p>
                     )}
-                    {navItems.slice(7).map((item) => {
+                    {navItems.slice(8).map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.href
                         return (
