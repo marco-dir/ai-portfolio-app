@@ -271,13 +271,13 @@ export default function ConservativePortfolioPage() {
             </div>
 
             {/* --- SECTION 0: HISTORY CHART (New) --- */}
-            {parsedHistory.length > 0 && (
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Andamento Anno in Corso</CardTitle>
-                        </CardHeader>
-                        <CardContent className="h-[350px]">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Andamento Anno in Corso</CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-[350px]">
+                        {parsedHistory.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={parsedHistory} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                                     <defs>
@@ -319,61 +319,65 @@ export default function ConservativePortfolioPage() {
                                     />
                                 </AreaChart>
                             </ResponsiveContainer>
-                        </CardContent>
-                    </Card>
+                        ) : (
+                            <div className="flex items-center justify-center h-full text-gray-500">
+                                Nessun dato storico disponibile
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
 
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Obiettivo Portafoglio</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4 text-gray-300 text-sm">
-                            <p className="leading-relaxed">
-                                Portafoglio focalizzato su investimenti a basso rischio, con una forte componente di Obbligazioni e strumenti a reddito fisso:
-                            </p>
-                            <ul className="space-y-3">
-                                <li className="flex gap-2">
-                                    <span className="text-blue-400 font-bold">•</span>
-                                    <span>
-                                        <strong className="text-white">Fondi:</strong> selezione di ETF di indici azionari mondiali e materie prime con Target al 20%
-                                    </span>
-                                </li>
-                                <li className="flex gap-2">
-                                    <span className="text-green-400 font-bold">•</span>
-                                    <span>
-                                        <strong className="text-white">Obbligazioni:</strong> Titoli di Stato e Corporate area Euro con Target al 70%
-                                    </span>
-                                </li>
-                                <li className="flex gap-2">
-                                    <span className="text-yellow-400 font-bold">•</span>
-                                    <span>
-                                        <strong className="text-white">Cash ed Equivalenti:</strong> Conto Deposito o Risparmio con Target al 10%
-                                    </span>
-                                </li>
-                            </ul>
-                        </CardContent>
-                    </Card>
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Obiettivo Portafoglio</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 text-gray-300 text-sm">
+                        <p className="leading-relaxed">
+                            Portafoglio focalizzato su investimenti a basso rischio, con una forte componente di Obbligazioni e strumenti a reddito fisso:
+                        </p>
+                        <ul className="space-y-3">
+                            <li className="flex gap-2">
+                                <span className="text-blue-400 font-bold">•</span>
+                                <span>
+                                    <strong className="text-white">Fondi:</strong> selezione di ETF di indici azionari mondiali e materie prime con Target al 20%
+                                </span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-green-400 font-bold">•</span>
+                                <span>
+                                    <strong className="text-white">Obbligazioni:</strong> Titoli di Stato e Corporate area Euro con Target al 70%
+                                </span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-yellow-400 font-bold">•</span>
+                                <span>
+                                    <strong className="text-white">Cash ed Equivalenti:</strong> Conto Deposito o Risparmio con Target al 10%
+                                </span>
+                            </li>
+                        </ul>
+                    </CardContent>
+                </Card>
 
-                    {/* Latest Movements */}
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Ultimi Movimenti</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <ul className="space-y-3">
-                                {parsedMovements.map((movement, index) => (
-                                    <li key={index} className="flex gap-3 text-sm text-gray-300 items-start">
-                                        <div className="min-w-[6px] h-[6px] rounded-full bg-blue-500 mt-1.5" />
-                                        <span>{movement}</span>
-                                    </li>
-                                ))}
-                                {parsedMovements.length === 0 && (
-                                    <p className="text-gray-500 text-sm">Nessun movimento recente.</p>
-                                )}
-                            </ul>
-                        </CardContent>
-                    </Card>
-                </div>
-            )}
+                {/* Latest Movements */}
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Ultimi Movimenti</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="space-y-3">
+                            {parsedMovements.map((movement, index) => (
+                                <li key={index} className="flex gap-3 text-sm text-gray-300 items-start">
+                                    <div className="min-w-[6px] h-[6px] rounded-full bg-blue-500 mt-1.5" />
+                                    <span>{movement}</span>
+                                </li>
+                            ))}
+                            {parsedMovements.length === 0 && (
+                                <p className="text-gray-500 text-sm">Nessun movimento recente.</p>
+                            )}
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div>
 
             {/* --- SECTION 1: ASSET ALLOCATION --- */}
             <div className="space-y-6">

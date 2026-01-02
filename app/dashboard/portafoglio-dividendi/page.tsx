@@ -232,15 +232,25 @@ export default function DividendPortfolioPage() {
     const dividendsHeaders = dividendsData.length > 0 ? Object.keys(dividendsData[0]) : []
 
     // Filter rows (exclude header row if exists and TOTALE)
-    const dividendsList = dividendsData.filter((row: any) => {
+    // Filter rows (exclude header row if exists and TOTALE)
+    // User requested to start from 3rd row (Row 1=Header, Row 2=Metadata 1-12, Row 3=Data)
+    // dividersData[0] corresponds to Row 2. So we slice(1) to skip it.
+    const dividendsList = dividendsData.slice(1).filter((row: any) => {
         const firstVal = Object.values(row)[0] as string
         return firstVal && firstVal.toUpperCase() !== 'TOTALE' && !firstVal.toLowerCase().includes('ticker')
     })
 
     // Columns A (0), B (1), C (2), L (11) to AA (26)
-    // Table headers: indices 0, 1, 2, 11-26
-    const allowedDividendsTableIndices = [0, 1, 2, ...Array.from({ length: 16 }, (_, i) => 11 + i)] // 0,1,2, 11-26
-    const allowedDividendsHeaders = dividendsHeaders.filter((_, i) => allowedDividendsTableIndices.includes(i) && dividendsHeaders[i])
+    // Table headers: indices 0, 1, 11-26 (Skip index 2 which is MESE)
+    const allowedDividendsTableIndices = [0, 1, ...Array.from({ length: 16 }, (_, i) => 11 + i)] // 0,1, 11-26
+
+    const monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
+    const getColumnLabel = (index: number, originalLabel: string) => {
+        if (index >= 11 && index <= 22) {
+            return monthNames[index - 11]
+        }
+        return originalLabel
+    }
 
     // Chart data: columns L (11) to W (22) - 12 months of data
     // We need to aggregate monthly totals across all stocks
@@ -255,7 +265,7 @@ export default function DividendPortfolioPage() {
         })
     })
 
-    const monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
+
     const dividendsChartData = monthlyDividends.map((value, i) => ({
         name: monthNames[i],
         month: i + 1,
@@ -663,21 +673,26 @@ export default function DividendPortfolioPage() {
                             <table className="w-full text-sm text-left text-gray-400">
                                 <thead className="text-xs text-gray-500 uppercase bg-gray-800/50">
                                     <tr>
-                                        {allowedDividendsHeaders.map((header) => (
-                                            <th key={header} className="px-6 py-3 whitespace-nowrap">{header}</th>
-                                        ))}
+                                        {allowedDividendsTableIndices.map((colIndex) => {
+                                            const originalLabel = dividendsHeaders[colIndex]
+                                            return (
+                                                <th key={originalLabel} className="px-6 py-3 whitespace-nowrap">
+                                                    {getColumnLabel(colIndex, originalLabel)}
+                                                </th>
+                                            )
+                                        })}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {dividendsList.map((row: any, index: number) => (
                                         <tr key={index} className="border-b border-gray-800 hover:bg-gray-800/20">
-                                            {Object.keys(row).map((key, i) => {
-                                                if (!allowedDividendsHeaders.includes(key)) return null
+                                            {allowedDividendsTableIndices.map((colIndex, i) => {
+                                                const key = dividendsHeaders[colIndex]
                                                 const value = row[key]
                                                 let colorClass = 'text-gray-300'
 
-                                                // Color numeric values
-                                                if (typeof value === 'string' && i >= 3) {
+                                                // Color numeric values (assuming from index 3 onwards in original list were numeric)
+                                                if (typeof value === 'string' && i >= 2) {
                                                     const numValue = parseItNum(value)
                                                     if (numValue > 0) colorClass = 'text-green-500'
                                                 }

@@ -176,10 +176,44 @@ export const getETFHolders = async (symbol: string) => {
 }
 
 export const getETFSectorWeight = async (symbol: string) => {
-    return fetchFMP(`/etf-sector-weight/${symbol}`)
+    return fetchFMP(`/etf-sector-weightings/${symbol}`)
 }
 
 export const getETFCountryWeight = async (symbol: string) => {
-    return fetchFMP(`/etf-country-weight/${symbol}`)
+    return fetchFMP(`/etf-country-weightings/${symbol}`)
+}
+
+// === Macroeconomic Data ===
+
+export const getEconomicIndicator = async (name: string) => {
+    // Uses v4 endpoint
+    // name examples: GDP, CPI, unemploymentRate, federalFunds
+    const url = `${BASE_URL.replace('v3', 'v4')}/economic?name=${name}&apikey=${FMP_API_KEY}`
+
+    try {
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`FMP API Error: ${res.status}`)
+        return await res.json()
+    } catch (error) {
+        console.error(`Failed to fetch Economic Indicator (${name}):`, error)
+        return []
+    }
+}
+
+export const getTreasuryRates = async (from?: string, to?: string) => {
+    // Uses v4 endpoint
+    let url = `${BASE_URL.replace('v3', 'v4')}/treasury?apikey=${FMP_API_KEY}`
+    if (from && to) {
+        url += `&from=${from}&to=${to}`
+    }
+
+    try {
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`FMP API Error: ${res.status}`)
+        return await res.json()
+    } catch (error) {
+        console.error("Failed to fetch Treasury Rates:", error)
+        return []
+    }
 }
 

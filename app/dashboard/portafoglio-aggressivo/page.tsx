@@ -332,15 +332,15 @@ export default function AggressivePortfolioPage() {
             {/* TREND & STRATEGY & MOVEMENTS SECTION */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 {/* TREND CHART (2 Cols) */}
-                {trendChartData.length > 0 ? (
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
-                                <TrendingUp className="w-5 h-5 text-blue-500" />
-                                Andamento Anno in Corso
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="h-[350px]">
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
+                            <TrendingUp className="w-5 h-5 text-blue-500" />
+                            Andamento Anno in Corso
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-[350px]">
+                        {trendChartData.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={trendChartData}>
                                     <defs>
@@ -388,9 +388,13 @@ export default function AggressivePortfolioPage() {
                                     />
                                 </AreaChart>
                             </ResponsiveContainer>
-                        </CardContent>
-                    </Card>
-                ) : null}
+                        ) : (
+                            <div className="flex items-center justify-center h-full text-gray-500">
+                                Nessun dato storico disponibile
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
 
                 {/* STRATEGY CARD (1 Col) */}
                 <Card className="bg-gray-900 border-gray-800 lg:col-span-1">

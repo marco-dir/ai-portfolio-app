@@ -318,14 +318,14 @@ export default function ModeratePortfolioPage() {
             </div>
 
             {/* --- SECTION 0: CURRENT YEAR TREND & STRATEGY --- */}
-            {parsedCurrentYear.length > 0 && (
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    {/* CHART */}
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Andamento Anno in Corso</CardTitle>
-                        </CardHeader>
-                        <CardContent className="h-[300px]">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                {/* CHART */}
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Andamento Anno in Corso</CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-[300px]">
+                        {parsedCurrentYear.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={parsedCurrentYear}>
                                     <defs>
@@ -371,72 +371,76 @@ export default function ModeratePortfolioPage() {
                                     />
                                 </AreaChart>
                             </ResponsiveContainer>
-                        </CardContent>
-                    </Card>
+                        ) : (
+                            <div className="flex items-center justify-center h-full text-gray-500">
+                                Nessun dato storico disponibile
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
 
-                    {/* STRATEGY DESCRIPTION */}
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Strategia Portafoglio</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4 text-gray-300 text-sm">
-                            <p>
-                                Portafoglio focalizzato su investimenti a medio rischio, con una componente equilibrata di Azioni e Obbligazioni e strumenti a reddito fisso.
-                            </p>
-                            <ul className="space-y-3">
-                                <li className="flex items-start justify-between border-b border-gray-800 pb-2">
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                                        <span className="font-medium text-white">Fondi</span>
-                                    </div>
-                                    <span className="text-right text-gray-400">ETF azionario mondiale (Target 10%)</span>
-                                </li>
-                                <li className="flex items-start justify-between border-b border-gray-800 pb-2">
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
-                                        <span className="font-medium text-white">Azioni</span>
-                                    </div>
-                                    <span className="text-right text-gray-400">Area Euro e USA (Target 40%)</span>
-                                </li>
-                                <li className="flex items-start justify-between border-b border-gray-800 pb-2">
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                                        <span className="font-medium text-white">Obbligazioni</span>
-                                    </div>
-                                    <span className="text-right text-gray-400">Titoli di Stato e Corporate (Target 40%)</span>
-                                </li>
-                                <li className="flex items-start justify-between border-b border-gray-800 pb-2">
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
-                                        <span className="font-medium text-white">Cash</span>
-                                    </div>
-                                    <span className="text-right text-gray-400">Conto Deposito o Risparmio (Target 10%)</span>
-                                </li>
+                {/* STRATEGY DESCRIPTION */}
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Strategia Portafoglio</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 text-gray-300 text-sm">
+                        <p>
+                            Portafoglio focalizzato su investimenti a medio rischio, con una componente equilibrata di Azioni e Obbligazioni e strumenti a reddito fisso.
+                        </p>
+                        <ul className="space-y-3">
+                            <li className="flex items-start justify-between border-b border-gray-800 pb-2">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+                                    <span className="font-medium text-white">Fondi</span>
+                                </div>
+                                <span className="text-right text-gray-400">ETF azionario mondiale (Target 10%)</span>
+                            </li>
+                            <li className="flex items-start justify-between border-b border-gray-800 pb-2">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
+                                    <span className="font-medium text-white">Azioni</span>
+                                </div>
+                                <span className="text-right text-gray-400">Area Euro e USA (Target 40%)</span>
+                            </li>
+                            <li className="flex items-start justify-between border-b border-gray-800 pb-2">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                                    <span className="font-medium text-white">Obbligazioni</span>
+                                </div>
+                                <span className="text-right text-gray-400">Titoli di Stato e Corporate (Target 40%)</span>
+                            </li>
+                            <li className="flex items-start justify-between border-b border-gray-800 pb-2">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
+                                    <span className="font-medium text-white">Cash</span>
+                                </div>
+                                <span className="text-right text-gray-400">Conto Deposito o Risparmio (Target 10%)</span>
+                            </li>
+                        </ul>
+                    </CardContent>
+                </Card>
+
+                {/* LATEST MOVEMENTS */}
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Ultimi Movimenti</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        {movementsData.length > 0 ? (
+                            <ul className="space-y-2">
+                                {movementsData.map((movement, idx) => (
+                                    <li key={idx} className="text-sm text-gray-300 border-b border-gray-800 pb-1 last:border-0">
+                                        {movement}
+                                    </li>
+                                ))}
                             </ul>
-                        </CardContent>
-                    </Card>
-
-                    {/* LATEST MOVEMENTS */}
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Ultimi Movimenti</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {movementsData.length > 0 ? (
-                                <ul className="space-y-2">
-                                    {movementsData.map((movement, idx) => (
-                                        <li key={idx} className="text-sm text-gray-300 border-b border-gray-800 pb-1 last:border-0">
-                                            {movement}
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p className="text-sm text-gray-500 italic">Nessun movimento recente</p>
-                            )}
-                        </CardContent>
-                    </Card>
-                </div>
-            )}
+                        ) : (
+                            <p className="text-sm text-gray-500 italic">Nessun movimento recente</p>
+                        )}
+                    </CardContent>
+                </Card>
+            </div>
 
             {/* --- SECTION 1: ASSET ALLOCATION --- */}
             <div className="space-y-6">

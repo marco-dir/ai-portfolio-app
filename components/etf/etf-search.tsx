@@ -1,5 +1,7 @@
 "use client"
 
+// Force update
+
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Search, Loader2 } from "lucide-react"

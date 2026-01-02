@@ -364,14 +364,14 @@ export default function DiramcoPortfolioPage() {
             </div>
 
             {/* --- SECTION 0: HISTORICAL CHART & STRATEGY & MOVEMENTS --- */}
-            {parsedHistory.length > 0 && (
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    {/* Chart - Takes up 2 columns */}
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Andamento Storico (Anno Corrente)</CardTitle>
-                        </CardHeader>
-                        <CardContent className="h-[350px]">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                {/* Chart - Takes up 2 columns */}
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-2">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Andamento Storico (Anno Corrente)</CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-[350px]">
+                        {parsedHistory.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={parsedHistory}>
                                     <defs>
@@ -409,78 +409,82 @@ export default function DiramcoPortfolioPage() {
                                     />
                                 </AreaChart>
                             </ResponsiveContainer>
-                        </CardContent>
-                    </Card>
+                        ) : (
+                            <div className="flex items-center justify-center h-full text-gray-500">
+                                Nessun dato storico disponibile
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
 
-                    {/* Strategy Description - Takes up 1 column */}
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Strategia Portafoglio</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4 text-sm text-gray-400">
-                                <p>
-                                    Portafoglio focalizzato su investimenti ad alto rischio, con una forte componente di Azioni,
-                                    una componente intermedia di Obbligazioni e una componente minima di Fondi e Liquidità.
-                                </p>
+                {/* Strategy Description - Takes up 1 column */}
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Strategia Portafoglio</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4 text-sm text-gray-400">
+                            <p>
+                                Portafoglio focalizzato su investimenti ad alto rischio, con una forte componente di Azioni,
+                                una componente intermedia di Obbligazioni e una componente minima di Fondi e Liquidità.
+                            </p>
+                            <ul className="space-y-3">
+                                <li className="flex gap-2">
+                                    <div className="min-w-[4px] bg-blue-500 rounded-full h-auto self-stretch"></div>
+                                    <div>
+                                        <strong className="text-white block">Fondi</strong>
+                                        ETF azionari mondiali, materie prime e cryptovalute con Target inferiore al 5%.
+                                    </div>
+                                </li>
+                                <li className="flex gap-2">
+                                    <div className="min-w-[4px] bg-purple-500 rounded-full h-auto self-stretch"></div>
+                                    <div>
+                                        <strong className="text-white block">Azioni</strong>
+                                        Azioni area Euro, Cina e USA con Target variabile tra 50% e 80%.
+                                    </div>
+                                </li>
+                                <li className="flex gap-2">
+                                    <div className="min-w-[4px] bg-orange-500 rounded-full h-auto self-stretch"></div>
+                                    <div>
+                                        <strong className="text-white block">Obbligazioni</strong>
+                                        Titoli di Stato e Corporate area Euro con Target tra 20% e 40%.
+                                    </div>
+                                </li>
+                                <li className="flex gap-2">
+                                    <div className="min-w-[4px] bg-emerald-500 rounded-full h-auto self-stretch"></div>
+                                    <div>
+                                        <strong className="text-white block">Liquidità</strong>
+                                        Variabile in base alle condizioni di mercato, dividendi e interessi maturati.
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Recent Movements - Takes up 1 column */}
+                <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-medium text-white">Ultimi Movimenti</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {parsedMovements.length > 0 ? (
                                 <ul className="space-y-3">
-                                    <li className="flex gap-2">
-                                        <div className="min-w-[4px] bg-blue-500 rounded-full h-auto self-stretch"></div>
-                                        <div>
-                                            <strong className="text-white block">Fondi</strong>
-                                            ETF azionari mondiali, materie prime e cryptovalute con Target inferiore al 5%.
-                                        </div>
-                                    </li>
-                                    <li className="flex gap-2">
-                                        <div className="min-w-[4px] bg-purple-500 rounded-full h-auto self-stretch"></div>
-                                        <div>
-                                            <strong className="text-white block">Azioni</strong>
-                                            Azioni area Euro, Cina e USA con Target variabile tra 50% e 80%.
-                                        </div>
-                                    </li>
-                                    <li className="flex gap-2">
-                                        <div className="min-w-[4px] bg-orange-500 rounded-full h-auto self-stretch"></div>
-                                        <div>
-                                            <strong className="text-white block">Obbligazioni</strong>
-                                            Titoli di Stato e Corporate area Euro con Target tra 20% e 40%.
-                                        </div>
-                                    </li>
-                                    <li className="flex gap-2">
-                                        <div className="min-w-[4px] bg-emerald-500 rounded-full h-auto self-stretch"></div>
-                                        <div>
-                                            <strong className="text-white block">Liquidità</strong>
-                                            Variabile in base alle condizioni di mercato, dividendi e interessi maturati.
-                                        </div>
-                                    </li>
+                                    {parsedMovements.map((movement: string, index: number) => (
+                                        <li key={index} className="flex gap-3 text-sm border-b border-gray-800 pb-2 last:border-0 last:pb-0">
+                                            <div className="min-w-[4px] bg-gray-600 rounded-full h-auto self-stretch"></div>
+                                            <span className="text-gray-300">{movement}</span>
+                                        </li>
+                                    ))}
                                 </ul>
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* Recent Movements - Takes up 1 column */}
-                    <Card className="bg-gray-900 border-gray-800 lg:col-span-1">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Ultimi Movimenti</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                {parsedMovements.length > 0 ? (
-                                    <ul className="space-y-3">
-                                        {parsedMovements.map((movement: string, index: number) => (
-                                            <li key={index} className="flex gap-3 text-sm border-b border-gray-800 pb-2 last:border-0 last:pb-0">
-                                                <div className="min-w-[4px] bg-gray-600 rounded-full h-auto self-stretch"></div>
-                                                <span className="text-gray-300">{movement}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p className="text-sm text-gray-500">Nessun movimento recente.</p>
-                                )}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-            )}
+                            ) : (
+                                <p className="text-sm text-gray-500">Nessun movimento recente.</p>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
 
             {/* --- SECTION 1: ASSET ALLOCATION --- */}
             <div className="space-y-6">
