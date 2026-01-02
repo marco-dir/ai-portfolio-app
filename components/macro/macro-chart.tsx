@@ -39,7 +39,7 @@ export function MacroChart({ title, data, dataKey, color, unit = "" }: { title: 
                         <Tooltip
                             contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#F3F4F6' }}
                             itemStyle={{ color: '#F3F4F6' }}
-                            formatter={(value: number) => [`${formatNumber(value)}${unit}`, title]}
+                            formatter={(value: any) => [`${formatNumber(value)}${unit}`, title]}
                             labelFormatter={(label) => `Data: ${label}`}
                         />
                         <Area
