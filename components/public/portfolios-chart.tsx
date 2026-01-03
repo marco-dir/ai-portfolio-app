@@ -15,12 +15,21 @@ const data = [
     },
     {
         year: '2025',
-        'Conservativo': 3.29,
-        'Moderato': 8.09,
-        'Aggressivo': 9.35,
-        'Dividendi': 16.20,
-        'ETF': 10.34,
-        'DIRAMCO': 3.70,
+        'Conservativo': 3.37,
+        'Moderato': 8.10,
+        'Aggressivo': 9.72,
+        'Dividendi': 16.34,
+        'ETF': 10.41,
+        'DIRAMCO': 3.84,
+    },
+    {
+        year: '2026',
+        'Conservativo': -0.02,
+        'Moderato': -0.01,
+        'Aggressivo': -0.13,
+        'Dividendi': 0.35,
+        'ETF': -0.16,
+        'DIRAMCO': 0.29,
     },
 ]
 
