@@ -62,8 +62,8 @@ export default async function SuperinvestorsPage({
                                 key={inv.cik}
                                 href={`/dashboard/superinvestitori?cik=${inv.cik}`}
                                 className={`px-4 py-3 rounded-xl border whitespace-nowrap transition-all flex items-center gap-2 ${inv.cik === selectedInvestor.cik
-                                        ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20"
-                                        : "bg-gray-900 border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white"
+                                    ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20"
+                                    : "bg-gray-900 border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white"
                                     }`}
                             >
                                 <Briefcase size={16} />
@@ -75,59 +75,81 @@ export default async function SuperinvestorsPage({
 
                 {holdings && holdings.length > 0 ? (
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Summary Card */}
-                        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 lg:col-span-1">
-                            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                                <PieChart size={20} className="text-purple-500" />
-                                Asset Allocation
-                            </h2>
-                            <div className="mb-6">
-                                <p className="text-sm text-gray-400">Valore Totale Portafoglio</p>
-                                <p className="text-2xl font-bold text-white">${formatNumber(totalValue)}</p>
-                                <p className="text-xs text-gray-500 mt-1">Data: {holdings[0].dateReported}</p>
+                        {/* Summary Card - Premium Sidebar */}
+                        <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700/50 rounded-2xl overflow-hidden lg:col-span-1">
+                            <div className="p-6 border-b border-gray-800">
+                                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                                    <div className="p-2 bg-purple-500/15 rounded-lg">
+                                        <PieChart size={18} className="text-purple-400" />
+                                    </div>
+                                    Asset Allocation
+                                </h2>
+                            </div>
+
+                            <div className="p-6 space-y-4">
+                                <div className="bg-gray-800/50 rounded-xl p-4">
+                                    <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Valore Totale</p>
+                                    <p className="text-2xl font-bold text-white">${formatNumber(totalValue)}</p>
+                                </div>
+                                <div className="bg-gray-800/50 rounded-xl p-4">
+                                    <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Data Filing</p>
+                                    <p className="text-lg font-semibold text-white">{holdings[0].filingDate || holdings[0].dateReported}</p>
+                                </div>
+                                <div className="bg-gray-800/50 rounded-xl p-4">
+                                    <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Posizioni Totali</p>
+                                    <p className="text-lg font-semibold text-white">{holdings.length}</p>
+                                </div>
                             </div>
 
                             {/* Chart Component */}
-                            <div className="h-[300px]">
-                                <SuperinvestorChart data={chartData} />
+                            <div className="px-6 pb-6">
+                                <div className="h-[280px]">
+                                    <SuperinvestorChart data={chartData} />
+                                </div>
                             </div>
                         </div>
 
-                        {/* Holdings Table */}
-                        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 lg:col-span-2">
-                            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                                <TrendingUp size={20} className="text-green-500" />
-                                Top Holdings
-                            </h2>
+                        {/* Holdings Table - Premium Style */}
+                        <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700/50 rounded-2xl overflow-hidden lg:col-span-2">
+                            <div className="p-6 border-b border-gray-800">
+                                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                                    <div className="p-2 bg-green-500/15 rounded-lg">
+                                        <TrendingUp size={18} className="text-green-400" />
+                                    </div>
+                                    Top Holdings
+                                </h2>
+                            </div>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm text-left">
-                                    <thead className="text-xs text-gray-400 uppercase bg-gray-800/50">
+                                    <thead className="text-xs text-gray-400 uppercase bg-gray-800/30">
                                         <tr>
-                                            <th className="px-6 py-3 rounded-l-lg">Simbolo</th>
-                                            <th className="px-6 py-3">Nome (dal 13F)</th>
-                                            <th className="px-6 py-3 text-right">Azioni</th>
-                                            <th className="px-6 py-3 text-right">Valore</th>
-                                            <th className="px-6 py-3 text-right rounded-r-lg">% Port.</th>
+                                            <th className="px-6 py-4">Simbolo</th>
+                                            <th className="px-6 py-4">Nome Azienda</th>
+                                            <th className="px-6 py-4 text-right">Azioni</th>
+                                            <th className="px-6 py-4 text-right">Valore</th>
+                                            <th className="px-6 py-4 text-right">% Port.</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-800">
+                                    <tbody className="divide-y divide-gray-800/50">
                                         {sortedHoldings.map((item: any, i: number) => {
                                             const percent = (item.marketValue / totalValue) * 100;
                                             return (
                                                 <tr key={i} className="hover:bg-gray-800/30 transition-colors">
-                                                    <td className="px-6 py-4 font-medium text-blue-400">
-                                                        <Link href={`/dashboard/analisi-finanziaria?ticker=${item.symbol}`} className="hover:underline">
+                                                    <td className="px-6 py-4">
+                                                        <Link href={`/dashboard/analisi-finanziaria?ticker=${item.symbol}`} className="font-medium text-blue-400 hover:text-blue-300 transition-colors">
                                                             {item.symbol}
                                                         </Link>
                                                     </td>
-                                                    <td className="px-6 py-4 text-gray-300 truncate max-w-[200px]">{item.companyName || item.symbol}</td>
-                                                    <td className="px-6 py-4 text-right text-gray-300">{formatNumber(item.shares)}</td>
+                                                    <td className="px-6 py-4 text-gray-300 truncate max-w-[200px]">{item.securityName || item.companyName || item.symbol}</td>
+                                                    <td className="px-6 py-4 text-right text-gray-300 font-mono">{formatNumber(item.sharesNumber)}</td>
                                                     <td className="px-6 py-4 text-right text-white font-medium">${formatNumber(item.marketValue)}</td>
                                                     <td className="px-6 py-4 text-right">
-                                                        <div className="flex items-center justify-end gap-2">
-                                                            <span className="text-gray-300">{percent.toFixed(2)}%</span>
-                                                            <div className="w-16 h-1 bg-gray-700 rounded-full overflow-hidden">
-                                                                <div className="h-full bg-blue-500" style={{ width: `${Math.min(percent, 100)}%` }} />
+                                                        <div className="flex items-center justify-end gap-3">
+                                                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${percent > 10 ? 'bg-blue-500/20 text-blue-400' : percent > 5 ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}`}>
+                                                                {percent.toFixed(2)}%
+                                                            </span>
+                                                            <div className="w-16 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                                                <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500" style={{ width: `${Math.min(percent, 100)}%` }} />
                                                             </div>
                                                         </div>
                                                     </td>

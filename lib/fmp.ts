@@ -255,3 +255,8 @@ export const getSuperInvestorHoldings = async (cik: string, date?: string) => {
         return []
     }
 }
+
+export const getVIX = async () => {
+    const quote = await getQuote('^VIX')
+    return quote ? quote[0] : null
+}
