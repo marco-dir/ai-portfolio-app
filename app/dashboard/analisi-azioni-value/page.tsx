@@ -170,6 +170,7 @@ export default async function FundamentalAnalysisPage({
                             cashFlows={cashFlows || []}
                             dividendHistory={dividendHistory || []}
                             currency={companyProfile.currency || 'USD'}
+                            symbol={ticker}
                         />
                     )}
 

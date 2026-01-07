@@ -54,22 +54,60 @@ export default async function SuperinvestorsPage({
                     <p className="text-gray-400">Analizza i portafogli dei più grandi investitori del mondo (Dati 13F).</p>
                 </div>
 
-                {/* Investor Selector - Horizontal Scrollable List */}
-                <div className="overflow-x-auto pb-4 custom-scrollbar">
-                    <div className="flex gap-4">
-                        {SUPERINVESTORS.map((inv) => (
-                            <Link
-                                key={inv.cik}
-                                href={`/dashboard/superinvestitori?cik=${inv.cik}`}
-                                className={`px-4 py-3 rounded-xl border whitespace-nowrap transition-all flex items-center gap-2 ${inv.cik === selectedInvestor.cik
-                                    ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20"
-                                    : "bg-gray-900 border-gray-800 text-gray-400 hover:border-gray-700 hover:text-white"
-                                    }`}
-                            >
-                                <Briefcase size={16} />
-                                <span className="font-medium">{inv.name}</span>
-                            </Link>
-                        ))}
+                {/* Investor Selector - Premium Grid Layout */}
+                <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/50 border border-gray-700/50 rounded-2xl p-6">
+                    <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <Briefcase size={18} className="text-blue-400" />
+                        Seleziona Investitore
+                    </h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
+                        {SUPERINVESTORS.map((inv) => {
+                            const isSelected = inv.cik === selectedInvestor.cik
+                            // Extract investor name and fund name
+                            const nameMatch = inv.name.match(/^([^(]+)(?:\s*\(([^)]+)\))?$/)
+                            const investorName = nameMatch?.[1]?.trim() || inv.name
+                            const fundName = nameMatch?.[2]?.trim()
+                            // Get initials for avatar
+                            const initials = investorName.split(' ').slice(0, 2).map(n => n[0]).join('')
+
+                            return (
+                                <Link
+                                    key={inv.cik}
+                                    href={`/dashboard/superinvestitori?cik=${inv.cik}`}
+                                    className={`group relative p-4 rounded-xl border transition-all duration-300 ${isSelected
+                                            ? "bg-gradient-to-br from-blue-600 to-blue-700 border-blue-500 text-white shadow-lg shadow-blue-500/20"
+                                            : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-blue-500/50 hover:bg-gray-800 hover:shadow-lg hover:shadow-blue-500/5"
+                                        }`}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        {/* Avatar */}
+                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${isSelected
+                                                ? "bg-white/20 text-white"
+                                                : "bg-gradient-to-br from-blue-500 to-purple-600 text-white"
+                                            }`}>
+                                            {initials}
+                                        </div>
+                                        {/* Text */}
+                                        <div className="min-w-0">
+                                            <p className={`font-semibold text-sm truncate ${isSelected ? 'text-white' : 'text-white group-hover:text-blue-400'}`}>
+                                                {investorName}
+                                            </p>
+                                            {fundName && (
+                                                <p className={`text-xs truncate ${isSelected ? 'text-blue-200' : 'text-gray-500'}`}>
+                                                    {fundName}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    {/* Selection indicator */}
+                                    {isSelected && (
+                                        <div className="absolute top-2 right-2">
+                                            <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                                        </div>
+                                    )}
+                                </Link>
+                            )
+                        })}
                     </div>
                 </div>
 

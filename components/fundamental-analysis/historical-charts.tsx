@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useMemo, useState, useEffect } from "react"
 import {
     LineChart,
     Line,
@@ -20,23 +20,64 @@ interface HistoricalChartsProps {
     cashFlows: any[]
     dividendHistory: any[]
     currency: string
+    symbol?: string
 }
 
 export function HistoricalCharts({
-    incomeStatements,
-    balanceSheets,
-    cashFlows,
+    incomeStatements: initialIncomeStatements,
+    balanceSheets: initialBalanceSheets,
+    cashFlows: initialCashFlows,
     dividendHistory,
-    currency
+    currency,
+    symbol
 }: HistoricalChartsProps) {
     const currencySymbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency
+    const [period, setPeriod] = useState<'annual' | 'quarter'>('annual')
+    const [loading, setLoading] = useState(false)
+    const [incomeStatements, setIncomeStatements] = useState(initialIncomeStatements)
+    const [balanceSheets, setBalanceSheets] = useState(initialBalanceSheets)
+    const [cashFlows, setCashFlows] = useState(initialCashFlows)
 
-    // Prepare comprehensive financial data (30 years)
+    // Fetch data when period changes
+    useEffect(() => {
+        if (period === 'annual') {
+            // Reset to initial data for annual
+            setIncomeStatements(initialIncomeStatements)
+            setBalanceSheets(initialBalanceSheets)
+            setCashFlows(initialCashFlows)
+            return
+        }
+
+        if (!symbol) return
+
+        const fetchQuarterlyData = async () => {
+            setLoading(true)
+            try {
+                const response = await fetch(`/api/stocks/statements?symbol=${symbol}&period=quarter`)
+                if (response.ok) {
+                    const data = await response.json()
+                    setIncomeStatements(data.incomeStatements)
+                    setBalanceSheets(data.balanceSheets)
+                    setCashFlows(data.cashFlows)
+                }
+            } catch (error) {
+                console.error("Error fetching quarterly data:", error)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchQuarterlyData()
+    }, [period, symbol, initialIncomeStatements, initialBalanceSheets, initialCashFlows])
+
+    // Prepare comprehensive financial data
     const financialData = useMemo(() => {
         if (!incomeStatements || incomeStatements.length === 0) return []
 
+        const dataLimit = period === 'quarter' ? 120 : 30
+
         return incomeStatements
-            .slice(0, 30)
+            .slice(0, dataLimit)
             .reverse()
             .map((income, idx) => {
                 const balance = balanceSheets?.find(b => b.date === income.date)
@@ -45,8 +86,19 @@ export function HistoricalCharts({
 
                 const annualDividend = dividendHistory?.find(d => new Date(d.date).getFullYear() === new Date(income.date).getFullYear())
 
+                // Format label based on period
+                const date = new Date(income.date)
+                let label: string
+                if (period === 'quarter') {
+                    const quarter = Math.ceil((date.getMonth() + 1) / 3)
+                    label = `Q${quarter} ${date.getFullYear().toString().slice(-2)}`
+                } else {
+                    label = date.getFullYear().toString()
+                }
+
                 return {
-                    year: new Date(income.date).getFullYear().toString(),
+                    year: label,
+
                     // Revenue
                     revenue: income.revenue / 1000000000,
                     // EPS
@@ -69,7 +121,7 @@ export function HistoricalCharts({
                     investingCF: cashFlow ? (cashFlow.cashFlowFromInvestment || cashFlow.netCashUsedForInvestingActivites || 0) / 1000000000 : 0
                 }
             })
-    }, [incomeStatements, balanceSheets, cashFlows])
+    }, [incomeStatements, balanceSheets, cashFlows, dividendHistory, period])
 
     if (financialData.length === 0) {
         return (
@@ -82,7 +134,41 @@ export function HistoricalCharts({
 
     return (
         <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-white">Grafici Storici Finanziari (30 Anni)</h3>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <h3 className="text-2xl font-bold text-white">
+                    Grafici Storici Finanziari {period === 'annual' ? '(30 Anni)' : '(Trimestrali)'}
+                </h3>
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => setPeriod('annual')}
+                        disabled={loading}
+                        className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${period === 'annual'
+                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
+                            } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        Annuale
+                    </button>
+                    <button
+                        onClick={() => setPeriod('quarter')}
+                        disabled={loading}
+                        className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${period === 'quarter'
+                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                                : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
+                            } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        Trimestrale
+                    </button>
+                </div>
+            </div>
+
+            {loading && (
+                <div className="flex items-center justify-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                    <span className="ml-3 text-gray-400">Caricamento dati trimestrali...</span>
+                </div>
+            )}
+
 
             {/* Revenue & EPS */}
             <div className="grid md:grid-cols-2 gap-6">

@@ -149,19 +149,11 @@ export default async function DashboardPage() {
                         Patrimonio Totale
                     </h1>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <p className="text-blue-200 text-sm font-medium mb-1">Valore Netto</p>
                             <div className="text-4xl font-bold text-white tracking-tight">
                                 ${formatNumber(totalNetWorth)}
-                            </div>
-                        </div>
-
-                        <div>
-                            <p className="text-blue-200 text-sm font-medium mb-1">Rendimento YTD</p>
-                            <div className={`text-3xl font-bold flex items-center gap-2 ${aggregateYTD >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                {aggregateYTD >= 0 ? <TrendingUp size={28} /> : <TrendingDown size={28} />}
-                                {aggregateYTD >= 0 ? '+' : ''}{formatNumber(aggregateYTD)}%
                             </div>
                         </div>
 
@@ -212,20 +204,7 @@ export default async function DashboardPage() {
                                         </p>
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <p className="text-xs text-gray-500 mb-1">Rendimento YTD</p>
-                                            <p className={`font-semibold ${portfolio.ytdReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                                {portfolio.ytdReturn >= 0 ? '+' : ''}{formatNumber(portfolio.ytdReturn)}%
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-gray-500 mb-1">Yield</p>
-                                            <p className="font-semibold text-blue-400">
-                                                {formatNumber(portfolio.dividendYield)}%
-                                            </p>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                                 <div className="mt-6 pt-4 border-t border-gray-800 flex justify-between items-center text-xs text-gray-500">

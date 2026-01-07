@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowLeft, Calendar, User, Clock, Share2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { CommentSection } from "@/components/blog/comment-section";
+import { NewsletterSignup } from "@/components/blog/newsletter-signup";
 
 interface BlogPost {
     id: number;
@@ -148,6 +149,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         Condividi
                     </button>
                 </div>
+
+                {/* Newsletter Signup */}
+                <NewsletterSignup />
 
                 <CommentSection slug={resolvedParams.slug} />
             </main>
