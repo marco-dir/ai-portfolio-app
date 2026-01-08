@@ -1,18 +1,18 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { Suspense, useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import { BarChart3, Briefcase, ChevronLeft, DollarSign, Landmark, LayoutDashboard, Lightbulb, LogOut, Menu, PieChart, Send, Star, TrendingUp, User, Users, X, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { PaymentSuccessHandler } from "@/components/payment-success-handler"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
-    const { data: session, status, update } = useSession()
+    const { data: session, status } = useSession()
     const router = useRouter()
-    const searchParams = useSearchParams()
 
     // Separate states for mobile and desktop to avoid conflicts
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -23,12 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         setIsMobileMenuOpen(false)
     }, [pathname])
 
-    // Handle Payment Success
-    useEffect(() => {
-        if (searchParams.get('payment') === 'success') {
-            update()
-        }
-    }, [searchParams, update])
+    // Payment success logic moved to PaymentSuccessHandler component
 
     // Enforce Subscription Access
     useEffect(() => {
@@ -58,9 +53,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             // This layout is valid for /dashboard/*.
 
             if (!isSubActive && !isTrialActive) {
-                // If payment was just successful, give it a moment or show processing
-                // Don't redirect immediately to avoid loops while session updates
-                if (searchParams.get('payment') === 'success') {
+                // Check if payment=success via window since we can't useSearchParams here directy
+                // But easier: the PaymentSuccessHandler handles the update()
+                // We just need to delay redirect if payment success is present in URL
+                // We can use window.location.search in client component safely inside useEffect? Yes.
+                const params = new URLSearchParams(window.location.search)
+                if (params.get('payment') === 'success') {
                     return
                 }
 
@@ -68,7 +66,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 router.push('/abbonamento')
             }
         }
-    }, [session, status, router, searchParams])
+    }, [session, status, router])
 
     const navItems = [
         // Analisi (first 2)
@@ -213,6 +211,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return (
         <div className="flex min-h-screen bg-gray-950 text-white">
+            <Suspense fallback={null}>
+                <PaymentSuccessHandler />
+            </Suspense>
+
             {/* Mobile Header */}
             <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-gray-950 border-b border-gray-800 z-40 flex items-center justify-between px-4">
                 <div className="flex items-center gap-3">
