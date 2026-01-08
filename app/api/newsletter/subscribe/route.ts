@@ -12,52 +12,65 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const apiKey = process.env.MAILPOET_API_KEY;
-        const listId = process.env.MAILPOET_LIST_ID;
-        const wpUrl = process.env.WORDPRESS_URL || "https://diramco.com";
+        const apiKey = process.env.MAILCHIMP_API_KEY;
+        const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
+        const serverPrefix = process.env.MAILCHIMP_SERVER_PREFIX; // e.g., "us21"
 
-        if (!apiKey) {
-            console.error("MAILPOET_API_KEY not configured");
+        if (!apiKey || !audienceId || !serverPrefix) {
+            console.error("Mailchimp configuration missing:", {
+                hasApiKey: !!apiKey,
+                hasAudienceId: !!audienceId,
+                hasServerPrefix: !!serverPrefix
+            });
             return NextResponse.json(
                 { error: "Configurazione newsletter mancante" },
                 { status: 500 }
             );
         }
 
-        // Call MailPoet API
-        const response = await fetch(`${wpUrl}/wp-json/mailpoet/v1/subscribers`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Basic ${Buffer.from(`${apiKey}:`).toString("base64")}`,
-            },
-            body: JSON.stringify({
-                email: email,
-                status: "subscribed",
-                lists: listId ? [parseInt(listId, 10)] : undefined,
-            }),
-        });
+        // Call Mailchimp API
+        const response = await fetch(
+            `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceId}/members`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Basic ${Buffer.from(`anystring:${apiKey}`).toString("base64")}`,
+                },
+                body: JSON.stringify({
+                    email_address: email,
+                    status: "subscribed", // Use "pending" for double opt-in
+                }),
+            }
+        );
 
         const data = await response.json();
 
         if (response.ok) {
             return NextResponse.json({
                 success: true,
-                message: "Iscrizione completata! Controlla la tua email per confermare.",
+                message: "Iscrizione completata! Benvenuto nella nostra newsletter.",
             });
         }
 
-        // Handle MailPoet specific errors
-        if (response.status === 409 || data.code === "mailpoet_subscriber_exists") {
+        // Handle Mailchimp specific errors
+        if (data.title === "Member Exists") {
             return NextResponse.json(
                 { error: "Questa email è già iscritta alla newsletter" },
                 { status: 409 }
             );
         }
 
-        console.error("MailPoet API error:", data);
+        if (data.title === "Invalid Resource") {
+            return NextResponse.json(
+                { error: "Email non valida. Verifica l'indirizzo inserito." },
+                { status: 400 }
+            );
+        }
+
+        console.error("Mailchimp API error:", data);
         return NextResponse.json(
-            { error: data.message || "Errore durante l'iscrizione" },
+            { error: data.detail || "Errore durante l'iscrizione" },
             { status: response.status }
         );
     } catch (error) {
@@ -68,3 +81,4 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
