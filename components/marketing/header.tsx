@@ -82,7 +82,7 @@ export function MarketingHeader() {
             <div className="flex items-center gap-4">
                 <Link
                     href="/disclaimer"
-                    className="px-6 py-2 text-gray-300 hover:text-white transition-colors"
+                    className="hidden md:block px-6 py-2 text-gray-300 hover:text-white transition-colors"
                 >
                     Disclaimer
                 </Link>

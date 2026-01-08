@@ -16,7 +16,8 @@ import {
     getDividendHistory,
     getInstitutionalHolders,
     getMutualFundHolders,
-    getBeneficialOwnership
+    getBeneficialOwnership,
+    getEarningsTranscripts
 } from "@/lib/fmp"
 import { FinancialAnalysisSearch } from "@/components/financial-analysis/search-bar"
 import { CompanyHeader } from "@/components/financial-analysis/company-header"
@@ -47,6 +48,7 @@ export default async function FinancialAnalysisPage({
     let institutionalHolders = null
     let mutualFundHolders = null
     let beneficialOwnership = null
+    let transcripts = null
 
     if (ticker) {
         // Parallel data fetching
@@ -67,7 +69,8 @@ export default async function FinancialAnalysisPage({
             getDividendHistory(ticker),
             getInstitutionalHolders(ticker),
             getMutualFundHolders(ticker),
-            getBeneficialOwnership(ticker)
+            getBeneficialOwnership(ticker),
+            getEarningsTranscripts(ticker, 1) // Fetch latest transcript
         ])
 
         // Helper to extract value or null
@@ -91,6 +94,7 @@ export default async function FinancialAnalysisPage({
         institutionalHolders = results[14].status === 'fulfilled' ? results[14].value : null
         mutualFundHolders = results[15].status === 'fulfilled' ? results[15].value : null
         beneficialOwnership = results[16].status === 'fulfilled' ? results[16].value : null
+        transcripts = results[17].status === 'fulfilled' ? results[17].value : null
     }
 
     return (
@@ -133,6 +137,7 @@ export default async function FinancialAnalysisPage({
                             institutionalHolders={institutionalHolders}
                             mutualFundHolders={mutualFundHolders}
                             beneficialOwnership={beneficialOwnership}
+                            transcripts={transcripts}
                             quote={quote}
                             profile={companyProfile}
                         />

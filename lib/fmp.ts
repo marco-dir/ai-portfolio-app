@@ -260,3 +260,43 @@ export const getVIX = async () => {
     const quote = await getQuote('^VIX')
     return quote ? quote[0] : null
 }
+
+// === Senate Trading Data ===
+
+export const getSenateTrading = async (limit: number = 1000) => {
+    // Uses v4 RSS feed endpoint which returns recent global trades
+    // Standard senate-trading endpoint requires symbol parameter or returns empty
+    const url = `${BASE_URL.replace('v3', 'v4')}/senate-trading-rss-feed?apikey=${FMP_API_KEY}&limit=${limit}`
+
+    try {
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`FMP API Error: ${res.status}`)
+        return await res.json()
+    } catch (error) {
+        console.error("Failed to fetch Senate Trading:", error)
+        return []
+    }
+}
+
+export const getSenateDisclosure = async (symbol?: string) => {
+    // Uses v4 endpoint for senate disclosure by symbol
+    let url = `${BASE_URL.replace('v3', 'v4')}/senate-disclosure?apikey=${FMP_API_KEY}`
+    if (symbol) {
+        url += `&symbol=${symbol}`
+    }
+
+    try {
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`FMP API Error: ${res.status}`)
+        return await res.json()
+    } catch (error) {
+        console.error("Failed to fetch Senate Disclosure:", error)
+        return []
+    }
+}
+
+export const getEarningsTranscripts = async (symbol: string, limit: number = 1) => {
+    // Uses v3 endpoint which returns full content
+    return fetchFMP(`/earning_call_transcript/${symbol}?limit=${limit}`)
+}
+

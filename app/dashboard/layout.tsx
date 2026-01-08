@@ -3,15 +3,16 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import { BarChart3, Briefcase, ChevronLeft, DollarSign, Landmark, LayoutDashboard, Lightbulb, LogOut, Menu, PieChart, Send, Star, TrendingUp, User, Users, X, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
-    const { data: session, status } = useSession()
+    const { data: session, status, update } = useSession()
     const router = useRouter()
+    const searchParams = useSearchParams()
 
     // Separate states for mobile and desktop to avoid conflicts
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -21,6 +22,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     useEffect(() => {
         setIsMobileMenuOpen(false)
     }, [pathname])
+
+    // Handle Payment Success
+    useEffect(() => {
+        if (searchParams.get('payment') === 'success') {
+            update()
+        }
+    }, [searchParams, update])
 
     // Enforce Subscription Access
     useEffect(() => {
@@ -50,11 +58,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             // This layout is valid for /dashboard/*.
 
             if (!isSubActive && !isTrialActive) {
+                // If payment was just successful, give it a moment or show processing
+                // Don't redirect immediately to avoid loops while session updates
+                if (searchParams.get('payment') === 'success') {
+                    return
+                }
+
                 // If user is inside dashboard, kick them out
                 router.push('/abbonamento')
             }
         }
-    }, [session, status, router])
+    }, [session, status, router, searchParams])
 
     const navItems = [
         // Analisi (first 2)

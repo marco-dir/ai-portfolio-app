@@ -13,7 +13,8 @@ import {
     Newspaper,
     Target,
     Calendar,
-    Building2
+    Building2,
+    ScrollText
 } from "lucide-react"
 
 // We'll import these as we build them. For now placeholders.
@@ -24,6 +25,7 @@ import { InsiderTab } from "./tabs/insider-tab"
 import { EstimatesTab } from "./tabs/estimates-tab"
 import { HistoricalPriceChart } from "./tabs/historical-price-chart"
 import { OwnershipTab } from "./tabs/ownership-tab"
+import { TranscriptTab } from "./tabs/transcript-tab"
 
 export function AnalysisTabs({
     ticker,
@@ -43,7 +45,8 @@ export function AnalysisTabs({
     profile,
     institutionalHolders,
     mutualFundHolders,
-    beneficialOwnership
+    beneficialOwnership,
+    transcripts
 }: {
     ticker: string
     incomeStatement: any
@@ -63,6 +66,7 @@ export function AnalysisTabs({
     institutionalHolders: any
     mutualFundHolders: any
     beneficialOwnership: any
+    transcripts: any
 }) {
     const [activeTab, setActiveTab] = useState("overview")
 
@@ -80,6 +84,7 @@ export function AnalysisTabs({
         { id: "ownership", label: "Proprietà", icon: Building2 }, // Re-using Building2 or could use another icon if available
         { id: "news", label: "Notizie", icon: Newspaper },
         { id: "calendar", label: "Calendario", icon: Calendar },
+        { id: "transcripts", label: "Earnings Call", icon: ScrollText },
     ]
 
     return (
@@ -201,6 +206,9 @@ export function AnalysisTabs({
                         beneficialOwnership={beneficialOwnership}
                         sharesOutstanding={quote?.sharesOutstanding}
                     />
+                )}
+                {activeTab === "transcripts" && (
+                    <TranscriptTab data={transcripts} />
                 )}
                 {activeTab === "estimates" && (
                     <EstimatesTab estimates={estimates} ratings={ratings} recommendations={recommendations} />

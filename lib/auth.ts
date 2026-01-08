@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
                 }
             }
         },
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session }) {
             if (user) {
                 return {
                     ...token,
@@ -74,6 +74,25 @@ export const authOptions: NextAuthOptions = {
                     trialEndsAt: user.trialEndsAt,
                 }
             }
+
+            // Refetch user data on update trigger
+            if (trigger === "update") {
+                if (token.sub) {
+                    const freshUser = await prisma.user.findUnique({
+                        where: { id: token.sub }
+                    });
+
+                    if (freshUser) {
+                        return {
+                            ...token,
+                            role: freshUser.role,
+                            subscriptionStatus: freshUser.subscriptionStatus,
+                            trialEndsAt: freshUser.trialEndsAt
+                        }
+                    }
+                }
+            }
+
             return token
         }
     }

@@ -1,8 +1,8 @@
 import { Suspense } from "react"
-import { getSuperInvestorHoldings, SUPERINVESTORS, getQuote } from "@/lib/fmp"
+import { getSuperInvestorHoldings, SUPERINVESTORS, getQuote, getSenateTrading } from "@/lib/fmp"
 import { formatCurrency, formatNumber } from "@/lib/format-utils"
 import Link from "next/link"
-import { PieChart, Briefcase, TrendingUp } from "lucide-react"
+import { PieChart, Briefcase, TrendingUp, Landmark } from "lucide-react"
 
 // Client component for the chart needs to be separate if using recharts interactivity purely
 // But let's build a simple server rendered view first or import client chart components
@@ -43,6 +43,75 @@ export default async function SuperinvestorsPage({
         percent: (h.marketValue / totalValue) * 100
     }))
 
+    // Fetch Senate Trading Data
+    const senateTradesRaw = await getSenateTrading()
+
+    // Aggregate trades by senator and estimate total values
+    const senatorAggregates: Record<string, {
+        name: string,
+        trades: number,
+        estimatedValue: number,
+        recentTrades: any[],
+        lastTradeDate: string
+    }> = {}
+
+    // Helper to estimate value from FMP amount ranges
+    const estimateValue = (amount: string) => {
+        if (!amount) return 0
+        if (amount.includes('$50,000,001')) return 75000000
+        if (amount.includes('$25,000,001')) return 37500000
+        if (amount.includes('$5,000,001')) return 12500000
+        if (amount.includes('$1,000,001')) return 2500000
+        if (amount.includes('$500,001')) return 750000
+        if (amount.includes('$250,001')) return 375000
+        if (amount.includes('$100,001')) return 175000
+        if (amount.includes('$50,001')) return 75000
+        if (amount.includes('$15,001')) return 32500
+        if (amount.includes('$1,001')) return 8000
+        return 5000
+    }
+
+    if (Array.isArray(senateTradesRaw)) {
+        senateTradesRaw.forEach((trade: any) => {
+            const fullName = `${trade.firstName || ''} ${trade.lastName || ''}`.trim()
+            if (!fullName) return
+
+            if (!senatorAggregates[fullName]) {
+                senatorAggregates[fullName] = {
+                    name: fullName,
+                    trades: 0,
+                    estimatedValue: 0,
+                    recentTrades: [],
+                    lastTradeDate: trade.transactionDate || trade.disclosureDate || ''
+                }
+            }
+
+            senatorAggregates[fullName].trades++
+            senatorAggregates[fullName].estimatedValue += estimateValue(trade.amount)
+
+            // Keep only last 5 trades per senator
+            if (senatorAggregates[fullName].recentTrades.length < 5) {
+                senatorAggregates[fullName].recentTrades.push({
+                    symbol: trade.symbol || trade.ticker || trade.assetDescription?.match(/\(([A-Z]+)\)/)?.[1] || 'N/A',
+                    type: trade.type || 'Unknown',
+                    amount: trade.amount,
+                    date: trade.transactionDate || trade.disclosureDate
+                })
+            }
+
+            // Update last trade date if newer
+            const currentDate = trade.transactionDate || trade.disclosureDate || ''
+            if (currentDate > senatorAggregates[fullName].lastTradeDate) {
+                senatorAggregates[fullName].lastTradeDate = currentDate
+            }
+        })
+    }
+
+    // Sort by estimated value and take top 8
+    const topSenators = Object.values(senatorAggregates)
+        .sort((a, b) => b.estimatedValue - a.estimatedValue)
+        .slice(0, 8)
+
     return (
         <div className="container mx-auto px-4 py-8 min-h-screen">
             <div className="flex flex-col gap-6">
@@ -51,7 +120,7 @@ export default async function SuperinvestorsPage({
                         <UsersIcon className="w-8 h-8 text-blue-500" />
                         Superinvestitori
                     </h1>
-                    <p className="text-gray-400">Analizza i portafogli dei più grandi investitori del mondo (Dati 13F).</p>
+                    <p className="text-gray-400">Analizza i portafogli dei più grandi investitori del mondo (Dati 13F) e le operazioni di trading dei Senatori USA.</p>
                 </div>
 
                 {/* Investor Selector - Premium Grid Layout */}
@@ -75,15 +144,15 @@ export default async function SuperinvestorsPage({
                                     key={inv.cik}
                                     href={`/dashboard/superinvestitori?cik=${inv.cik}`}
                                     className={`group relative p-4 rounded-xl border transition-all duration-300 ${isSelected
-                                            ? "bg-gradient-to-br from-blue-600 to-blue-700 border-blue-500 text-white shadow-lg shadow-blue-500/20"
-                                            : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-blue-500/50 hover:bg-gray-800 hover:shadow-lg hover:shadow-blue-500/5"
+                                        ? "bg-gradient-to-br from-blue-600 to-blue-700 border-blue-500 text-white shadow-lg shadow-blue-500/20"
+                                        : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-blue-500/50 hover:bg-gray-800 hover:shadow-lg hover:shadow-blue-500/5"
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
                                         {/* Avatar */}
                                         <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${isSelected
-                                                ? "bg-white/20 text-white"
-                                                : "bg-gradient-to-br from-blue-500 to-purple-600 text-white"
+                                            ? "bg-white/20 text-white"
+                                            : "bg-gradient-to-br from-blue-500 to-purple-600 text-white"
                                             }`}>
                                             {initials}
                                         </div>
@@ -204,6 +273,74 @@ export default async function SuperinvestorsPage({
                         <Briefcase className="w-12 h-12 text-gray-600 mx-auto mb-4" />
                         <h3 className="text-xl font-bold text-white mb-2">Nessun dato disponibile</h3>
                         <p className="text-gray-400">Non siamo riusciti a recuperare i dati 13F per questo investitore al momento.</p>
+                    </div>
+                )}
+
+                {/* Senators Trading Section */}
+                {topSenators.length > 0 && (
+                    <div className="mt-8">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-3 bg-amber-500/15 rounded-xl">
+                                <Landmark size={24} className="text-amber-400" />
+                            </div>
+                            <div>
+                                <h2 className="text-2xl font-bold text-white">Senatori USA - Trading</h2>
+                                <p className="text-gray-400 text-sm">I senatori con il maggior volume di trading (dati STOCK Act)</p>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {topSenators.map((senator, idx) => (
+                                <div key={senator.name} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700/50 rounded-xl p-5 hover:border-amber-500/30 transition-all duration-300">
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold text-sm">
+                                                {senator.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold text-white text-sm">{senator.name}</h3>
+                                                <p className="text-xs text-gray-500">{senator.trades} operazioni</p>
+                                            </div>
+                                        </div>
+                                        <div className="px-2 py-1 bg-amber-500/20 rounded-full">
+                                            <span className="text-xs font-medium text-amber-400">#{idx + 1}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-gray-800/50 rounded-lg p-3 mb-3">
+                                        <p className="text-xs text-gray-400 mb-1">Valore Stimato Totale</p>
+                                        <p className="text-lg font-bold text-amber-400">
+                                            ${formatNumber(senator.estimatedValue)}
+                                        </p>
+                                    </div>
+
+                                    {senator.recentTrades.length > 0 && (
+                                        <div>
+                                            <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Ultime Operazioni</p>
+                                            <div className="space-y-1.5">
+                                                {senator.recentTrades.slice(0, 5).map((trade, tIdx) => (
+                                                    <div key={tIdx} className="flex items-center justify-between text-xs">
+                                                        <span className="text-gray-300 font-mono">{trade.symbol}</span>
+                                                        <span className={`px-1.5 py-0.5 rounded ${trade.type?.toLowerCase().includes('purchase')
+                                                            ? 'bg-green-500/20 text-green-400'
+                                                            : 'bg-red-500/20 text-red-400'
+                                                            }`}>
+                                                            {trade.type?.toLowerCase().includes('purchase') ? 'BUY' : 'SELL'}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {senator.lastTradeDate && (
+                                        <p className="text-xs text-gray-600 mt-3 pt-3 border-t border-gray-800">
+                                            Ultimo trade: {new Date(senator.lastTradeDate).toLocaleDateString('it-IT')}
+                                        </p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>
