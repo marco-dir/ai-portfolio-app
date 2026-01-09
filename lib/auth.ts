@@ -38,7 +38,12 @@ export const authOptions: NextAuthOptions = {
                     return null
                 }
 
-                console.log('[AUTH DEBUG] User from DB:', { email: user.email, role: user.role })
+                console.log('[AUTH DEBUG] User from DB:', {
+                    email: user.email,
+                    role: user.role,
+                    subStatus: user.subscriptionStatus,
+                    stripeId: user.stripeSubscriptionId
+                })
 
                 return {
                     id: user.id,

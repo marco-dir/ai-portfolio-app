@@ -246,10 +246,13 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
         totalBuy = totalBuy * rate
         totalCurrent = totalCurrent * rate
 
+        const gainPercent = totalBuy > 0 ? ((totalCurrent - totalBuy) / totalBuy) * 100 : 0
+
         return {
             name: stock.symbol,
             Investito: totalBuy,
-            Valore: totalCurrent
+            Valore: totalCurrent,
+            gainPercent: gainPercent
         }
     })
 
@@ -415,6 +418,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
         const calculateDividends = async () => {
             let total = 0
             const currentYear = new Date().getFullYear()
+            const prevYear = currentYear - 1
             const monthlyData = Array(12).fill(0)
             const monthNames = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"]
 
@@ -425,20 +429,52 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                         const data = await res.json()
                         const stockDividends = (data && data.historical) ? data.historical : []
 
+                        // Sort by date desc (newest first)
+                        stockDividends.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+                        const lastKnownDividend = stockDividends[0]?.dividend || 0
+
                         // Get currency for conversion
                         const currency = detailedData[stock.symbol]?.currency || "USD"
                         const rate = forexRates[currency] || 1
 
-                        stockDividends.forEach((d: { date: string, paymentDate?: string, dividend: number }) => {
-                            const date = new Date(d.paymentDate || d.date) // Use paymentDate if available
-                            if (date.getFullYear() === currentYear) {
-                                let amount = d.dividend * stock.quantity
-                                // Convert to USD
+                        // Helper to get month index from dividend object
+                        const getMonth = (d: any) => new Date(d.paymentDate || d.date).getMonth()
+
+                        // 1. Confirmed dividends for Current Year
+                        const confirmedThisYear = stockDividends.filter((d: any) =>
+                            new Date(d.paymentDate || d.date).getFullYear() === currentYear
+                        )
+
+                        // 2. Confirmed dividends for Previous Year (to build schedule)
+                        const confirmedPrevYear = stockDividends.filter((d: any) =>
+                            new Date(d.paymentDate || d.date).getFullYear() === prevYear
+                        )
+
+                        // 3. Fill monthly buckets
+                        for (let month = 0; month < 12; month++) {
+                            // Check if we have a confirmed dividend for this month in current year
+                            const confirmed = confirmedThisYear.find((d: any) => getMonth(d) === month)
+
+                            if (confirmed) {
+                                // Use confirmed amount
+                                let amount = confirmed.dividend * stock.quantity
                                 amount = amount * rate
+                                monthlyData[month] += amount
                                 total += amount
-                                monthlyData[date.getMonth()] += amount
+                            } else {
+                                // If not confirmed, check if we normally receive one this month (based on prev year)
+                                const wasPaidLastYear = confirmedPrevYear.some((d: any) => getMonth(d) === month)
+
+                                if (wasPaidLastYear) {
+                                    // Project using last known dividend amount
+                                    let amount = lastKnownDividend * stock.quantity
+                                    amount = amount * rate
+                                    monthlyData[month] += amount
+                                    total += amount
+                                }
                             }
-                        })
+                        }
                     }
                 } catch (e) {
                     console.error(e)
@@ -473,6 +509,27 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
             </text>
         );
     };
+
+    // Custom Tooltip for Performance Chart
+    const CustomPerformanceTooltip = ({ active, payload, label }: any) => {
+        if (active && payload && payload.length) {
+            const data = payload[0].payload
+            const isPositive = data.gainPercent >= 0
+            return (
+                <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-lg">
+                    <p className="font-bold text-white mb-2">{label}</p>
+                    <div className="space-y-1 text-sm">
+                        <p className="text-[#8884d8]">Investito: ${data.Investito.toFixed(2)}</p>
+                        <p className="text-[#82ca9d]">Valore: ${data.Valore.toFixed(2)}</p>
+                        <div className={`mt-2 pt-2 border-t border-gray-700 font-semibold ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+                            P/L: {isPositive ? '+' : ''}{data.gainPercent.toFixed(2)}%
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        return null
+    }
 
     return (
         <div className="space-y-8">
@@ -772,7 +829,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                                             <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                                             <XAxis dataKey="name" stroke="#9CA3AF" />
                                             <YAxis stroke="#9CA3AF" />
-                                            <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: 'none' }} />
+                                            <Tooltip content={<CustomPerformanceTooltip />} />
                                             <Legend />
                                             <Bar dataKey="Investito" fill="#8884d8" />
                                             <Bar dataKey="Valore" fill="#82ca9d" />
@@ -838,7 +895,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                     {portfolio.stocks.length > 0 && (
                         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-8">
                             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                <BarChartIcon size={20} /> Dividendi Mensili (YTD)
+                                <BarChartIcon size={20} /> Dividendi Mensili (Stimati 2026)
                             </h3>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
