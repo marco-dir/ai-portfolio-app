@@ -18,6 +18,7 @@ export const sendWelcomeEmail = async (email: string, name?: string) => {
                         <li>Monitorare i tuoi investimenti</li>
                         <li>Ricevere analisi basate sull'IA</li>
                         <li>Tenere traccia dei dividendi</li>
+                        <li>Analizzare azioni, ETF e molto altro 📊</li>
                     </ul>
                     <p>A presto,<br/>Il team di DIRAMCO</p>
                 </div>
