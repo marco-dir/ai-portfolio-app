@@ -9,77 +9,88 @@ export async function POST(req: Request) {
     const headerPayload = await headers()
     const signature = headerPayload.get('Stripe-Signature') as string
 
+    console.log('[WEBHOOK] Received stripe webhook request')
+
     let event: Stripe.Event
 
     try {
+        if (!process.env.STRIPE_WEBHOOK_SECRET) {
+            console.error('[WEBHOOK] Missing STRIPE_WEBHOOK_SECRET')
+            return new NextResponse('Missing stripe webhook secret', { status: 500 })
+        }
+
         event = stripe.webhooks.constructEvent(
             body,
             signature,
             process.env.STRIPE_WEBHOOK_SECRET!
         )
     } catch (error: any) {
+        console.error(`[WEBHOOK] Error verifying signature: ${error.message}`)
         return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 })
     }
 
+    console.log(`[WEBHOOK] Processing event: ${event.type}`)
+
     const session = event.data.object as Stripe.Checkout.Session
 
-    if (event.type === 'checkout.session.completed') {
-        const subscription = await stripe.subscriptions.retrieve(
-            session.subscription as string
-        )
+    try {
+        if (event.type === 'checkout.session.completed') {
+            const subscription = await stripe.subscriptions.retrieve(
+                session.subscription as string
+            )
 
-        if (!session?.metadata?.userId) {
-            return new NextResponse('User id is required', { status: 400 })
+            if (!session?.metadata?.userId) {
+                console.error('[WEBHOOK] Missing userId in metadata')
+                return new NextResponse('User id is required', { status: 400 })
+            }
+
+            console.log(`[WEBHOOK] Updating user ${session.metadata.userId} with subscription ${subscription.id}`)
+
+            await prisma.user.update({
+                where: {
+                    id: session.metadata.userId,
+                },
+                data: {
+                    stripeSubscriptionId: subscription.id,
+                    stripeCustomerId: subscription.customer as string,
+                    subscriptionStatus: 'active',
+                    trialEndsAt: null,
+                },
+            })
+            console.log('[WEBHOOK] User updated successfully')
         }
 
-        await prisma.user.update({
-            where: {
-                id: session.metadata.userId,
-            },
-            data: {
-                stripeSubscriptionId: subscription.id,
-                stripeCustomerId: subscription.customer as string,
-                subscriptionStatus: 'active', // Plan is active
-                trialEndsAt: null, // Trial is over/consumed by sub
-            },
-        })
-    }
+        if (event.type === 'invoice.payment_succeeded') {
+            const subscription = await stripe.subscriptions.retrieve(
+                session.subscription as string
+            )
 
-    if (event.type === 'invoice.payment_succeeded') {
-        const subscription = await stripe.subscriptions.retrieve(
-            session.subscription as string
-        )
+            console.log(`[WEBHOOK] Handling invoice payment success for sub ${subscription.id}`)
 
-        // Ensure status is active
-        await prisma.user.update({
-            where: {
-                stripeSubscriptionId: subscription.id,
-            },
-            data: {
-                subscriptionStatus: 'active',
-            },
-        })
-    }
+            await prisma.user.update({
+                where: {
+                    stripeSubscriptionId: subscription.id,
+                },
+                data: {
+                    subscriptionStatus: 'active',
+                },
+            })
+            console.log('[WEBHOOK] Subscription status activated')
+        }
 
-    // Handle subscription cancellation or expiration
-    if (event.type === 'customer.subscription.deleted' || event.type === 'customer.subscription.updated') {
-        const subscription = event.data.object as Stripe.Subscription;
+        if (event.type === 'customer.subscription.deleted' || event.type === 'customer.subscription.updated') {
+            const subscription = event.data.object as Stripe.Subscription;
+            console.log(`[WEBHOOK] Handling subscription update/delete for sub ${subscription.id}, status: ${subscription.status}`)
 
-        // If status is canceled or past_due
-        if (subscription.status === 'canceled' || subscription.status === 'past_due' || subscription.status === 'unpaid') {
             await prisma.user.update({
                 where: { stripeSubscriptionId: subscription.id },
                 data: { subscriptionStatus: subscription.status }
             });
+            console.log('[WEBHOOK] Subscription status updated')
         }
-
-        // If it becomes active again (e.g. payment retried success)
-        if (subscription.status === 'active') {
-            await prisma.user.update({
-                where: { stripeSubscriptionId: subscription.id },
-                data: { subscriptionStatus: 'active' }
-            });
-        }
+    } catch (error: any) {
+        console.error('[WEBHOOK] DB Update Error:', error)
+        return new NextResponse(`Database Error: ${error.message}`, { status: 500 })
     }
 
     return new NextResponse(null, { status: 200 })
