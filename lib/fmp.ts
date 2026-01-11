@@ -185,10 +185,17 @@ export const getETFCountryWeight = async (symbol: string) => {
 
 // === Macroeconomic Data ===
 
-export const getEconomicIndicator = async (name: string) => {
+// === Macroeconomic Data ===
+
+export const getEconomicIndicator = async (name: string, from?: string, to?: string) => {
     // Uses v4 endpoint
     // name examples: GDP, CPI, unemploymentRate, federalFunds
-    const url = `${BASE_URL.replace('v3', 'v4')}/economic?name=${name}&apikey=${FMP_API_KEY}`
+    let url = `${BASE_URL.replace('v3', 'v4')}/economic?name=${name}&apikey=${FMP_API_KEY}`
+
+    // Add date range if provided (FMP v4 might accept from/to, or we just fetch all and slice)
+    // Checking docs, v4 economic often just returns all or takes from/to
+    if (from) url += `&from=${from}`
+    if (to) url += `&to=${to}`
 
     try {
         const res = await fetch(url)
@@ -215,6 +222,15 @@ export const getTreasuryRates = async (from?: string, to?: string) => {
         console.error("Failed to fetch Treasury Rates:", error)
         return []
     }
+}
+
+export const getMarketIndicators = async () => {
+    // Fetch quotes for VIX, USD Index, Commodities
+    // Symbols: ^VIX, DX-Y.NYB, CLUSD (Oil), HGUSD (Copper)
+    // Note: FMP symbols for commodities might vary. 
+    // Trying standard ones: CLUSD (Crude Oil), HGUSD (Copper), GCUSD (Gold)
+    const symbols = ['^VIX', 'DX-Y.NYB', 'CLUSD', 'GCUSD'].join(',')
+    return getQuote(symbols)
 }
 
 

@@ -79,41 +79,51 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
         const data: Record<string, StockData> = {}
         const details: Record<string, DetailedStockData> = {}
         const newRates: Record<string, number> = { ...forexRates }
+        const currenciesToFetch = new Set<string>()
 
-        for (const stock of portfolio.stocks) {
+        // 1. Fetch all stock data in parallel
+        await Promise.all(portfolio.stocks.map(async (stock) => {
             try {
-                // Fetch Quote
-                const resQuote = await fetch(`/api/stocks/quote?symbol=${stock.symbol}`)
+                // Fetch Quote and Details in parallel for this stock
+                const [resQuote, resDetails] = await Promise.all([
+                    fetch(`/api/stocks/quote?symbol=${stock.symbol}`),
+                    fetch(`/api/stocks/details?symbol=${stock.symbol}`)
+                ])
+
                 if (resQuote.ok) {
                     const quote = await resQuote.json()
                     data[stock.symbol] = quote
                 }
 
-                // Fetch Details (Sector, Beta, Historical, Country, Currency)
-                const resDetails = await fetch(`/api/stocks/details?symbol=${stock.symbol}`)
                 if (resDetails.ok) {
                     const detail = await resDetails.json()
                     details[stock.symbol] = detail
 
-                    // Check currency and fetch rate if needed
                     const currency = detail.currency || "USD"
                     if (currency !== "USD" && !newRates[currency]) {
-                        try {
-                            const resRate = await fetch(`/api/forex?currency=${currency}`)
-                            if (resRate.ok) {
-                                const rateData = await resRate.json()
-                                newRates[currency] = rateData.rate
-                            }
-                        } catch (e) {
-                            console.error(`Failed to fetch rate for ${currency}`, e)
-                        }
+                        currenciesToFetch.add(currency)
                     }
                 }
-
             } catch (e) {
-                console.error(e)
+                console.error(`Error fetching data for ${stock.symbol}:`, e)
             }
+        }))
+
+        // 2. Fetch missing forex rates in parallel
+        if (currenciesToFetch.size > 0) {
+            await Promise.all(Array.from(currenciesToFetch).map(async (currency) => {
+                try {
+                    const resRate = await fetch(`/api/forex?currency=${currency}`)
+                    if (resRate.ok) {
+                        const rateData = await resRate.json()
+                        newRates[currency] = rateData.rate
+                    }
+                } catch (e) {
+                    console.error(`Failed to fetch rate for ${currency}`, e)
+                }
+            }))
         }
+
         setStockData(data)
         setDetailedData(details)
         setForexRates(newRates)
