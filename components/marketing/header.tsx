@@ -57,6 +57,13 @@ export function MarketingHeader() {
                         Portafogli
                     </Link>
                     <Link
+                        href="/strumenti"
+                        className={`transition-colors text-sm font-medium ${isActive('/strumenti') ? 'text-white' : 'text-gray-300 hover:text-white'
+                            }`}
+                    >
+                        Strumenti
+                    </Link>
+                    <Link
                         href="/abbonamento"
                         className={`transition-colors text-sm font-medium ${isActive('/abbonamento') ? 'text-white' : 'text-gray-300 hover:text-white'
                             }`}

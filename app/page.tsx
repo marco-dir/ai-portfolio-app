@@ -1,7 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
+import { Suspense } from "react"
 import HomeAnimations from "@/components/home-animations"
-import DiramcoEquityChart from "@/components/public/diramco-equity-chart"
+import EquityChartWrapper from "@/components/public/equity-chart-wrapper"
 import ReviewsSection from "@/components/public/reviews-section"
 import {
   TrendingUp,
@@ -9,7 +10,6 @@ import {
   PieChart,
   BarChart3,
   Lightbulb,
-  Star,
   ChevronRight,
   Zap,
   Target,
@@ -17,10 +17,7 @@ import {
   Layers
 } from "lucide-react"
 
-import { fetchEquityData } from "@/lib/data-fetcher"
-
-export default async function Home() {
-  const equityData = await fetchEquityData()
+export default function Home() {
 
   const features = [
     {
@@ -124,6 +121,12 @@ export default async function Home() {
               Portafogli
             </Link>
             <Link
+              href="/strumenti"
+              className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
+            >
+              Strumenti
+            </Link>
+            <Link
               href="/abbonamento"
               className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
             >
@@ -146,7 +149,7 @@ export default async function Home() {
         <div className="flex items-center gap-4">
           <Link
             href="/disclaimer"
-            className="px-6 py-2 text-gray-300 hover:text-white transition-colors"
+            className="hidden md:block px-6 py-2 text-gray-300 hover:text-white transition-colors"
           >
             Disclaimer
           </Link>
@@ -284,7 +287,9 @@ export default async function Home() {
               Trasparenza assoluta sui nostri risultati. Ecco l'andamento storico del portafoglio DIRAMCO.
             </p>
           </div>
-          <DiramcoEquityChart data={equityData} />
+          <Suspense fallback={<div className="h-[400px] w-full flex items-center justify-center text-gray-400">Caricamento grafico...</div>}>
+            <EquityChartWrapper />
+          </Suspense>
         </div>
       </section>
 

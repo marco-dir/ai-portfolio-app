@@ -103,3 +103,66 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         return false;
     }
 };
+
+export const sendSubscriptionSuccessEmail = async (email: string, planName: string = "Pro") => {
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'DIRAMCO <noreply@diramco.com>',
+            to: [email],
+            subject: 'Pagamento ricevuto - Il tuo abbonamento è attivo! 🚀',
+            html: `
+                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h1>Grazie per il tuo supporto!</h1>
+                    <p>Siamo felici di confermarti che il pagamento per il tuo abbonamento <strong>${planName}</strong> è andato a buon fine.</p>
+                    <p>Hai ora accesso completo a tutte le funzionalità premium di DIRAMCO:</p>
+                    <ul>
+                        <li>Analisi finanziarie illimitate</li>
+                        <li>Dati storici completi</li>
+                        <li>Portafogli modello AI</li>
+                        <li>E molto altro...</li>
+                    </ul>
+                    <p>Buon investimento!<br/>Il team di DIRAMCO</p>
+                </div>
+            `,
+        });
+
+        if (error) {
+            console.error('Error sending subscription success email:', error);
+            return false;
+        }
+
+        return true;
+    } catch (e) {
+        console.error('Exception sending subscription success email:', e);
+        return false;
+    }
+};
+
+export const sendSubscriptionCancelledEmail = async (email: string) => {
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'DIRAMCO <noreply@diramco.com>',
+            to: [email],
+            subject: 'Conferma cancellazione abbonamento',
+            html: `
+                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h1>Ci dispiace vederti andare via</h1>
+                    <p>Ti confermiamo che il rinnovo automatico del tuo abbonamento è stato annullato.</p>
+                    <p>Potrai continuare ad accedere alle funzionalità premium fino alla fine del periodo di fatturazione corrente.</p>
+                    <p>Se dovessi cambiare idea, saremo felici di riaverti con noi.</p>
+                    <p>A presto,<br/>Il team di DIRAMCO</p>
+                </div>
+            `,
+        });
+
+        if (error) {
+            console.error('Error sending subscription cancelled email:', error);
+            return false;
+        }
+
+        return true;
+    } catch (e) {
+        console.error('Exception sending subscription cancelled email:', e);
+        return false;
+    }
+};

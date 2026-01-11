@@ -33,6 +33,7 @@ export default withAuth(
                     "/abbonamento",
                     "/missione",
                     "/portafogli",
+                    "/strumenti",
                     "/blog",
                     "/contatti",
                     "/chi-siamo",

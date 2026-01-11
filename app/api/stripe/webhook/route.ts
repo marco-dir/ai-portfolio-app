@@ -4,6 +4,8 @@ import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import Stripe from 'stripe'
 
+import { sendSubscriptionSuccessEmail, sendSubscriptionCancelledEmail } from '@/lib/email'
+
 export async function POST(req: Request) {
     const body = await req.text()
     const headerPayload = await headers()
@@ -46,7 +48,7 @@ export async function POST(req: Request) {
 
             console.log(`[WEBHOOK] Updating user ${session.metadata.userId} with subscription ${subscription.id}`)
 
-            await prisma.user.update({
+            const user = await prisma.user.update({
                 where: {
                     id: session.metadata.userId,
                 },
@@ -58,36 +60,64 @@ export async function POST(req: Request) {
                 },
             })
             console.log('[WEBHOOK] User updated successfully')
+
+            // Send success email for new subscription
+            if (user.email) {
+                await sendSubscriptionSuccessEmail(user.email)
+                console.log('[WEBHOOK] Sent success email to', user.email)
+            }
         }
 
         if (event.type === 'invoice.payment_succeeded') {
-            const subscription = await stripe.subscriptions.retrieve(
-                session.subscription as string
-            )
+            const invoice = event.data.object as Stripe.Invoice
+            const subscriptionId = typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id
 
-            console.log(`[WEBHOOK] Handling invoice payment success for sub ${subscription.id}`)
+            if (subscriptionId) {
+                console.log(`[WEBHOOK] Handling invoice payment success for sub ${subscriptionId}`)
 
-            await prisma.user.update({
-                where: {
-                    stripeSubscriptionId: subscription.id,
-                },
-                data: {
-                    subscriptionStatus: 'active',
-                },
-            })
-            console.log('[WEBHOOK] Subscription status activated')
+                const user = await prisma.user.update({
+                    where: {
+                        stripeSubscriptionId: subscriptionId,
+                    },
+                    data: {
+                        subscriptionStatus: 'active',
+                    },
+                })
+                console.log('[WEBHOOK] Subscription status activated')
+
+                // Send success email only for renewals (updates) to avoid duplicate email with checkout.session.completed
+                if (invoice.billing_reason === 'subscription_cycle' && user.email) {
+                    await sendSubscriptionSuccessEmail(user.email)
+                    console.log('[WEBHOOK] Sent renewal success email to', user.email)
+                }
+            }
         }
 
-        if (event.type === 'customer.subscription.deleted' || event.type === 'customer.subscription.updated') {
+        if (event.type === 'customer.subscription.deleted') {
             const subscription = event.data.object as Stripe.Subscription;
-            console.log(`[WEBHOOK] Handling subscription update/delete for sub ${subscription.id}, status: ${subscription.status}`)
+            console.log(`[WEBHOOK] Handling subscription delete for sub ${subscription.id}`)
 
+            const user = await prisma.user.update({
+                where: { stripeSubscriptionId: subscription.id },
+                data: { subscriptionStatus: subscription.status }
+            });
+            console.log('[WEBHOOK] Subscription status updated to deleted')
+
+            if (user.email) {
+                await sendSubscriptionCancelledEmail(user.email)
+                console.log('[WEBHOOK] Sent cancellation email to', user.email)
+            }
+        }
+
+        if (event.type === 'customer.subscription.updated') {
+            const subscription = event.data.object as Stripe.Subscription;
+            // Just update status, no email needed usually unless status changed to active/past_due
             await prisma.user.update({
                 where: { stripeSubscriptionId: subscription.id },
                 data: { subscriptionStatus: subscription.status }
             });
-            console.log('[WEBHOOK] Subscription status updated')
         }
+
     } catch (error: any) {
         console.error('[WEBHOOK] DB Update Error:', error)
         return new NextResponse(`Database Error: ${error.message}`, { status: 500 })
