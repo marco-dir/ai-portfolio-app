@@ -84,10 +84,12 @@ export default function Home() {
       {/* Navigation */}
       <nav className="relative z-20 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
         <div className="flex items-center gap-12">
-          <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={40} height={40} className="w-10 h-10 rounded-full" />
-          <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-            DIRAMCO
-          </div>
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={40} height={40} className="w-10 h-10 rounded-full" />
+            <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+              DIRAMCO
+            </div>
+          </Link>
           <div className="hidden md:flex items-center gap-6">
             <div className="relative group">
               <Link
