@@ -40,7 +40,7 @@ export function AIAnalysis({ ticker, companyName }: AIAnalysisProps) {
             setAnalysis(data.analysis)
             setIsExpanded(true)
         } catch (err) {
-            setError('Impossibile recuperare l\'analisi AI. Verifica che la chiave API Perplexity sia configurata.')
+            setError('Impossibile recuperare l\'analisi IA. Verifica che la chiave API Perplexity sia configurata.')
             console.error(err)
         } finally {
             setIsLoading(false)
@@ -58,7 +58,7 @@ export function AIAnalysis({ ticker, companyName }: AIAnalysisProps) {
                     <Sparkles className="w-6 h-6 text-purple-400" />
                     <div className="text-left">
                         <h3 className="text-xl font-bold text-white">
-                            Analisi News AI
+                            Analisi News IA
                         </h3>
                         <p className="text-sm text-gray-400">
                             Ultimi risultati finanziari e sentiment di mercato

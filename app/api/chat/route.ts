@@ -3,13 +3,13 @@ import { rateLimit, getClientIp, RATE_LIMIT_CONFIGS } from "@/lib/rate-limit"
 
 // Site context for the AI
 const SITE_CONTEXT = `
-Sei l'assistente AI di DIRAMCO, una piattaforma italiana di analisi finanziaria e gestione portafogli.
+Sei l'assistente IA di DIRAMCO, una piattaforma italiana di analisi finanziaria e gestione portafogli.
 
 INFORMAZIONI SUL SITO:
 
 1. SERVIZI PRINCIPALI:
 - Analisi finanziaria avanzata con dati storici fino a 30 anni
-- Creazione di portafogli personalizzati tramite AI
+- Creazione di portafogli personalizzati tramite IA
 - Watchlist personalizzate per monitorare titoli
 - Portafogli modello (Conservativo, Moderato, Aggressivo, Dividendi, ETF)
 - Monitoraggio in tempo reale del portafoglio DIRAMCO

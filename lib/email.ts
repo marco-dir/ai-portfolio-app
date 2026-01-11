@@ -118,7 +118,7 @@ export const sendSubscriptionSuccessEmail = async (email: string, planName: stri
                     <ul>
                         <li>Analisi finanziarie illimitate</li>
                         <li>Dati storici completi</li>
-                        <li>Portafogli modello AI</li>
+                        <li>Portafogli modello IA</li>
                         <li>E molto altro...</li>
                     </ul>
                     <p>Buon investimento!<br/>Il team di DIRAMCO</p>

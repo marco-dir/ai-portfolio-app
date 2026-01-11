@@ -35,7 +35,7 @@ export function PortfolioAnalytics({ metrics, recommendations }: PortfolioAnalyt
             {/* Header */}
             <div className="flex items-center gap-2 mb-4">
                 <Shield className="text-blue-500" size={24} />
-                <h2 className="text-2xl font-bold text-white">Analisi Avanzata (AI Algorithm)</h2>
+                <h2 className="text-2xl font-bold text-white">Analisi Avanzata (Algoritmo IA)</h2>
             </div>
 
             {/* Metrics Grid */}

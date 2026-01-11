@@ -1061,7 +1061,7 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                     )}
 
                     <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
-                        <h2 className="text-xl font-semibold text-white mb-4">Analisi AI</h2>
+                        <h2 className="text-xl font-semibold text-white mb-4">Analisi IA</h2>
                         <p className="text-gray-400 text-sm mb-6">
                             Ottieni un&apos;analisi professionale del tuo portafoglio basata sui dati attuali.
                         </p>

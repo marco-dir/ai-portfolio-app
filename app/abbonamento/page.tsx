@@ -13,7 +13,7 @@ export default function SubscriptionPage() {
         "Analisi Finanziaria Avanzata (Dati storici 30 anni)",
         "Azioni Value (Dati storici 30 anni)",
         "Analisi ETF (Holdings, Settori, Paesi)",
-        "Creazione Portafogli Personalizzati (Analisi AI)",
+        "Creazione Portafogli Personalizzati (Analisi IA)",
         "Watchlist Personalizzate",
         "Visualizzazione Portafogli Modello",
         "Portafoglio Diramco in Tempo Reale (+ Movimenti)",
@@ -68,7 +68,7 @@ export default function SubscriptionPage() {
                             Sblocca il Tuo Potenziale
                         </h1>
                         <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                            Accedi a strumenti professionali, analisi AI e dati esclusivi per massimizzare i tuoi investimenti.
+                            Accedi a strumenti professionali, analisi IA e dati esclusivi per massimizzare i tuoi investimenti.
                         </p>
                     </div>
 

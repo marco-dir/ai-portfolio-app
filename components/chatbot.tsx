@@ -14,7 +14,7 @@ export function Chatbot() {
     const [messages, setMessages] = useState<Message[]>([
         {
             role: "assistant",
-            content: "Ciao! Sono l'assistente AI di DIRAMCO. Come posso aiutarti oggi? Posso rispondere a domande sui nostri servizi, portafogli e strategie di investimento."
+            content: "Ciao! Sono l'assistente IA di DIRAMCO. Come posso aiutarti oggi? Posso rispondere a domande sui nostri servizi, portafogli e strategie di investimento."
         }
     ])
     const [input, setInput] = useState("")
@@ -130,7 +130,7 @@ export function Chatbot() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-white">Assistente DIRAMCO</h3>
-                                <p className="text-xs text-white/70">Powered by AI</p>
+                                <p className="text-xs text-white/70">Powered by IA</p>
                             </div>
                         </div>
 
@@ -142,8 +142,8 @@ export function Chatbot() {
                                     className={`flex gap-3 ${message.role === "user" ? "flex-row-reverse" : ""}`}
                                 >
                                     <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.role === "user"
-                                            ? "bg-blue-600"
-                                            : "bg-purple-600"
+                                        ? "bg-blue-600"
+                                        : "bg-purple-600"
                                         }`}>
                                         {message.role === "user" ? (
                                             <User size={16} className="text-white" />
@@ -152,8 +152,8 @@ export function Chatbot() {
                                         )}
                                     </div>
                                     <div className={`max-w-[75%] px-4 py-2 rounded-2xl ${message.role === "user"
-                                            ? "bg-blue-600 text-white rounded-br-md"
-                                            : "bg-gray-800 text-gray-100 rounded-bl-md"
+                                        ? "bg-blue-600 text-white rounded-br-md"
+                                        : "bg-gray-800 text-gray-100 rounded-bl-md"
                                         }`}>
                                         <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                                     </div>
