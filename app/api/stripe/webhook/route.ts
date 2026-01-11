@@ -70,7 +70,10 @@ export async function POST(req: Request) {
 
         if (event.type === 'invoice.payment_succeeded') {
             const invoice = event.data.object as Stripe.Invoice
-            const subscriptionId = typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id
+            const subscription = (invoice as any).subscription as string | Stripe.Subscription | null
+            const subscriptionId = typeof subscription === 'string'
+                ? subscription
+                : subscription?.id
 
             if (subscriptionId) {
                 console.log(`[WEBHOOK] Handling invoice payment success for sub ${subscriptionId}`)
