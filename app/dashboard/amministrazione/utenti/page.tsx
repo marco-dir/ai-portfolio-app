@@ -29,6 +29,7 @@ export default async function UsersPage() {
             id: true,
             email: true,
             name: true,
+            surname: true,
             role: true,
             newsletterSubscribed: true,
             createdAt: true,
@@ -111,7 +112,7 @@ export default async function UsersPage() {
                                     <td className="px-6 py-4">
                                         <div>
                                             <p className="text-white font-medium">
-                                                {user.name || 'N/A'}
+                                                {[user.name, user.surname].filter(Boolean).join(' ') || 'N/A'}
                                             </p>
                                             <p className="text-sm text-gray-400">
                                                 {user.email}

@@ -33,7 +33,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ user: null, message: validation.error }, { status: 400 })
         }
 
-        const { email, password, name } = validation.data
+        const { email, password, name, surname } = validation.data
 
         const existingUser = await prisma.user.findUnique({
             where: { email }
@@ -50,6 +50,7 @@ export async function POST(req: Request) {
                 email,
                 password: hashedPassword,
                 name,
+                surname,
                 subscriptionStatus: 'trialing',
                 trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days trial
                 hasUsedTrial: true,

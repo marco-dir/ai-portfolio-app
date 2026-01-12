@@ -194,7 +194,7 @@ export function AnalysisTabs({
                 )}
 
                 {activeTab === "ratios" && (
-                    <KeyRatiosTab data={keyRatios} />
+                    <KeyRatiosTab data={keyRatios} historicalPrice={historicalPrice} />
                 )}
                 {activeTab === "insider" && (
                     <InsiderTab data={insiderTrades} />

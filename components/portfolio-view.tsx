@@ -851,10 +851,26 @@ export default function PortfolioView({ initialPortfolio, forexRate }: { initial
                             {/* Historical Line Chart */}
                             {hasHistoricalData && (
                                 <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 md:col-span-2">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                                            <TrendingUp size={20} /> Andamento Storico
-                                        </h3>
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                                                <TrendingUp size={20} /> Andamento Storico
+                                            </h3>
+                                            {/* Performance Metrics */}
+                                            {historicalChartData.length > 1 && (() => {
+                                                const startValue = historicalChartData[0]?.value || 0
+                                                const endValue = historicalChartData[historicalChartData.length - 1]?.value || 0
+                                                const changeEUR = endValue - startValue
+                                                const changePercent = startValue > 0 ? ((endValue - startValue) / startValue) * 100 : 0
+                                                const isPositive = changeEUR >= 0
+
+                                                return (
+                                                    <div className={`text-sm mt-1 font-medium ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+                                                        {isPositive ? '+' : ''}{changeEUR.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD ({isPositive ? '+' : ''}{changePercent.toFixed(2)}%)
+                                                    </div>
+                                                )
+                                            })()}
+                                        </div>
                                         <div className="flex gap-2">
                                             {(["1Y", "YTD", "2Y", "5Y"] as const).map((range) => (
                                                 <button

@@ -31,11 +31,19 @@ export const nameSchema = z
     .max(100, "Nome troppo lungo")
     .trim()
 
+// Surname validation
+export const surnameSchema = z
+    .string()
+    .min(2, "Cognome troppo corto")
+    .max(100, "Cognome troppo lungo")
+    .trim()
+
 // User registration schema
 export const registerSchema = z.object({
     email: emailSchema,
     password: passwordSchema,
     name: nameSchema,
+    surname: surnameSchema,
 })
 
 // Login schema

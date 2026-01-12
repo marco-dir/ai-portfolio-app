@@ -82,7 +82,7 @@ export default function StrumentiPage() {
                             </div>
 
                             {/* Image Preview */}
-                            <div className="flex-1 md:flex-[1.3] w-full">
+                            <div className="flex-1 md:flex-[1.5] w-full">
                                 <div className="relative group rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 shadow-2xl">
                                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 group-hover:opacity-0 transition-opacity z-10"></div>
                                     <Image

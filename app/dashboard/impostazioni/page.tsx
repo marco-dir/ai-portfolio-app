@@ -175,7 +175,7 @@ export default function SettingsPage() {
         <div className="space-y-8">
             <h1 className="text-3xl font-bold text-white">Il mio account</h1>
 
-            <div className="max-w-xl space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {/* Subscription Section */}
                 <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">

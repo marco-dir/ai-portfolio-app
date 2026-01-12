@@ -9,6 +9,7 @@ export default function RegisterPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
+    const [surname, setSurname] = useState("")
     const [error, setError] = useState("")
     const router = useRouter()
 
@@ -20,7 +21,7 @@ export default function RegisterPage() {
             const res = await fetch("/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password, name }),
+                body: JSON.stringify({ email, password, name, surname }),
             })
 
             if (res.ok) {
@@ -44,14 +45,27 @@ export default function RegisterPage() {
                 <h2 className="text-3xl font-bold text-center text-white">Crea Account</h2>
                 {error && <p className="text-red-500 text-center">{error}</p>}
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-400">Nome</label>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-2 mt-1 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
-                        />
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-400">Nome</label>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="w-full px-4 py-2 mt-1 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-400">Cognome</label>
+                            <input
+                                type="text"
+                                value={surname}
+                                onChange={(e) => setSurname(e.target.value)}
+                                className="w-full px-4 py-2 mt-1 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                                required
+                            />
+                        </div>
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-400">Email</label>
