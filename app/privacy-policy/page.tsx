@@ -62,7 +62,7 @@ export default function PrivacyPolicyPage() {
                                 Fra i Dati Personali raccolti da questa Applicazione, in modo autonomo o tramite terze parti, ci sono:
                             </p>
                             <ul className="list-disc pl-6 space-y-2">
-                                <li><strong>Dati di registrazione:</strong> nome, indirizzo email, password (criptata)</li>
+                                <li><strong>Dati di registrazione:</strong> nome, cognome, indirizzo email, password (criptata)</li>
                                 <li><strong>Dati di navigazione:</strong> Cookie, dati di utilizzo, indirizzo IP</li>
                                 <li><strong>Dati di pagamento:</strong> gestiti tramite Stripe (non memorizziamo dati delle carte)</li>
                                 <li><strong>Dati di portafoglio:</strong> informazioni sugli investimenti inseriti dall'utente</li>

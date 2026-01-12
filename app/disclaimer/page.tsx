@@ -113,6 +113,12 @@ export default function DisclaimerPage() {
                         </div>
 
                         <div>
+                            <h3 className="text-xl font-bold text-white mb-3">Analisi con Intelligenza Artificiale</h3>
+                            <p className="mb-4">DIRAMCO utilizza sistemi di intelligenza artificiale (AI) per generare analisi e report. Le analisi generate mediante intelligenza artificiale hanno carattere puramente informativo e non costituiscono in alcun modo consulenza finanziaria personalizzata.</p>
+                            <p>L'AI può produrre errori, valutazioni imprecise o informazioni non aggiornate. L'utente è tenuto a verificare autonomamente le informazioni fornite e a consultare un professionista autorizzato prima di prendere decisioni d'investimento basate su tali analisi.</p>
+                        </div>
+
+                        <div>
                             <h3 className="text-xl font-bold text-white mb-3">Diritto applicabile e foro</h3>
                             <p className="mb-4">Per ogni eventuale controversia derivante dall’accesso e dall’uso del sito, o in qualsiasi altro modo riconducibile direttamente o indirettamente al sito diramco.com, è imperativamente applicabile il diritto italiano. L’eventuale foro competente è a Milano, Italia.</p>
                             <p className="font-medium text-blue-400">Per eventuali chiarimenti potete scrivere a info@diramco.com.</p>
@@ -129,7 +135,7 @@ export default function DisclaimerPage() {
                         DIRAMCO
                     </div>
                     <div className="flex items-center gap-6 text-gray-500 text-sm">
-                        <span>© 2024 DIRAMCO</span>
+                        <span>© {new Date().getFullYear()} DIRAMCO</span>
                         <span>•</span>
                         <span className="flex items-center gap-1">
                             <Globe size={14} />
