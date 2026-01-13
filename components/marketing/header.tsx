@@ -13,7 +13,15 @@ export function MarketingHeader() {
         <nav className="relative z-20 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
             <div className="flex items-center gap-12">
                 <Link href="/" className="flex items-center gap-3">
-                    <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={40} height={40} className="w-10 h-10 rounded-full" />
+                    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+                        <Image
+                            src="/diramco-logo.png"
+                            alt="DIRAMCO Logo"
+                            width={40}
+                            height={40}
+                            className="w-full h-full object-cover scale-150"
+                        />
+                    </div>
                     <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </div>

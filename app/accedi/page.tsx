@@ -39,14 +39,16 @@ export default function LoginPage() {
             </Link>
             <div className="w-full max-w-md p-8 space-y-6 bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
                 <div className="flex justify-center mb-6">
-                    <Image
-                        src="/diramco-logo.png"
-                        alt="Diramco Logo"
-                        width={180}
-                        height={60}
-                        className="h-12 w-auto object-contain rounded-full"
-                        priority
-                    />
+                    <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
+                        <Image
+                            src="/diramco-logo.png"
+                            alt="Diramco Logo"
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover scale-150"
+                            priority
+                        />
+                    </div>
                 </div>
                 <h2 className="text-3xl font-bold text-center text-white">Bentornato</h2>
                 {error && <p className="text-red-500 text-center">{error}</p>}

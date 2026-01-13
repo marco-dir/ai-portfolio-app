@@ -92,7 +92,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const SidebarContent = () => (
         <>
             <div className="flex items-center gap-3 mb-8 px-2">
-                <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={32} height={32} className="w-8 h-8 rounded-full" />
+                <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shrink-0">
+                    <Image
+                        src="/diramco-logo.png"
+                        alt="DIRAMCO Logo"
+                        width={32}
+                        height={32}
+                        className="w-full h-full object-cover scale-150"
+                    />
+                </div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent whitespace-nowrap">
                     DIRAMCO
                 </h1>
@@ -218,7 +226,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Mobile Header */}
             <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-gray-950 border-b border-gray-800 z-40 flex items-center justify-between px-4">
                 <div className="flex items-center gap-3">
-                    <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={32} height={32} className="w-8 h-8 rounded-full" />
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
+                        <Image
+                            src="/diramco-logo.png"
+                            alt="DIRAMCO Logo"
+                            width={32}
+                            height={32}
+                            className="w-full h-full object-cover scale-150"
+                        />
+                    </div>
                     <span className="font-bold text-lg bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">DIRAMCO</span>
                 </div>
                 <button
@@ -263,13 +279,31 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 )}
             >
                 <div className={cn("flex items-center gap-3 mb-8 transition-all", !isDesktopSidebarOpen && "justify-center")}>
-                    <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={32} height={32} className="w-8 h-8 rounded-full flex-shrink-0" />
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shrink-0">
+                        <Image
+                            src="/diramco-logo.png"
+                            alt="DIRAMCO Logo"
+                            width={32}
+                            height={32}
+                            className="w-full h-full object-cover scale-150"
+                        />
+                    </div>
                     <h1 className={cn(
-                        "text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent whitespace-nowrap overflow-hidden transition-all",
+                        "text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent whitespace-nowrap overflow-hidden transition-all flex-1",
                         isDesktopSidebarOpen ? "w-auto opacity-100" : "w-0 opacity-0"
                     )}>
                         DIRAMCO
                     </h1>
+                    <button
+                        onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
+                        className={cn(
+                            "p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors",
+                            !isDesktopSidebarOpen && "absolute right-2 top-6"
+                        )}
+                        title={isDesktopSidebarOpen ? "Riduci barra laterale" : "Espandi barra laterale"}
+                    >
+                        {isDesktopSidebarOpen ? <ChevronLeft size={18} /> : <Menu size={18} />}
+                    </button>
                 </div>
 
                 <nav className="flex-1 space-y-2 overflow-y-auto custom-scrollbar">
@@ -416,14 +450,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     >
                         <LogOut size={20} className="flex-shrink-0" />
                         <span className={cn("transition-all", isDesktopSidebarOpen ? "opacity-100" : "w-0 opacity-0 overflow-hidden")}>Esci</span>
-                    </button>
-
-                    {/* Desktop Toggle */}
-                    <button
-                        onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
-                        className="w-full flex justify-center p-2 text-gray-500 hover:text-white mt-2"
-                    >
-                        {isDesktopSidebarOpen ? <ChevronLeft size={20} /> : <Menu size={20} />}
                     </button>
                 </div>
             </aside>
