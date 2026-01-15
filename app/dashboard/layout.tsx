@@ -109,7 +109,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <nav className="flex-1 space-y-2 overflow-y-auto pr-2 custom-scrollbar">
                 {/* Section: Analisi */}
                 <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-2 pb-1">Strumenti</p>
-                {navItems.slice(0, 4).map((item) => {
+                {navItems.slice(0, 5).map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href
                     return (
@@ -129,7 +129,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 {/* Section: I Miei Investimenti */}
                 <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-4 pb-1">I Miei Investimenti</p>
-                {navItems.slice(4, 7).map((item) => {
+                {navItems.slice(5, 8).map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href
                     return (
@@ -149,7 +149,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
                 {/* Section: Portafogli DIRAMCO */}
                 <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider px-4 pt-4 pb-1">Portafogli</p>
-                {navItems.slice(7).map((item) => {
+                {navItems.slice(8).map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href
                     return (

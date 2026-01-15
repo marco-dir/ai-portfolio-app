@@ -95,6 +95,16 @@ export default async function FinancialAnalysisPage({
         mutualFundHolders = results[15].status === 'fulfilled' ? results[15].value : null
         beneficialOwnership = results[16].status === 'fulfilled' ? results[16].value : null
         transcripts = results[17].status === 'fulfilled' ? results[17].value : null
+
+        // Fallback to Perplexity for news if empty
+        if ((!stockNews || stockNews.length === 0) && companyProfile) {
+            console.log(`Fetching fallback news from Perplexity for ${ticker}...`)
+            const { getPerplexityNews } = await import("@/lib/perplexity")
+            const fallbackNews = await getPerplexityNews(ticker, companyProfile.companyName)
+            if (fallbackNews && fallbackNews.length > 0) {
+                stockNews = fallbackNews
+            }
+        }
     }
 
     return (

@@ -316,3 +316,28 @@ export const getEarningsTranscripts = async (symbol: string, limit: number = 1) 
     return fetchFMP(`/earning_call_transcript/${symbol}?limit=${limit}`)
 }
 
+// === House Trading Data ===
+
+export const getHouseTrading = async (limit: number = 1000) => {
+    // Uses v4 RSS feed endpoint for House disclosures
+    const url = `${BASE_URL.replace('v3', 'v4')}/house-disclosure-rss-feed?apikey=${FMP_API_KEY}&limit=${limit}`
+
+    try {
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`FMP API Error: ${res.status}`)
+        return await res.json()
+    } catch (error) {
+        console.error("Failed to fetch House Trading:", error)
+        return []
+    }
+}
+
+// Congress members to track
+export const CONGRESS_MEMBERS = [
+    { name: "Warren Davidson", chamber: "house" },
+    { name: "Donald Norcross", chamber: "house" },
+    { name: "Terri Sewell", chamber: "house" },
+    { name: "Bryan Steil", chamber: "house" },
+    { name: "Alex Padilla", chamber: "senate" },
+    { name: "Nick Lalota", chamber: "house" },
+]

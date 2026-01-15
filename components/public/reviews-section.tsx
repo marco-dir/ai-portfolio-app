@@ -87,7 +87,7 @@ export default function ReviewsSection() {
                                 </div>
                                 <div>
                                     <p className="font-medium text-white">
-                                        {review.user.name || review.user.email.split('@')[0]}
+                                        {review.user.name ? review.user.name.split(' ')[0] : review.user.email.split('@')[0]}
                                     </p>
                                     <p className="text-sm text-gray-500">
                                         {new Date(review.createdAt).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' })}
