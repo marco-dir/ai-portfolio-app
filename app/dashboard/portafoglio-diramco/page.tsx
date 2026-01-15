@@ -151,8 +151,8 @@ export default function DiramcoPortfolioPage() {
             initialValue: parseItNum(row['Valore Iniziale']),
             finalValue: parseItNum(row['Valore Finale']),
             target: parseItNum(row['TARGET']),
-            plEuro: parseItNum(row['PL']),
-            plPercent: parseItNum(row['Profit Loss'])
+            plEuro: parseItNum(row['Profit Loss']),
+            plPercent: parseItNum(row['PL'])
         }))
         .filter(asset => asset.finalValue > 0 || asset.initialValue > 0)
 
