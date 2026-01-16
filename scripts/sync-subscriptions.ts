@@ -23,8 +23,8 @@ if (!process.env.STRIPE_SECRET_KEY) {
     process.exit(1)
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2025-01-27.acacia', // Using the version likely used locally or generic default as typed in your stripe.ts (though here creating fresh instance)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2025-12-15.clover',
     typescript: true,
 })
 
@@ -51,7 +51,7 @@ async function main() {
             const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId)
 
             // Calculate fields
-            const subscriptionEndsAt = new Date(subscription.current_period_end * 1000)
+            const subscriptionEndsAt = new Date((subscription as any).current_period_end * 1000)
             const trialEndsAt = subscription.trial_end ? new Date(subscription.trial_end * 1000) : null
             const status = subscription.status
 
