@@ -57,7 +57,7 @@ export async function POST(req: Request) {
                     stripeCustomerId: subscription.customer as string,
                     subscriptionStatus: subscription.status,
                     trialEndsAt: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null,
-                    subscriptionEndsAt: new Date(subscription.current_period_end * 1000),
+                    subscriptionEndsAt: new Date((subscription as any).current_period_end * 1000),
                 },
             })
             console.log('[WEBHOOK] User updated successfully')
@@ -120,7 +120,7 @@ export async function POST(req: Request) {
                 where: { stripeSubscriptionId: subscription.id },
                 data: {
                     subscriptionStatus: subscription.status,
-                    subscriptionEndsAt: new Date(subscription.current_period_end * 1000),
+                    subscriptionEndsAt: new Date((subscription as any).current_period_end * 1000),
                     trialEndsAt: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null
                 }
             });
