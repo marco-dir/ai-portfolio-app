@@ -5,15 +5,21 @@ import { useEffect, useState } from "react";
 
 export default function HomeAnimations() {
     const [mounted, setMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         setMounted(true);
+        // Check if mobile (less than 768px)
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
     if (!mounted) return null;
 
     // Generate floating circles with various sizes and colors - MORE VISIBLE (PROFESSIONAL BLUE-GREEN THEME)
-    const circles = [
+    const allCircles = [
         // Large circles
         { id: 1, x: 10, y: 20, size: 500, color: "bg-sky-600", opacity: 0.25, blur: 100, duration: 25, delay: 0 },
         { id: 2, x: 80, y: 60, size: 450, color: "bg-emerald-600", opacity: 0.2, blur: 100, duration: 30, delay: 2 },
@@ -33,6 +39,11 @@ export default function HomeAnimations() {
         { id: 12, x: 45, y: 55, size: 140, color: "bg-sky-300", opacity: 0.3, blur: 50, duration: 12, delay: 2 },
     ];
 
+    // On mobile, use only 3 circles with reduced blur for better performance
+    const circles = isMobile
+        ? allCircles.slice(0, 3).map(c => ({ ...c, blur: 60, size: c.size * 0.6 }))
+        : allCircles;
+
     return (
         <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
             {/* Animated circles */}
@@ -48,14 +59,15 @@ export default function HomeAnimations() {
                         transform: 'translate(-50%, -50%)',
                         opacity: circle.opacity,
                         filter: `blur(${circle.blur}px)`,
+                        willChange: 'transform', // Hint for GPU acceleration
                     }}
                     animate={{
-                        x: [0, 120, -100, 80, 0],
-                        y: [0, -100, 80, -120, 0],
-                        scale: [1, 1.3, 0.85, 1.15, 1],
+                        x: isMobile ? [0, 50, -40, 30, 0] : [0, 120, -100, 80, 0],
+                        y: isMobile ? [0, -40, 30, -50, 0] : [0, -100, 80, -120, 0],
+                        scale: isMobile ? [1, 1.1, 0.95, 1.05, 1] : [1, 1.3, 0.85, 1.15, 1],
                     }}
                     transition={{
-                        duration: circle.duration,
+                        duration: isMobile ? circle.duration * 1.5 : circle.duration,
                         repeat: Infinity,
                         ease: "easeInOut",
                         delay: circle.delay,

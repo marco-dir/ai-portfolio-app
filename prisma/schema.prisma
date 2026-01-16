@@ -33,6 +33,7 @@ model User {
   stripeSubscriptionId String?   @unique
   subscriptionStatus   String?   // 'active', 'trialing', 'past_due', 'canceled'
   trialEndsAt          DateTime?
+  subscriptionEndsAt   DateTime?
   hasUsedTrial         Boolean   @default(false)
 }
 

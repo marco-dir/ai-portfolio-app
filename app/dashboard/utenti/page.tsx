@@ -33,7 +33,7 @@ export default async function UsersPage() {
                             <th className="p-4 font-medium whitespace-nowrap">Cognome</th>
                             <th className="p-4 font-medium whitespace-nowrap">Ruolo</th>
                             <th className="p-4 font-medium whitespace-nowrap">Stato Abbonamento</th>
-                            <th className="p-4 font-medium whitespace-nowrap">Scadenza Prova</th>
+                            <th className="p-4 font-medium whitespace-nowrap">Scadenza</th>
                             <th className="p-4 font-medium whitespace-nowrap">Data Registrazione</th>
                             <th className="p-4 font-medium whitespace-nowrap">Newsletter</th>
                             <th className="p-4 font-medium whitespace-nowrap">Recensione</th>
@@ -64,7 +64,12 @@ export default async function UsersPage() {
                                     </span>
                                 </td>
                                 <td className="p-4 text-sm text-gray-400">
-                                    {user.trialEndsAt ? new Date(user.trialEndsAt).toLocaleDateString('it-IT') : '-'}
+                                    {user.subscriptionStatus === 'trialing' && user.trialEndsAt
+                                        ? `Prova: ${new Date(user.trialEndsAt).toLocaleDateString('it-IT')}`
+                                        : user.subscriptionEndsAt
+                                            ? new Date(user.subscriptionEndsAt).toLocaleDateString('it-IT')
+                                            : '-'
+                                    }
                                 </td>
                                 <td className="p-4 text-sm text-gray-400">
                                     {new Date(user.createdAt).toLocaleDateString('it-IT', {

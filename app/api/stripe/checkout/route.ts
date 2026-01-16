@@ -57,9 +57,8 @@ export async function POST(req: Request) {
             customer: customerId,
             mode: 'subscription',
             billing_address_collection: 'required',
-            automatic_tax: { enabled: true },
-            tax_id_collection: { enabled: true },
             allow_promotion_codes: true,
+            // Prezzo IVA inclusa - non mostriamo tasse separate
             // payment_method_types non specificato = Stripe abilita automaticamente
             // tutti i metodi disponibili: Card, Apple Pay, Google Pay, Link, etc.
             customer_update: {

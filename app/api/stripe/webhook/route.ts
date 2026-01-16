@@ -55,8 +55,9 @@ export async function POST(req: Request) {
                 data: {
                     stripeSubscriptionId: subscription.id,
                     stripeCustomerId: subscription.customer as string,
-                    subscriptionStatus: 'active',
-                    trialEndsAt: null,
+                    subscriptionStatus: subscription.status,
+                    trialEndsAt: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null,
+                    subscriptionEndsAt: new Date(subscription.current_period_end * 1000),
                 },
             })
             console.log('[WEBHOOK] User updated successfully')
@@ -117,7 +118,11 @@ export async function POST(req: Request) {
             // Just update status, no email needed usually unless status changed to active/past_due
             await prisma.user.update({
                 where: { stripeSubscriptionId: subscription.id },
-                data: { subscriptionStatus: subscription.status }
+                data: {
+                    subscriptionStatus: subscription.status,
+                    subscriptionEndsAt: new Date(subscription.current_period_end * 1000),
+                    trialEndsAt: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null
+                }
             });
         }
 
