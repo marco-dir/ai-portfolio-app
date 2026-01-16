@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
             <nav className="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
                 <div className="flex items-center gap-3">
                     <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={32} height={32} className="w-8 h-8 rounded-full" />
-                    <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </Link>
                 </div>
@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
                     <div className="p-3 bg-blue-500/10 rounded-xl">
                         <Shield className="w-8 h-8 text-blue-400" />
                     </div>
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent">
                         Privacy Policy
                     </h1>
                 </div>
@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
                         {/* Finalità */}
                         <section>
                             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                                <Lock className="w-5 h-5 text-purple-400" />
+                                <Lock className="w-5 h-5 text-emerald-400" />
                                 Finalità del Trattamento
                             </h2>
                             <p className="mb-4">I Dati dell'Utente sono raccolti per le seguenti finalità:</p>
@@ -198,7 +198,7 @@ export default function PrivacyPolicyPage() {
             {/* Footer */}
             <footer className="border-t border-gray-800 py-12 px-8 mt-12">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </div>
                     <div className="flex items-center gap-4 text-sm text-gray-400">

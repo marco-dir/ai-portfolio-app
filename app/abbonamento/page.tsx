@@ -64,7 +64,7 @@ export default function SubscriptionPage() {
                                 className="w-20 h-20 rounded-full shadow-lg shadow-blue-500/20"
                             />
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                        <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-500 bg-clip-text text-transparent">
                             Sblocca il Tuo Potenziale
                         </h1>
                         <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -116,7 +116,7 @@ export default function SubscriptionPage() {
                                 <Button
                                     onClick={handleCheckout}
                                     disabled={isLoading}
-                                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-6 text-lg shadow-lg hover:shadow-blue-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    className="w-full bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-700 hover:to-emerald-700 text-white font-bold py-6 text-lg shadow-lg hover:shadow-sky-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
                                     {isLoading ? "Reindirizzamento..." : "Inizia la prova gratuita"}
                                 </Button>
                                 {error && <p className="text-red-400 text-sm text-center mt-2">{error}</p>}

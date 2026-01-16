@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-50 transform origin-left animate-[loading_1s_ease-in-out]" />
+        <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500 z-50 transform origin-left animate-[loading_1s_ease-in-out]" />
         <Providers>
           {children}
         </Providers>

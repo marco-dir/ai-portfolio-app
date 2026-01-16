@@ -101,7 +101,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         className="w-full h-full object-cover scale-150"
                     />
                 </div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent whitespace-nowrap">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">
                     DIRAMCO
                 </h1>
             </div>
@@ -235,7 +235,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             className="w-full h-full object-cover scale-150"
                         />
                     </div>
-                    <span className="font-bold text-lg bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">DIRAMCO</span>
+                    <span className="font-bold text-lg bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">DIRAMCO</span>
                 </div>
                 <button
                     onClick={() => setIsMobileMenuOpen(true)}
@@ -289,7 +289,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         />
                     </div>
                     <h1 className={cn(
-                        "text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent whitespace-nowrap overflow-hidden transition-all flex-1",
+                        "text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap overflow-hidden transition-all flex-1",
                         isDesktopSidebarOpen ? "w-auto opacity-100" : "w-0 opacity-0"
                     )}>
                         DIRAMCO

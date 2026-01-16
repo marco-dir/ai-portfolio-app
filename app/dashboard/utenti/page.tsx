@@ -12,6 +12,9 @@ export default async function UsersPage() {
     }
 
     const users = await prisma.user.findMany({
+        include: {
+            review: true
+        },
         orderBy: { createdAt: 'desc' }
     })
 
@@ -27,11 +30,13 @@ export default async function UsersPage() {
                         <tr>
                             <th className="p-4 font-medium whitespace-nowrap">Email</th>
                             <th className="p-4 font-medium whitespace-nowrap">Nome</th>
+                            <th className="p-4 font-medium whitespace-nowrap">Cognome</th>
                             <th className="p-4 font-medium whitespace-nowrap">Ruolo</th>
                             <th className="p-4 font-medium whitespace-nowrap">Stato Abbonamento</th>
                             <th className="p-4 font-medium whitespace-nowrap">Scadenza Prova</th>
                             <th className="p-4 font-medium whitespace-nowrap">Data Registrazione</th>
                             <th className="p-4 font-medium whitespace-nowrap">Newsletter</th>
+                            <th className="p-4 font-medium whitespace-nowrap">Recensione</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-800">
@@ -39,6 +44,7 @@ export default async function UsersPage() {
                             <tr key={user.id} className="text-gray-300 hover:bg-gray-800/50 transition-colors">
                                 <td className="p-4 font-medium text-white">{user.email}</td>
                                 <td className="p-4">{user.name || '-'}</td>
+                                <td className="p-4">{user.surname || '-'}</td>
                                 <td className="p-4">
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${user.role === 'ADMIN' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                                         }`}>
@@ -74,6 +80,15 @@ export default async function UsersPage() {
                                         }`}>
                                         {user.newsletterSubscribed ? 'Iscritto' : 'Non iscritto'}
                                     </span>
+                                </td>
+                                <td className="p-4">
+                                    {user.review ? (
+                                        <span className="flex items-center gap-1 text-yellow-400">
+                                            {user.review.rating} <span className="text-xs">★</span>
+                                        </span>
+                                    ) : (
+                                        <span className="text-gray-600">-</span>
+                                    )}
                                 </td>
                             </tr>
                         ))}

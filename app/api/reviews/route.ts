@@ -50,7 +50,7 @@ export async function POST(req: Request) {
             where: { id: session.user.id }
         })
 
-        if (!user || (user.subscriptionStatus !== 'active' && user.subscriptionStatus !== 'trialing')) {
+        if (!user || user.subscriptionStatus !== 'active') {
             return NextResponse.json(
                 { message: "Solo gli utenti abbonati possono lasciare una recensione" },
                 { status: 403 }

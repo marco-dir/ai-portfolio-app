@@ -45,7 +45,7 @@ export default function SettingsPage() {
                 console.error('Error fetching review:', error)
             }
         }
-        if (session?.user?.subscriptionStatus === 'active' || session?.user?.subscriptionStatus === 'trialing') {
+        if (session?.user?.subscriptionStatus === 'active') {
             fetchReview()
         }
     }, [session])
@@ -303,7 +303,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Review Section - Only for subscribed users */}
-                {(session?.user?.subscriptionStatus === 'active' || session?.user?.subscriptionStatus === 'trialing') && (
+                {session?.user?.subscriptionStatus === 'active' && (
                     <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
                         <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
                             <Star size={20} className="text-yellow-400" />

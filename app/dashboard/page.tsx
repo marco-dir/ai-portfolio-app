@@ -139,9 +139,9 @@ export default async function DashboardPage() {
     return (
         <div className="space-y-10">
             {/* Hero Section - Aggregate Metrics */}
-            <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 p-8 shadow-2xl border border-blue-800/50">
+            <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900 via-teal-900 to-emerald-900 p-8 shadow-2xl border border-blue-800/50">
                 <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-                <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+                <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
 
                 <div className="relative z-10">
                     <h1 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
@@ -172,7 +172,7 @@ export default async function DashboardPage() {
             <section>
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                        <PieChart size={24} className="text-purple-400" />
+                        <PieChart size={24} className="text-emerald-400" />
                         I tuoi Portafogli
                     </h2>
                     <Link href="/dashboard/portafoglio" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800 hover:border-blue-600 active:scale-95 transition-transform">

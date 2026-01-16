@@ -10,7 +10,7 @@ export default function AboutPage() {
             <MarketingHeader />
 
             <main className="max-w-4xl mx-auto px-8 py-16">
-                <h1 className="text-5xl font-bold mb-12 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-bold mb-12 bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent">
                     Chi Siamo
                 </h1>
 
@@ -38,7 +38,7 @@ export default function AboutPage() {
             {/* Footer */}
             <footer className="border-t border-gray-800 py-12 px-8 mt-12">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </div>
                     <div className="flex items-center gap-6 text-gray-500 text-sm">

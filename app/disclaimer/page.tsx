@@ -9,7 +9,7 @@ export default function DisclaimerPage() {
             <nav className="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
                 <div className="flex items-center gap-3">
                     <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={32} height={32} className="w-8 h-8 rounded-full" />
-                    <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </Link>
                 </div>
@@ -25,7 +25,7 @@ export default function DisclaimerPage() {
             </nav>
 
             <main className="max-w-4xl mx-auto px-8 py-16">
-                <h1 className="text-5xl font-bold mb-12 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-bold mb-12 bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent">
                     Disclaimer
                 </h1>
 
@@ -121,7 +121,7 @@ export default function DisclaimerPage() {
                         <div>
                             <h3 className="text-xl font-bold text-white mb-3">Diritto applicabile e foro</h3>
                             <p className="mb-4">Per ogni eventuale controversia derivante dall’accesso e dall’uso del sito, o in qualsiasi altro modo riconducibile direttamente o indirettamente al sito diramco.com, è imperativamente applicabile il diritto italiano. L’eventuale foro competente è a Milano, Italia.</p>
-                            <p className="font-medium text-blue-400">Per eventuali chiarimenti potete scrivere a info@diramco.com.</p>
+                            <p className="font-medium text-sky-400">Per eventuali chiarimenti potete scrivere a info@diramco.com.</p>
                         </div>
 
                     </div>
@@ -131,7 +131,7 @@ export default function DisclaimerPage() {
             {/* Footer */}
             <footer className="border-t border-gray-800 py-12 px-8 mt-12">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </div>
                     <div className="flex items-center gap-6 text-gray-500 text-sm">

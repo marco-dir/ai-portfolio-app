@@ -66,7 +66,7 @@ export default function ContactPage() {
             <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                             Contattaci
                         </h1>
                         <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -80,7 +80,7 @@ export default function ContactPage() {
                             <div className="md:col-span-1 space-y-8">
                                 <div>
                                     <h3 className="text-lg font-semibold text-white mb-2">Email</h3>
-                                    <a href="mailto:info@diramco.com" className="flex items-center gap-3 text-blue-400 hover:text-blue-300 transition-colors">
+                                    <a href="mailto:info@diramco.com" className="flex items-center gap-3 text-sky-400 hover:text-sky-300 transition-colors">
                                         <Mail size={20} />
                                         info@diramco.com
                                     </a>
@@ -88,7 +88,7 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="text-lg font-semibold text-white mb-2">Social</h3>
                                     <div className="flex gap-4">
-                                        <a href="https://www.instagram.com/diramco/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full hover:bg-pink-600 transition-colors text-white">
+                                        <a href="https://www.instagram.com/diramco/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full hover:bg-emerald-600 transition-colors text-white">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                                         </a>
                                         <a href="https://www.facebook.com/people/Diramco/100063790743102/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full hover:bg-blue-600 transition-colors text-white">
@@ -119,7 +119,7 @@ export default function ContactPage() {
                                                     required
                                                     value={formData.name}
                                                     onChange={handleChange}
-                                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-gray-600"
+                                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all placeholder:text-gray-600"
                                                     placeholder="Il tuo nome"
                                                 />
                                             </div>
@@ -137,7 +137,7 @@ export default function ContactPage() {
                                                     required
                                                     value={formData.email}
                                                     onChange={handleChange}
-                                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-gray-600"
+                                                    className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all placeholder:text-gray-600"
                                                     placeholder="La tua email"
                                                 />
                                             </div>
@@ -157,7 +157,7 @@ export default function ContactPage() {
                                                 required
                                                 value={formData.subject}
                                                 onChange={handleChange}
-                                                className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-gray-600"
+                                                className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all placeholder:text-gray-600"
                                                 placeholder="Oggetto del messaggio"
                                             />
                                         </div>
@@ -172,7 +172,7 @@ export default function ContactPage() {
                                             rows={5}
                                             value={formData.message}
                                             onChange={handleChange}
-                                            className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-gray-600 resize-none"
+                                            className="w-full bg-gray-950 border border-gray-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all placeholder:text-gray-600 resize-none"
                                             placeholder="Come possiamo aiutarti?"
                                         />
                                     </div>
@@ -193,7 +193,7 @@ export default function ContactPage() {
 
                                     <Button
                                         type="submit"
-                                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold py-6 rounded-xl transition-all shadow-lg shadow-blue-500/25"
+                                        className="w-full bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white font-semibold py-6 rounded-xl transition-all shadow-lg shadow-sky-500/25"
                                         disabled={loading}
                                     >
                                         {loading ? (

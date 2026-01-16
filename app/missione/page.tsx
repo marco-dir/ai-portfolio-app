@@ -10,7 +10,7 @@ export default function MissionPage() {
             <MarketingHeader />
 
             <main className="max-w-4xl mx-auto px-8 py-16">
-                <h1 className="text-5xl font-bold mb-12 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-bold mb-12 bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent">
                     La Nostra Missione
                 </h1>
 
@@ -28,11 +28,11 @@ export default function MissionPage() {
                             finanziari con sicurezza e consapevolezza.
                         </p>
                         <div className="border-t border-gray-800 pt-6 mt-6">
-                            <p className="font-medium text-blue-400 mb-4">
+                            <p className="font-medium text-sky-400 mb-4">
                                 DIRAMCO è anche un Portafoglio diversificato che gestisce diversi Asset come: Azioni, Obbligazioni su diversi
                                 mercati e in diverse valute, ETF in indici azionari, materie prime e criptovalute e Conti Deposito.
                             </p>
-                            <p className="italic text-purple-400">
+                            <p className="italic text-emerald-400">
                                 L’origine del nome è: <span className="font-bold">D</span>reaming <span className="font-bold">I</span>nvesting <span className="font-bold">R</span>isk <span className="font-bold">A</span>sset <span className="font-bold">M</span>anagement <span className="font-bold">Co</span>mpany.
                             </p>
                             <p className="text-sm mt-4 text-gray-500">
@@ -46,7 +46,7 @@ export default function MissionPage() {
             {/* Footer */}
             <footer className="border-t border-gray-800 py-12 px-8 mt-12">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </div>
                     <div className="flex items-center gap-6 text-gray-500 text-sm">

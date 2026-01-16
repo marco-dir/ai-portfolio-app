@@ -47,7 +47,7 @@ export default async function BlogPage() {
 
             <main className="max-w-7xl mx-auto px-8 py-16">
                 <div className="text-center mb-16">
-                    <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent pb-2">
+                    <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent pb-2">
                         Blog & News
                     </h1>
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -69,7 +69,7 @@ export default async function BlogPage() {
                             <Link
                                 key={post.id}
                                 href={`/blog/${post.slug}`}
-                                className="group bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all flex flex-col h-full"
+                                className="group bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition-all flex flex-col h-full"
                             >
                                 <div className="aspect-video relative bg-gray-800">
                                     {featuredImage ? (
@@ -99,7 +99,7 @@ export default async function BlogPage() {
                                     </div>
 
                                     <h2
-                                        className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-blue-400 transition-colors"
+                                        className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-emerald-400 transition-colors"
                                         dangerouslySetInnerHTML={{ __html: post.title.rendered }}
                                     />
 
@@ -107,7 +107,7 @@ export default async function BlogPage() {
                                         {post.excerpt.rendered.replace(/<[^>]+>/g, '')}
                                     </div>
 
-                                    <div className="flex items-center text-blue-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                                    <div className="flex items-center text-emerald-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
                                         Leggi l'articolo
                                         <ArrowRight size={16} className="ml-1" />
                                     </div>

@@ -22,7 +22,7 @@ export function MarketingHeader() {
                             className="w-full h-full object-cover scale-150"
                         />
                     </div>
-                    <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </div>
                 </Link>

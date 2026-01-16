@@ -94,7 +94,7 @@ export default function Home() {
                 className="w-full h-full object-cover scale-150"
               />
             </div>
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+            <div className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
               DIRAMCO
             </div>
           </Link>
@@ -189,7 +189,7 @@ export default function Home() {
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Gestisci i tuoi investimenti
             <br />
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent">
               come un professionista
             </span>
           </h1>
@@ -202,7 +202,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/registrati"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/25"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-sky-500/25"
             >
               Inizia Gratuitamente
               <ChevronRight size={20} />
@@ -222,7 +222,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <div key={index} className="text-center">
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
+              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-400 to-emerald-500 bg-clip-text text-transparent mb-2">
                 {stat.value}
               </div>
               <div className="text-gray-400">{stat.label}</div>
@@ -273,7 +273,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="relative text-center">
-                <div className="text-8xl font-bold bg-gradient-to-r from-blue-500/40 to-purple-500/40 bg-clip-text text-transparent mb-4">{step.number}</div>
+                <div className="text-8xl font-bold bg-gradient-to-r from-sky-500/40 to-emerald-500/40 bg-clip-text text-transparent mb-4">{step.number}</div>
                 <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
                 <p className="text-gray-400">{step.description}</p>
                 {index < steps.length - 1 && (
@@ -308,7 +308,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="relative z-10 py-24 px-8">
-        <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/20 rounded-3xl p-12">
+        <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-sky-600/20 to-emerald-600/20 border border-sky-500/20 rounded-3xl p-12">
           <Target className="w-16 h-16 text-blue-400 mx-auto mb-6" />
           <h2 className="text-4xl font-bold mb-4">
             Pronto a iniziare?
@@ -329,12 +329,12 @@ export default function Home() {
       {/* Footer */}
       <footer className="relative z-10 border-t border-gray-800 py-12 px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+          <div className="text-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
             DIRAMCO
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="https://www.instagram.com/diramco/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-500 transition-colors">
+            <a href="https://www.instagram.com/diramco/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-emerald-500 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
             </a>
             <a href="https://www.facebook.com/people/Diramco/100063790743102/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors">

@@ -36,7 +36,7 @@ export function CookieBanner() {
         <div className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6 animate-in slide-in-from-bottom duration-500">
             <div className="max-w-7xl mx-auto bg-gray-900/95 backdrop-blur-md border border-gray-800 rounded-2xl p-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
                 {/* Decoration */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500" />
 
                 <div className="flex items-start gap-4 flex-1">
                     <div className="p-3 bg-blue-500/10 rounded-xl hidden sm:block">

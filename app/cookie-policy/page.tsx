@@ -6,7 +6,7 @@ export default function CookiePolicyPage() {
         <div className="min-h-screen bg-gray-950 text-white">
             {/* Navigation */}
             <nav className="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
-                <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                     DIRAMCO
                 </Link>
                 <Link
@@ -23,7 +23,7 @@ export default function CookiePolicyPage() {
                     <div className="p-3 bg-blue-500/10 rounded-xl">
                         <Cookie className="w-8 h-8 text-blue-400" />
                     </div>
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-600 bg-clip-text text-transparent">
                         Cookie Policy
                     </h1>
                 </div>
@@ -80,7 +80,7 @@ export default function CookiePolicyPage() {
 
                         <section>
                             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                                <Eye className="w-5 h-5 text-purple-400" />
+                                <Eye className="w-5 h-5 text-emerald-400" />
                                 Gestione delle preferenze
                             </h2>
                             <p className="mb-4">

@@ -78,7 +78,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <nav className="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
                 <div className="flex items-center gap-3">
                     <Image src="/diramco-logo.png" alt="DIRAMCO Logo" width={32} height={32} className="w-8 h-8 rounded-full" />
-                    <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                    <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent">
                         DIRAMCO
                     </Link>
                 </div>
@@ -98,11 +98,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <header className="mb-12 text-center">
                     <div className="flex items-center justify-center gap-6 text-sm text-gray-400 mb-6">
                         <span className="flex items-center gap-2">
-                            <Calendar size={16} className="text-blue-400" />
+                            <Calendar size={16} className="text-sky-400" />
                             {date}
                         </span>
                         <span className="flex items-center gap-2">
-                            <User size={16} className="text-purple-400" />
+                            <User size={16} className="text-emerald-400" />
                             {authorName}
                         </span>
                         <span className="flex items-center gap-2">
@@ -123,10 +123,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <article className="prose prose-invert prose-lg max-w-none 
           prose-headings:text-base-100 prose-headings:font-bold prose-headings:mt-8 prose-headings:mb-4
           prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
-          prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+          prose-a:text-sky-400 prose-a:no-underline hover:prose-a:underline
           prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6 prose-ul:text-gray-300
           prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-6 prose-ol:text-gray-300
-          prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-400
+          prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-400
           prose-img:rounded-xl prose-img:shadow-lg
           prose-strong:text-white prose-strong:font-semibold
           [&_figure]:mb-8 [&_figure_figcaption]:text-center [&_figure_figcaption]:text-sm [&_figure_figcaption]:text-gray-500 [&_figure_figcaption]:mt-2
@@ -144,7 +144,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         Altri articoli
                     </Link>
 
-                    <button className="px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-full transition-colors flex items-center gap-2 font-medium">
+                    <button className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-full transition-colors flex items-center gap-2 font-medium">
                         <Share2 size={18} />
                         Condividi
                     </button>
