@@ -56,13 +56,15 @@ export default function SubscriptionPage() {
                     {/* Hero Section */}
                     <div className="text-center space-y-4">
                         <div className="flex justify-center mb-6">
-                            <Image
-                                src="/diramco-logo.png"
-                                alt="DIRAMCO Logo"
-                                width={80}
-                                height={80}
-                                className="w-20 h-20 rounded-full shadow-lg shadow-blue-500/20"
-                            />
+                            <div className="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center shadow-lg shadow-blue-500/20">
+                                <Image
+                                    src="/diramco-logo.png"
+                                    alt="DIRAMCO Logo"
+                                    width={80}
+                                    height={80}
+                                    className="w-full h-full object-cover scale-150"
+                                />
+                            </div>
                         </div>
                         <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-sky-400 via-teal-500 to-emerald-500 bg-clip-text text-transparent">
                             Sblocca il Tuo Potenziale
