@@ -72,7 +72,9 @@ export async function POST(req: Request) {
                         <body>
                             <div class="container">
                                 <div class="header">
-                                    <img src="${process.env.NEXT_PUBLIC_APP_URL}/diramco-logo.png" alt="DIRAMCO" class="logo" />
+                                    <a href="https://diramco.com" target="_blank" style="text-decoration: none;">
+                                        <img src="${process.env.NEXT_PUBLIC_APP_URL}/diramco-logo.png" alt="DIRAMCO" class="logo" />
+                                    </a>
                                     <h2>DIRAMCO</h2>
                                 </div>
                                 

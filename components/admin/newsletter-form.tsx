@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Send, Loader2, Info } from "lucide-react"
+import { Send, Loader2, Info, Link as LinkIcon } from "lucide-react"
 
 export function NewsletterForm() {
     const [subject, setSubject] = useState("")
@@ -45,6 +45,25 @@ export function NewsletterForm() {
         }
     }
 
+    const insertLink = () => {
+        const url = prompt("Inserisci l'URL del link (es. https://google.com):")
+        if (!url) return
+
+        const textarea = document.querySelector('textarea') as HTMLTextAreaElement
+        if (!textarea) return
+
+        const start = textarea.selectionStart
+        const end = textarea.selectionEnd
+        const selectedText = content.substring(start, end)
+        const textToLink = selectedText || prompt("Inserisci il testo da visualizzare:") || url
+
+        const newContent = content.substring(0, start) +
+            `<a href="${url}">${textToLink}</a>` +
+            content.substring(end)
+
+        setContent(newContent)
+    }
+
     return (
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
             <div className="mb-6 p-4 bg-blue-900/20 border border-blue-900/50 rounded-lg flex gap-3 text-blue-200">
@@ -71,9 +90,19 @@ export function NewsletterForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Contenuto HTML
-                    </label>
+                    <div className="flex justify-between items-center mb-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                            Contenuto HTML
+                        </label>
+                        <button
+                            type="button"
+                            onClick={insertLink}
+                            className="text-xs flex items-center gap-1 bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded transition-colors"
+                        >
+                            <LinkIcon size={14} />
+                            Inserisci Link
+                        </button>
+                    </div>
                     <textarea
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
@@ -98,6 +127,12 @@ export function NewsletterForm() {
 
                         {/* Email Body Simulation */}
                         <div style={{ fontFamily: 'sans-serif', maxWidth: '600px', margin: '0 auto' }}>
+                            <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+                                <a href="https://diramco.com" target="_blank" style={{ display: 'inline-block' }}>
+                                    <img src="/diramco-logo.png" alt="DIRAMCO" width="150" style={{ maxWidth: '150px', height: 'auto' }} />
+                                </a>
+                            </div>
+
                             <div
                                 className="prose prose-sm max-w-none text-gray-800"
                                 dangerouslySetInnerHTML={{ __html: content || "<p class='text-gray-400 italic'>Il contenuto della mail apparirà qui...</p>" }}
@@ -129,6 +164,7 @@ export function NewsletterForm() {
                         {isLoading ? (
                             <>
                                 <Loader2 className="animate-spin" size={20} />
+                                sentCount
                                 Invio in corso...
                             </>
                         ) : (

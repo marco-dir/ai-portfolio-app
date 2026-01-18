@@ -13,8 +13,8 @@ export default function SubscriptionPage() {
         "Analisi Finanziaria Avanzata (Dati storici 30 anni)",
         "Azioni Value (Dati storici 30 anni)",
         "Analisi ETF (Holdings, Settori, Paesi)",
-        "Creazione Portafogli Personalizzati (Analisi IA)",
-        "Watchlist Personalizzate",
+        "Creazione Portafogli Personalizzati (Max 2 portafogli, Analisi IA)",
+        "Watchlist Personalizzate (Max 30 titoli)",
         "Visualizzazione Portafogli Modello",
         "Portafoglio Diramco in Tempo Reale (+ Movimenti)",
         "Watchlist Diramco"

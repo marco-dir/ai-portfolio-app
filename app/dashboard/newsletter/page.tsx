@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { Send, Loader2 } from "lucide-react"
+import { Send, Loader2, Link as LinkIcon } from "lucide-react"
 
 export default function NewsletterPage() {
     const { data: session, status } = useSession()
@@ -57,6 +57,25 @@ export default function NewsletterPage() {
         }
     }
 
+    const insertLink = () => {
+        const url = prompt("Inserisci l'URL del link (es. https://google.com):")
+        if (!url) return
+
+        const textarea = document.querySelector('textarea') as HTMLTextAreaElement
+        if (!textarea) return
+
+        const start = textarea.selectionStart
+        const end = textarea.selectionEnd
+        const selectedText = content.substring(start, end)
+        const textToLink = selectedText || prompt("Inserisci il testo da visualizzare:") || url
+
+        const newContent = content.substring(0, start) +
+            `<a href="${url}">${textToLink}</a>` +
+            content.substring(end)
+
+        setContent(newContent)
+    }
+
     return (
         <div className="max-w-4xl mx-auto space-y-6">
             <h1 className="text-3xl font-bold text-white mb-8">Invia Newsletter</h1>
@@ -83,7 +102,17 @@ export default function NewsletterPage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">Contenuto (HTML supportato)</label>
+                        <div className="flex justify-between items-center mb-2">
+                            <label className="block text-sm font-medium text-gray-400">Contenuto (HTML supportato)</label>
+                            <button
+                                type="button"
+                                onClick={insertLink}
+                                className="text-xs flex items-center gap-1 bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded transition-colors"
+                            >
+                                <LinkIcon size={14} />
+                                Inserisci Link
+                            </button>
+                        </div>
                         <textarea
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
@@ -109,11 +138,13 @@ export default function NewsletterPage() {
                                 <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
                                     {/* Header with Logo - Centered */}
                                     <div style={{ textAlign: 'center', paddingBottom: '20px', borderBottom: '1px solid #eee', marginBottom: '20px' }}>
-                                        <img
-                                            src="/diramco-logo.png"
-                                            alt="DIRAMCO"
-                                            style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', display: 'inline-block' }}
-                                        />
+                                        <a href="https://diramco.com" target="_blank" style={{ textDecoration: 'none' }}>
+                                            <img
+                                                src="/diramco-logo.png"
+                                                alt="DIRAMCO"
+                                                style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', display: 'inline-block' }}
+                                            />
+                                        </a>
                                         <h2 style={{ margin: '10px 0 0 0', color: '#333' }}>DIRAMCO</h2>
                                     </div>
 

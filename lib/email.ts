@@ -45,6 +45,11 @@ export const sendNewsletter = async (email: string, subject: string, content: st
             subject: subject,
             html: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <a href="https://diramco.com" target="_blank" style="display: inline-block;">
+                            <img src="https://diramco.com/diramco-logo.png" alt="DIRAMCO" width="150" style="max-width: 150px; height: auto;" />
+                        </a>
+                    </div>
                     ${content}
                     <hr style="margin-top: 40px; border: 0; border-top: 1px solid #eaeaea;" />
                     <p style="font-size: 12px; color: #666;">
