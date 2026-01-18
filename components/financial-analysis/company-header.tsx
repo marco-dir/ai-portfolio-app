@@ -70,11 +70,15 @@ interface Quote {
 export function CompanyHeader({
     profile,
     quote,
-    keyRatios
+    keyRatios,
+    keyMetricsTTM,
+    financialRatios
 }: {
     profile: CompanyProfile
     quote: Quote
     keyRatios?: any[]
+    keyMetricsTTM?: any
+    financialRatios?: any
 }) {
     const [isAddingToWatchlist, setIsAddingToWatchlist] = useState(false)
     const [watchlistMessage, setWatchlistMessage] = useState<string | null>(null)
@@ -209,11 +213,15 @@ export function CompanyHeader({
                 <div className="text-center">
                     <div className="text-xs text-gray-500 mb-1">PEG Ratio</div>
                     <div className="text-sm font-semibold text-white">
-                        {latestRatios?.pegRatio
-                            ? formatRatio(latestRatios.pegRatio)
-                            : latestRatios?.priceEarningsToGrowthRatio
-                                ? formatRatio(latestRatios.priceEarningsToGrowthRatio)
-                                : 'N/A'}
+                        {keyMetricsTTM?.pegRatioTTM
+                            ? formatRatio(keyMetricsTTM.pegRatioTTM)
+                            : financialRatios?.pegRatioTTM
+                                ? formatRatio(financialRatios.pegRatioTTM)
+                                : latestRatios?.pegRatio
+                                    ? formatRatio(latestRatios.pegRatio)
+                                    : latestRatios?.priceEarningsToGrowthRatio
+                                        ? formatRatio(latestRatios.priceEarningsToGrowthRatio)
+                                        : 'N/A'}
                     </div>
                 </div>
                 <div className="text-center">
@@ -226,7 +234,13 @@ export function CompanyHeader({
                 </div>
                 <div className="text-center">
                     <div className="text-xs text-gray-500 mb-1">Div. Yield</div>
-                    <div className="text-sm font-semibold text-white">{latestRatios?.dividendYield ? formatPercent(latestRatios.dividendYield) : 'N/A'}</div>
+                    <div className="text-sm font-semibold text-white">
+                        {profile.lastDiv && quote.price
+                            ? formatPercent(profile.lastDiv / quote.price)
+                            : latestRatios?.dividendYield
+                                ? formatPercent(latestRatios.dividendYield)
+                                : 'N/A'}
+                    </div>
                 </div>
             </div>
 

@@ -705,7 +705,7 @@ export default function DiramcoPortfolioPage() {
                     {/* Yearly Dividends Chart - THIRD */}
                     <Card className="bg-gray-900 border-gray-800">
                         <CardHeader>
-                            <CardTitle className="text-lg font-medium text-white">Dividendi Annuali (Storico)</CardTitle>
+                            <CardTitle className="text-lg font-medium text-white">Dividendi e Interessi Annuali (Storico)</CardTitle>
                         </CardHeader>
                         <CardContent className="h-[300px]">
                             {(() => {
@@ -725,7 +725,7 @@ export default function DiramcoPortfolioPage() {
                                                 formatter={(value: any) => [`€ ${value.toLocaleString('it-IT')}`]}
                                             />
                                             <Legend wrapperStyle={{ paddingTop: '10px' }} />
-                                            <Bar dataKey="dividendi" fill="#10b981" name="Dividendi (€)" />
+                                            <Bar dataKey="dividendi" fill="#10b981" name="Dividendi e Interessi (€)" />
                                         </BarChart>
                                     </ResponsiveContainer>
                                 )

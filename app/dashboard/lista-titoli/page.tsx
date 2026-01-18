@@ -129,19 +129,19 @@ export default function WatchlistPage() {
         ) : (
           <div className="space-y-2">
             {/* Desktop Header */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <div className="hidden md:grid grid-cols-12 gap-2 px-6 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
               <div className="col-span-3">Titolo</div>
               <div className="col-span-2 text-right">Prezzo</div>
               <div className="col-span-1 text-right">P/E</div>
               <div className="col-span-1 text-right">P/B</div>
               <div className="col-span-1 text-right">Div%</div>
-              <div className="col-span-2 text-right">Mkt Cap</div>
+              <div className="col-span-1 text-right">Mkt Cap</div>
               <div className="col-span-1 text-right">PEG</div>
-              <div className="col-span-1"></div>
+              <div className="col-span-2"></div>
             </div>
 
             {stocks.map((stock) => (
-              <div key={stock.symbol} className="group p-2 bg-gray-800 rounded-lg border border-gray-700 hover:border-blue-500 transition-colors grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              <div key={stock.symbol} className="group p-2 bg-gray-800 rounded-lg border border-gray-700 hover:border-blue-500 transition-colors grid grid-cols-1 md:grid-cols-12 gap-2 items-center">
 
                 {/* Symbol & Name */}
                 <div className="md:col-span-3 flex items-center gap-3">
@@ -179,7 +179,7 @@ export default function WatchlistPage() {
                   <span className="md:hidden text-gray-500 text-sm">Div%</span>
                   <div className="text-sm text-gray-300">{stock.divYield ? stock.divYield.toFixed(2) + "%" : "-"}</div>
                 </div>
-                <div className="md:col-span-2 flex justify-between md:block md:text-right">
+                <div className="md:col-span-1 flex justify-between md:block md:text-right">
                   <span className="md:hidden text-gray-500 text-sm">Mkt Cap</span>
                   <div className="text-sm text-gray-300">{formatLargeNumber(stock.marketCap)}</div>
                 </div>
